@@ -8,6 +8,7 @@
             @import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap');
             body {
                 font-family: 'IM Fell DW Pica', serif;
+                background-color: #feffef;
             }
             h1 {
                 text-align: center;
@@ -16,6 +17,7 @@
             .conteneur {
                 max-width: 1200px;
                 margin: auto;
+                filter: sepia(1);
             }
             .partoche-viewer {
                 max-width: 1200px;
@@ -41,29 +43,27 @@
                 text-indent: -9999px; 
             }
             #play-button {
-                background: url(img/playB.png);
+                background: url(img/playB.svg);
                 margin-right: 2px;
                 flex-grow: 0;
             }
-            /* #play-button:hover {
-                background: url(img/playW.png);
-            } */
+            #play-button:hover {
+                background: url(img/playW.svg);
+            }
             #stop-button {
-                background: url(img/stopB.png);
+                background: url(img/stopB.svg);
                 margin-right: 2px;
                 flex-grow: 0;
             }
-            /* #stop-button:hover {
-                background: url(img/stopW.png);
-            } */
+            #stop-button:hover {
+                background: url(img/stopW.svg);
+            }
             #progressBarControl {
-                /* display: inline-block;
-                width: 1133px; */
                 height: 30px;
                 flex-grow: 50;
             }
             #progressBar {
-                color: white;
+                color: #feffef;
                 background-color: black ;
                 height: 30px;
                 font-size: 24px;
@@ -83,35 +83,47 @@
             <div class="audio-control">
                 <audio id='lecteurAudio' src='prelude10/prelude10.mp3' ontimeupdate="update(this)"></audio>
                 <button class='control' id="play-button" onclick='play("lecteurAudio", this)'>Lecture</button>
-                <button class='control' id="stop-button" onclick='resume("lecteurAudio", this)'>Arrêt</button>
+                <button class='control' id="stop-button" onclick='stop("lecteurAudio", this)'>Arrêt</button>
                 <div id="progressBarControl">
                     <div id="progressBar">&nbsp;00:00</div>
                 </div>
             </div>
         </div>
         <script>
-            const markers = await fetch('prelude10/prelude10 reaper_regions_markers.csv')
-                .then(response => { return response.text() })
-            // const markers = "#,Name,Start,End,Length↵M1,,0:02.620,,↵M2,,0:07.962,,↵M3,,0:12.119,,↵M4,,0:17.656,,↵"
-            // let markersArray = markers.split(",");
-            
+            let markers = ['0:00.000'];
+            async function main() {
+                let markersRaw = await fetch('prelude10/prelude10 reaper_regions_markers.csv')
+                    .then(response => { return response.text() })
+                markersRaw = markersRaw.split(",");
+                markersRaw = markersRaw.slice(6);
+                let nbMarkers = Math.ceil(markersRaw.length/4);
+                for (let i=0; i<nbMarkers; i++) {
+                    markers.push(markersRaw[i*4])
+                }
+                for (let i=0; i<markers.length; i++) {
+                    markers[i] = Number(markers[i].slice(2))
+                }
+                markers.push(999999)
+                console.log(markers)
+            }
+            main();
 
-            function play(idPlayer, control) {
+            function play(idPlayer, playBtn) {
                 let player = document.querySelector('#' + idPlayer);
                 if (player.paused) {
                     player.play();
-                    control.textContent = 'Pause';
-                    control.style.background = 'url(img/pauseB.png)';
+                    playBtn.style.backgroundImage  = 'url(img/pauseB.svg)';
                 } else {
                     player.pause();
-                    control.textContent = 'Reprendre';
-                    control.style.background = 'url(img/playB.png)';
+                    playBtn.style.backgroundImage  = 'url(img/playB.svg)';
                 }
             }
-            function resume(idPlayer) {
+            function stop(idPlayer) {
                 let player = document.querySelector('#' + idPlayer);
                 player.currentTime = 0;
                 player.pause();
+                const playBtn = document.getElementById("play-button")
+                playBtn.style.backgroundImage  = 'url(img/playB.svg)';
             }
             function update(player) {
                 var duration = player.duration;    // Durée totale
@@ -124,17 +136,12 @@
                 progress.style.width = percent + '%';
                 document.querySelector('#progressBar').innerHTML = "&nbsp;" + formatTime(time);
 
-                if (time < "02.620") {
-                    partoche.src = "prelude10/slice1.png"
-                } else if (time > "02.620" && time < "07.962") {
-                    partoche.src = "prelude10/slice2.png"
-                } else if (time > "07.962" && time < "12.119") {
-                    partoche.src = "prelude10/slice3.png"
-                } else if (time > "12.119" && time < "17.656") {
-                    partoche.src = "prelude10/slice4.png"
-                } else if (time > "17.656") {
-                    partoche.src = "prelude10/slice5.png"
+                for (let i=0; i<markers.length; i++) {
+                    if (time > markers[i] && time < markers[i+1]) {
+                        partoche.src = "prelude10/slice" + (i+1) + ".png"
+                    }
                 }
+
             }
             function formatTime(time) {
                 var hours = Math.floor(time / 3600);
@@ -158,6 +165,7 @@
                     y: event.pageY
                 }
             }
+
         </script>
     </body>
 </html>
