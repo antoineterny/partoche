@@ -3,22 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Lecteur de partoche</title>
-        <link href="normalize.css" rel="stylesheet" type="text/css">
-        <link href="partoche.css" rel="stylesheet" type="text/css">
+        <link href="../normalize.css" rel="stylesheet" type="text/css">
+        <link href="../partoche.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="conteneur">
             <h1>Partoche.js</h1>
             <div class="partoche-viewer">
-                <img id="partoche" src="prelude10/slice1.png" style="width: 100%;">
+                <img id="partoche" src="slice1.png" style="width: 100%;">
             </div>
             
             <div class="audio-control">
-                <audio id='lecteurAudio1' src='prelude10/prelude10.mp3' ontimeupdate="update(this)"></audio>
+                <audio id='lecteurAudio1' src='' ontimeupdate="update(this)"></audio>
                 <div class="buttonsAndTitle">
                     <button class='control play-button' id="button1" onclick='play("lecteurAudio1", this)'>Lecture</button>
                     <button class='control stop-button' id="button2" onclick='stop("lecteurAudio1", this)'>Arrêt</button>
-                    <h2>Chopin - Prélude Op. 28, No.10 <em>(E. Kissin, 2000)</em></h2>
+                    <h2 class="titreLong"></h2>
                 </div>
                 <div class="progressDisplay">
                     <div id="progressBarControl" onclick="clickProgress('lecteurAudio1', this, event)">
@@ -30,6 +30,11 @@
                 
             </div>
         </div>
-        <script src="partoche.js"></script>
+        <script>
+            const titreCourt = "prelude01";
+            const titreLong = "Chopin - Prélude Op. 28, No.1 <em>(R. Blechacz , 2007)</em>"
+            const nbrSlices = 5;
+        </script>
+        <script src="../partoche.js"></script>
     </body>
 </html>
