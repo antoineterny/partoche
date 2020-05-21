@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&display=swap');
+body {
+    font-family: 'IM Fell DW Pica', serif;
+    background-color: #feffef;
+    margin: 2em;
+}
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+}
+h2 {
+    
+    display: inline-block;
+    vertical-align: middle;
+    margin: 6px;
+}
+.conteneur {
+    max-width: 1200px;
+    margin: auto;
+    filter: sepia(1);
+}
+.partoche-viewer {
+    max-width: 1200px;
+    height: 315px;
+    /* border: 1px solid black; */
+    position: relative;
+    margin-bottom: 1em;
+}
+.partoche-viewer img {
+    top: 50%;                         
+    position: absolute;               
+    transform: translate(0, -50%) }
+.audio-control {
+    display: block;
+}
+.audio-control button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    vertical-align: middle;
+    text-indent: -9999px; 
+    margin-right: 2px;
+    flex-grow: 0;
+}
+.play-button {
+    background: url(img/playW.png);
+}
+.play-button:hover {
+    background: url(img/playB.png);
+}
+.pause-button {
+    background: url(img/pauseW.png);
+}
+.pause-button:hover {
+    background: url(img/pauseB.png);
+}
+.stop-button {
+    background: url(img/stopW.png);
+}
+.stop-button:hover {
+    background: url(img/stopB.png);
+}
+#progressBarControl {
+    display: flex;
+    box-sizing: border-box;
+    height: 30px;
+    flex-grow: 50;
+    border-bottom: 1px solid black;
+}
+#progressBar {
+    color: black;
+    background-image: url(img/hand.svg);
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 30px;
+    align-self: flex-end;
+    flex-grow: 0;
+}
+#displayCurrentTime {
+    float: left;
+    font-size: 22px;
+}
+#displayTotalTime {
+    float: right;
+    font-size: 22px;
+}
+

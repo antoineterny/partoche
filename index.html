@@ -4,97 +4,35 @@
         <meta charset="utf-8">
         <title>Lecteur de partoche</title>
         <link href="normalize.css" rel="stylesheet" type="text/css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap');
-            body {
-                font-family: 'IM Fell DW Pica', serif;
-                background-color: #feffef;
-            }
-            h1 {
-                text-align: center;
-                text-transform: uppercase;
-            }
-            .conteneur {
-                max-width: 1200px;
-                margin: auto;
-                filter: sepia(1);
-            }
-            .partoche-viewer {
-                max-width: 1200px;
-                height: 400px;
-                /* border: 1px solid black; */
-                position: relative;
-                margin-bottom: 1em;
-            }
-            .partoche-viewer img {
-                top: 50%;                         
-                position: absolute;               
-                transform: translate(0, -50%) }
-            .audio-control {
-                display: flex;
-            }
-            .audio-control button {
-                width: 30px;
-                height: 30px;
-                border: none;
-                padding: 0;
-                vertical-align: middle;
-                text-indent: -9999px; 
-                margin-right: 2px;
-                flex-grow: 0;
-            }
-            .play-button {
-                background: url(img/playB.svg);
-            }
-            .play-button:hover {
-                background: url(img/playW.svg);
-            }
-            .pause-button {
-                background: url(img/pauseB.svg);
-            }
-            .pause-button:hover {
-                background: url(img/pauseW.svg);
-            }
-            .stop-button {
-                background: url(img/stopB.svg);
-            }
-            .stop-button:hover {
-                background: url(img/stopW.svg);
-            }
-            #progressBarControl {
-                height: 30px;
-                flex-grow: 50;
-            }
-            #progressBar {
-                color: #feffef;
-                background-color: black ;
-                height: 30px;
-                font-size: 24px;
-                vertical-align: middle;
-                line-height: 30px;
-                flex-grow: 50;
-            }
-        </style>
+        <link href="partoche.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="conteneur">
-            <h1>Chopin - Prélude Op. 28, No.10</h1>
+            <h1>Partoche.js</h1>
             <div class="partoche-viewer">
                 <img id="partoche" src="prelude10/slice1.png" style="width: 100%;">
             </div>
-
+            
             <div class="audio-control">
                 <audio id='lecteurAudio1' src='prelude10/prelude10.mp3' ontimeupdate="update(this)"></audio>
-                <button class='control play-button' id="button1" onclick='play("lecteurAudio1", this)'>Lecture</button>
-                <button class='control stop-button' id="button2" onclick='stop("lecteurAudio1", this)'>Arrêt</button>
-                <div id="progressBarControl" onclick="clickProgress('lecteurAudio1', this, event)">
-                    <div id="progressBar">&nbsp;00:00</div>
+                <div class="buttonsAndTitle">
+                    <button class='control play-button' id="button1" onclick='play("lecteurAudio1", this)'>Lecture</button>
+                    <button class='control stop-button' id="button2" onclick='stop("lecteurAudio1", this)'>Arrêt</button>
+                    <h2>Chopin - Prélude Op. 28, No.10 <em>(E. Kissin, 2000)</em></h2>
                 </div>
+                <div class="progressDisplay">
+                    <div id="progressBarControl" onclick="clickProgress('lecteurAudio1', this, event)">
+                        <div id="progressBar"></div>
+                    </div>
+                </div>
+                <div id="displayCurrentTime">00:00</div>
+                <div id="displayTotalTime"></div>
+                
             </div>
         </div>
         <script>
             let markers = ['0:00.000'];
-            async function main() {
+            async function getMarkers() {
                 let markersRaw = await fetch('prelude10/prelude10 reaper_regions_markers.csv')
                     .then(response => { return response.text() })
                 markersRaw = markersRaw.split(",");
@@ -109,7 +47,7 @@
                 markers.push(999999)
                 console.log(markers)
             }
-            main();
+            getMarkers();
 
             function play(idPlayer, playBtn) {
                 let player = document.querySelector('#' + idPlayer);
@@ -140,14 +78,14 @@
                 let partoche = document.querySelector("#partoche");
 
                 progress.style.width = percent + '%';
-                document.querySelector('#progressBar').innerHTML = "&nbsp;" + formatTime(time);
+                document.querySelector('#displayCurrentTime').innerHTML = formatTime(time);
+                document.querySelector('#displayTotalTime').innerHTML = formatTime(duration);
 
                 for (let i=0; i<markers.length; i++) {
                     if (time > markers[i] && time < markers[i+1]) {
                         partoche.src = "prelude10/slice" + (i+1) + ".png"
                     }
                 }
-
             }
             function formatTime(time) {
                 var mins  = Math.floor((time % 3600) / 60);
