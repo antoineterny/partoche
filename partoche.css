@@ -9,7 +9,6 @@ h1 {
     text-transform: uppercase;
 }
 h2 {
-    
     display: inline-block;
     vertical-align: middle;
     margin: 6px;
@@ -21,15 +20,9 @@ h2 {
 }
 .partoche-viewer {
     max-width: 1200px;
-    height: 315px;
-    /* border: 1px solid black; */
     position: relative;
     margin-bottom: 1em;
 }
-.partoche-viewer img {
-    top: 50%;                         
-    position: absolute;               
-    transform: translate(0, -50%) }
 .audio-control {
     display: block;
 }
@@ -47,19 +40,19 @@ h2 {
     background: url(img/playW.png);
 }
 .play-button:hover {
-    background: url(img/playB.png);
+    background: url(img/play.png);
 }
 .pause-button {
     background: url(img/pauseW.png);
 }
 .pause-button:hover {
-    background: url(img/pauseB.png);
+    background: url(img/pause.png);
 }
 .stop-button {
     background: url(img/stopW.png);
 }
 .stop-button:hover {
-    background: url(img/stopB.png);
+    background: url(img/stop.png);
 }
 #progressBarControl {
     display: flex;
@@ -77,12 +70,32 @@ h2 {
     align-self: flex-end;
     flex-grow: 0;
 }
-#displayCurrentTime {
-    float: left;
+.displayTime {
+    display: flex;
+    justify-content: space-between;
     font-size: 22px;
 }
-#displayTotalTime {
-    float: right;
-    font-size: 22px;
+.repereLigne{
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    border-right-width: 1px;
+    border-right-color: black;
+    border-right-style: solid;
 }
+ul {
+    clear: both;
+    padding: 0;
+    list-style-type: none;
 
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a::before {
+    content: '» ';
+}

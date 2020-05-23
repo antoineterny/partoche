@@ -1,9 +1,10 @@
 document.querySelector('.titreLong').innerHTML = titreLong;
 document.querySelector('#lecteurAudio1').src = `${titreCourt}.mp3`;
-
+document.querySelector('#lecteurAudio1').load();
 
 let markers = ['0:00.000'];
-async function getMarkers() {
+let partocheImages = [];
+async function init() {
     let markersRaw = await fetch('markers.csv')
         .then(response => { return response.text() })
     markersRaw = markersRaw.split(",");
@@ -14,11 +15,16 @@ async function getMarkers() {
     }
     for (let i=0; i<markers.length; i++) {
         markers[i] = Number(markers[i].slice(2))
+        partocheImages[i] = new Image();
+        partocheImages[i].src = `slice${i+1}.png`
     }
     markers.push(999999)
-    console.log(markers)
+    let max = (arr) => Math.max.apply(null, arr)
+    let hauteurs = partocheImages.map(x => x.naturalHeight)
+    document.querySelector(".partoche-viewer").style = `height:${max(hauteurs)*2}px`;
+    stop(lecteurAudio1);
 }
-getMarkers();
+init();
 
 function play(idPlayer, playBtn) {
     let player = document.querySelector('#' + idPlayer);
@@ -32,8 +38,8 @@ function play(idPlayer, playBtn) {
         playBtn.classList.add("play-button");
     }
 }
-function stop(idPlayer) {
-    let player = document.querySelector('#' + idPlayer);
+function stop() {
+    let player = document.querySelector('#lecteurAudio1');
     player.currentTime = 0;
     player.pause();
     let playBtn = document.querySelector("#button1");
@@ -44,20 +50,43 @@ function update(player) {
     var duration = player.duration;    // Durée totale
     var time     = player.currentTime; // Temps écoulé
     var fraction = time / duration;
-    var percent  = Math.ceil(fraction * 100);
+    var percent  = fraction * 100;
     var progress = document.querySelector('#progressBar');
-    let partoche = document.querySelector("#partoche");
+    let partoche1 = document.querySelector("#partoche1");
+    let partoche2 = document.querySelector("#partoche2");
 
     progress.style.width = percent + '%';
     document.querySelector('#displayCurrentTime').innerHTML = formatTime(time);
     document.querySelector('#displayTotalTime').innerHTML = formatTime(duration);
 
     for (let i=0; i<markers.length; i++) {
-        if (time > markers[i] && time < markers[i+1]) {
-            partoche.src = "slice" + (i+1) + ".png"
+        if (time > markers[markers.length-2] && time < markers[markers.length-1]) {
+            partoche1.src = `slice${markers.length - 2}.png`;
+            partoche2.src = `slice${markers.length - 1}.png`
+        }
+        else if (time > markers[i] && time < markers[i+1]) {
+            partoche1.src = `slice${i+1}.png`;
+            partoche2.src = `slice${i+2}.png`
         }
     }
 }
+
+function dessineReperes() {
+    let player = document.querySelector('#lecteurAudio1');
+    let progress = document.querySelector('#progressBarControl'); 
+    var duration = player.duration;    // Durée totale
+    for (let i=1; i<markers.length-1; i++) {
+        var time = markers[i];
+        console.log(time);
+        var percent  = time / duration * 100;
+        let divRepere = document.createElement("div");
+        console.log(percent);
+        divRepere.className = "repereLigne";
+        divRepere.style = "width:" + percent + "%";
+        progress.appendChild(divRepere);
+    }
+}
+
 function formatTime(time) {
     var mins  = Math.floor((time % 3600) / 60);
     var secs  = Math.floor(time % 60);
@@ -91,8 +120,9 @@ function clickProgress(idPlayer, control, event) {
     var x = target.x - parent.x; 
     var wrapperWidth = document.querySelector('#progressBarControl').offsetWidth;
     
-    var percent = Math.ceil((x / wrapperWidth) * 100);    
+    var percent = (x / wrapperWidth) * 100;    
     var duration = player.duration;
     
     player.currentTime = (duration * percent) / 100;
 }
+dessineReperes();
