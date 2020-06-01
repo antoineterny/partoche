@@ -73,6 +73,7 @@ h2 {
 .displayTime {
     display: flex;
     justify-content: space-between;
+    flex-flow: row nowrap;
     font-size: 22px;
 }
 .repereLigne{

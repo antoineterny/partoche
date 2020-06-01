@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <script>
+        let markersRaw = 
+`#,Name,Start,End,Length
+M1,,0:15.467,,
+M2,,0:51.128,,
+M3,,1:22.922,,
+M4,,1:48.271,,
+M5,,2:10.183,,
+M6,,2:36.993,,
+M7,,3:13.771,,
+M8,,3:41.268,,
+R1,,0:00.000,1:22.922,1:22.922
+R2,,1:22.922,2:36.993,1:14.071
+R3,,2:36.993,4:14.351,1:37.358
+`
+    function convertToSeconds(ms) {
+      let temp = ms.split(':');
+      let minutes = Number(temp[0]);
+      let seconds = Number(temp[1]);
+      return Number(((minutes * 60) + seconds).toFixed(3))
+    }
+
+    function processCSV(csv) {
+      let lines = csv.split(/\r\n|\n/);
+      let markers = [];
+      let regions = [];
+      for (let i=0; i<lines.length; i++) {
+        lines[i] = lines[i].split(',');
+        lines[i][0] = lines[i][0].slice(0,1);
+        if (lines[i][0] == "M") {
+          markers.push(convertToSeconds(lines[i][2]));
+        }
+        else if (lines[i][0] == "R") {
+          let temp = {};
+          temp.start = convertToSeconds(lines[i][2]);
+          temp.end = convertToSeconds(lines[i][3]);
+          regions.push(temp);
+        }
+      };
+      console.log(markers);
+      console.log(regions);
+    }
+
+    processCSV(markersRaw);
+    
+  </script>
+</body>
+</html>

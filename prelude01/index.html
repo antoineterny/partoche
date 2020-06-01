@@ -5,6 +5,10 @@
         <title>Chopin - Prélude Op. 28, No.1</title>
         <link href="../normalize.css" rel="stylesheet" type="text/css">
         <link href="../partoche.css" rel="stylesheet" type="text/css">
+        <script>
+            const titreCourt = "prelude01";
+            const titreLong = "Chopin - Prélude Op. 28, No.1 <em>(R. Blechacz , 2007)</em>"
+        </script>
     </head>
     <body>
         <div class="conteneur">
@@ -24,22 +28,18 @@
                 <div class="progressDisplay">
                     <div id="progressBarControl" onclick="clickProgress('lecteurAudio1', this, event)">
                         <div id="progressBar"></div>
-                        <!-- <div class="repereLigne" style="width: 20%;"></div>
-                        <div class="repereLigne" style="width: 50%;"></div>
-                        <div class="repereLigne" style="width: 70%;"></div> -->
                     </div>
                 </div>
-                <div id="displayCurrentTime">00:00</div>
-                <div id="displayTotalTime"></div>
+                <div class="displayTime">
+                    <div id="displayCurrentTime">00:00</div>
+                    <div id="displayTotalTime"></div>
+                </div>
             </div>
         </div>
         <ul>
             <li><a href="../prelude10/index.html">Prélude n°10 par Kissin</a></li>
         </ul>
-        <script>
-            const titreCourt = "prelude01";
-            const titreLong = "Chopin - Prélude Op. 28, No.1 <em>(R. Blechacz , 2007)</em>"
-        </script>
+
         <script src="../partoche.js"></script>
     </body>
 </html>
