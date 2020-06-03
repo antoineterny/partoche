@@ -37,32 +37,30 @@ function processCSV(csv) {
     }
 }
 
+let pageOffsets = [];
+
 async function init() {
     let markersRaw = await fetch('_regions_markers.csv')
     .then(response => { return response.text() })
     processCSV(markersRaw);
+
+    let json = await fetch('suggestion.json')
+    .then(function(response) { return response.json() })
+    addPages(json);
 }
 init();
 console.log("markers:",markers);
 console.log("regions:",regions);
 
 // Add images
-// TODO: find a practical way to generate this pageOffsets array
-const pageOffsets = [
-    [122, 368, 603, 850, 1063],
-	[ 23, 274, 533, 775, 1044],
-	[ 17, 258, 500, 735, 998 ],
-	[ 21, 261, 501, 736, 1010],
-	[ 29, 303, 560, 824, 1063],
-	[ 10, 240, 504, 769, 1043],
-    [  0, 266, 561, 820, 1072]
-];
-
 const pages = document.querySelector('.pages');
 let pagesHeight = [];
 let previousPagesHeight = [0];
 let pagesLoaded = 0;
-function addPages() {
+function addPages(json) {
+    for(let i=0; i<json.length; i++) {
+        pageOffsets.push(json[i]);
+    }
     for (let i=1; i<=pageOffsets.length; i++) {
         let newImg = document.createElement('img');
         newImg.onload = function() {
@@ -80,18 +78,21 @@ function addPages() {
         pages.appendChild(newImg);
     }
 }
-addPages();
+
 
 console.log("pageMarkers:",pageMarkers);
 console.log("pageOffsets:",pageOffsets);
+
+// Passe à la ligne suivante plus tôt
+let avance = .5;
 
 // Conditions de décalage des pages
 const audio = document.querySelector("audio");
 audio.addEventListener('timeupdate', (event) => {
     for (let i=0; i<pageMarkers.length; i++) {
-        if (audio.currentTime > pageMarkers[i][0] && audio.currentTime < pageMarkers[i][pageMarkers[i].length-1]) {
+        if (audio.currentTime > (pageMarkers[i][0] - avance) && audio.currentTime < (pageMarkers[i][pageMarkers[i].length-1] - avance)) {
             for (j=0; j<pageMarkers[i]['length']; j++) {
-                if (audio.currentTime > pageMarkers[i][j] && audio.currentTime < pageMarkers[i][j+1]) {
+                if (audio.currentTime > (pageMarkers[i][j] - avance) && audio.currentTime < (pageMarkers[i][j+1] - avance)) {
                     pages.style = "transform: translateY(-" + (previousPagesHeight[i] + pageOffsets[i][j]) + "px)"
                 }
             }
