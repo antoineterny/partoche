@@ -141,7 +141,7 @@ function addPages(json) {
         let largeur = (regions[i].end / regions[regions.length - 1].end * 958);
         console.log("largeur", i, largeur)
         progression.innerHTML += 
-        `<div class="delimiteurRegion" style="width: ${largeur}px;"></div>`
+        `<div class="delimiteurRegion" style="left: ${largeur}px;"></div>`
     }
 }
 

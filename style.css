@@ -30,7 +30,7 @@ h1 {
     transition-duration: .5s;
 }
 .pages img {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ccc;
 }
 .lecteur {
     position: relative;
@@ -104,6 +104,8 @@ button {
     left: 12px;
     /* max 970px */
     background-image: url(img/hand.svg);
+    transition-property: left;
+    transition-duration: .2s;
 }
 #temps {
     position: absolute;
@@ -116,6 +118,7 @@ button {
 }
 .delimiteurRegion {
     position: absolute;
+    width: 1px;
     height: 5px;
     top: 25px;
     border-right: 1px solid black;
@@ -128,6 +131,7 @@ button {
 .playlist a {
     font-size: 18px;
     line-height: 30px;
+    width: 958px;;
     color: white;
     text-decoration: none;
 }
