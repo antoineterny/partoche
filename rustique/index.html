@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="rustique.css">
+    <script src="rustique.js" defer></script>
+    <title>Poulenc - Rustique</title>
+</head>
+<body>
+  <h1>Rustique (Francis Poulenc, <i>Villageoises</i>)</h1>
+  <div class="conteneur">
+
+    <div class="partoche cadre">
+      <div class="pages">
+      </div>
+    </div>
+
+    <div class="lecteur cadre">
+      <audio id="audio1" src="RustiqueA_droite.mp3" preload="auto"></audio>
+      <audio id="audio2" src="RustiqueA_gauche.mp3" preload="auto"></audio>
+      <audio id="audio3" src="RustiqueA_metronome.mp3" preload="auto"></audio>
+      <div class="boutons">
+        <button id="btn1" class="play"></button>
+        <button id="stop"></button>
+        <h2 class="titre">Passage A</h2>
+          <button id="prev"></button>
+          <button id="next"></button>
+      </div>
+      <div id="curseur">
+      </div>
+      <div id="progression">
+      </div>
+      <div id="temps">
+        <div id="tempsCourant">00:00</div>
+        <div id="tempsTotal">00:00</div>
+      </div>
+      <div id="balance-et-metronome">
+        <p>gauche<input type="range" id="balance" min="-100" max="100" value = "0">droite</p>
+        <label><input type="checkbox" id="metronome" checked>Métronome</label>
+      </div>
+    </div>
+    <p style="text-align: center">En cas de décalage des pistes, recharger la page (F5).<br>Ce sera bientôt corrigé...</p>
+
+    
+  </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <audio id="droite" src="rustique/Rustique_DROITE.opus" preload="auto"></audio>
+    <audio id="gauche" src="rustique/Rustique_GAUCHE.opus" preload="auto"></audio>
+    <audio id="clic" src="rustique/Rustique_clic.opus" preload="auto"></audio>
+    <button id="play" onclick="playAudio();">Play</button>
+    <button id="pause" onclick="pauseAudio();">Pause</button><br>
+    <input type="range" id="balance" min="-100" max="100" value = "0"><br>
+    <p></p>
+    <label><input type="checkbox" id="metronome" checked>Métronome</label>
+
+    <script>
+        const audioDroite = document.getElementById("droite");
+        const audioGauche = document.getElementById("gauche");
+        const audioClic = document.getElementById("clic");
+        const playBtn = document.getElementById('play');
+        const tousAudio = document.querySelectorAll('audio');
+        const btnClic = document.getElementById('metronome');
+        const balance = document.getElementById('balance');
+        function playAudio() {
+            tousAudio.forEach(element => {
+                element.play();
+            });
+        }
+        function pauseAudio() {
+            tousAudio.forEach(element => {  
+                element.pause();
+            });
+        }
+        btnClic.addEventListener('click', function(){
+            if (btnClic.checked == true) {
+                audioClic.volume = 1;
+            }
+            else {
+                audioClic.volume = 0;
+            }
+        })
+        balance.addEventListener('input', function(){
+            document.querySelector('p').innerText = balance.value;
+            if (balance.value > 0) {
+                audioDroite.volume = 1;
+                audioGauche.volume = (100 - Number(balance.value)) / 100;
+            } else if (balance.value < 0) {
+                audioDroite.volume = (100 + Number(balance.value)) / 100;
+                audioGauche.volume = 1;
+            } else {
+                audioDroite.volume = 1;
+                audioGauche.volume = 1;
+            }
+        })
+    </script>
+</body>
+</html>

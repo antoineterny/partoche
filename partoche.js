@@ -175,6 +175,7 @@ audio.addEventListener('timeupdate', (event) => {
     // TODO: rendre le déplacement plus fluide
     curseur.style = "left:" + (audio.currentTime / audio.duration * 958 + 12) + "px";
     document.querySelector('#tempsCourant').innerText = formatTime(audio.currentTime); 
+    // TODO: faire afficher le temps total avant la lecture !!!
     document.querySelector('#tempsTotal').innerText = formatTime(audio.duration);
 });
 
