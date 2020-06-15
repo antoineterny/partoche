@@ -7,6 +7,7 @@
 }
 .conteneur {
     margin: 0 auto;
+    width: 1000px;
 }
 h1 {
     text-align: center;
@@ -18,7 +19,6 @@ h1 {
     overflow: hidden;
 }
 .cadre {
-    width: 1000px;
     margin: 10px auto 20px;
     border: 1px solid black;
     box-shadow: 0 0 0 2px white,

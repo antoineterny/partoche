@@ -73,6 +73,9 @@ async function init(index) {
 
   metronomeCheckbox.checked = true;
   stopAudio();
+  audio1.addEventListener('durationchange', function() {
+    document.querySelector("#tempsTotal").innerText = formatTime(audio1.duration);
+  } )
 }
 
 
@@ -138,7 +141,7 @@ audio1.addEventListener('timeupdate', () => {
     curseur.style = "left:" + (audio1.currentTime / audio1.duration * progression.clientWidth + 12) + "px";
     document.querySelector('#tempsCourant').innerText = formatTime(audio1.currentTime); 
     // TODO: faire afficher le temps total avant la lecture !!!
-    document.querySelector('#tempsTotal').innerText = formatTime(audio1.duration);
+
 });
 
 // Lecteur audio
@@ -193,7 +196,7 @@ document.querySelector("#prev").addEventListener("click", function () {
   init(index);
 });
 document.querySelector("#next").addEventListener("click", function () {
-  index++;
+  index++; 
   if (index > playlist.length - 1) index = 0;
   init(index);
 });
@@ -204,7 +207,6 @@ document.getElementById('progression').addEventListener('click', function(e) {
   tousAudio.forEach((element) => {
     element.currentTime = e.offsetX / this.clientWidth * element.duration;
   });
-  console.log(audio1.currentTime, audio2.currentTime, audio3.currentTime);
 })
 
 
