@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: lightgray;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+#editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#editorImage {
+  width: 750px;
+  overflow: hidden;
+}
+#guide1 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid red;
+}
+.guide {
+  position: absolute;
+  width: 750px;
+  height: 0;
+  border-bottom: 1px solid blue;
+}
+#output, #input {
+  margin: 1em auto;
+  padding : .5em;
+  width: 750px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#output {
+  font-family: monospace;
+  font-size: 1.25em;
+
+}
+#input {
+  margin: 0 auto;
+}
