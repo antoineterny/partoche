@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="rustique.css">
-    <script src="rustique.js" defer></script>
+    <link rel="stylesheet" href="../partoche-etude.css">
+    <script>
+      const morceau = "rustique";
+      const playlist = [
+        { titre: "RustiqueA", description: "Rustique - passage A" },
+        { titre: "RustiqueB", description: "Rustique - passage B" },
+        { titre: "RustiqueC", description: "Rustique - passage C" },
+        { titre: "RustiqueD", description: "Rustique - passage D" },
+      ];
+    </script>
+    <script src="../partoche-etude.js" defer></script>
     <title>Poulenc - Rustique</title>
 </head>
 <body>
@@ -17,9 +26,9 @@
     </div>
 
     <div class="lecteur cadre">
-      <audio id="audio1" src="RustiqueA_droite.mp3" preload="auto"></audio>
-      <audio id="audio2" src="RustiqueA_gauche.mp3" preload="auto"></audio>
-      <audio id="audio3" src="RustiqueA_metronome.mp3" preload="auto"></audio>
+      <audio id="audio1" src="" preload="auto"></audio>
+      <audio id="audio2" src="" preload="auto"></audio>
+      <audio id="audio3" src="" preload="auto"></audio>
       <div class="boutons">
         <button id="btn1" class="play"></button>
         <button id="stop"></button>

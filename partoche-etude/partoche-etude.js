@@ -1,10 +1,3 @@
-//Définition des morceaux
-const playlist = [
-  { titre: "RustiqueA", description: "Rustique - passage A" },
-  { titre: "RustiqueB", description: "Rustique - passage B" },
-  { titre: "RustiqueC", description: "Rustique - passage C" },
-  { titre: "RustiqueD", description: "Rustique - passage D" },
-];
 let index = 0;
 window.onload = function() {
   init(index);
@@ -48,8 +41,8 @@ function processCSV(csv) {
   progression.innerHTML = "";
   for (let i=0; i<markers.length; i++) {
     let largeur = (markers[i].time / regions[regions.length -1].end * 958);
-    progression.innerHTML += 
-      `<div class="delimiteurRegion" style="left: ${largeur}px;">${markers[i].text}</div>`;
+    // https://caracteres-speciaux.net/note-de-musique/
+    progression.innerHTML += `<div class="delimiteurRegion" style="left: ${largeur}px;">♩=${markers[i].text}</div>`;
   }
 }
 
@@ -62,8 +55,11 @@ async function init(index) {
   .then( (response) => response.text() );
   processCSV(markersRaw);
 
-  let json = await fetch("rustique.json")
-  .then(function(response) { return response.json() })
+  let json = await fetch(`${morceau}.json`).then(
+    function (response) {
+      return response.json();
+    }
+  );
   addPages(json);
 
   titre.innerHTML = playlist[index].description;
@@ -189,7 +185,7 @@ balance.addEventListener("input", function () {
   }
 });
 
-// Changement de titre
+// Changement de passage
 document.querySelector("#prev").addEventListener("click", function () {
   index--;
   if (index < 0) index = playlist.length - 1; 
