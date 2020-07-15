@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+:root {
+  --margin-unit: 20px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'IM Fell English', serif;
+}
+.conteneur {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: calc(100vh - 2*var(--margin-unit));
+  width: calc(100vw - 2*var(--margin-unit));
+  margin: var(--margin-unit);
+  z-index: 999;
+  /* border : 1px solid red; */
+}
+.partoche {
+  width: 100%;
+  flex-grow: 999;
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+.pages {
+  transform: translateY(0) ;
+  transition-property: transform;
+  transition-duration: .5s;
+}
+.pages img {
+  border-bottom: 1px solid #888;
+}
+.lecteur {
+  height: 100px; /* === Hardcoded height === */
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: var(--margin-unit);
+  overflow: hidden;
+}
+.cadre {
+  border: 1px solid black;
+  box-shadow: 0 0 0 2px white,
+              0 0 0 5px black;
+}
+.btn-group {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.boutons {
+  display: flex;
+  flex-shrink: 1;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  margin: calc(var(--margin-unit) / 2);
+}
+.boutons button {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  margin-right: 3px;
+}
+.paused {
+  background-image: url(img/playW.svg);
+}
+.playing {
+  background-image: url(img/pauseW.svg);
+}
+.disabled {
+  opacity: 33%;
+}
+#prevBtn {
+  background-image: url(img/prevW.svg);
+}
+#nextBtn {
+  background-image: url(img/nextW.svg);
+}
+#stopBtn {
+  background-image: url(img/stopW.svg);
+  margin-right: 0;
+}
+#titre {
+  flex-grow: 999;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
+  user-select: none;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin: 0 6px 0 3px;
+  padding-left: 0.5em;
+  border-bottom: 1px solid black;
+  /* background-image: linear-gradient(to right, rgb(213, 188, 238) 50%, #fff 0); */
+  /* Juste besoin de faire varier ce poucentage pour avoir une barre de progression */
+}
+/* .temps {
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  align-items: center;
+  margin: calc(var(--margin-unit) / 2);
+} */
+/* .progression {
+  position: absolute;
+  background-color: black;
+  height: 40px;
+  width: 40px;
+  top: 0;
+  left: 0;
+  opacity: .33;
+} */
+.mixer {
+  display: flex;
+  justify-content: space-around;
+  height: 30px;
+  align-items: center;
+  margin: calc(var(--margin-unit) / 2);
+  font-size: 1.12rem;
+}
+.mixer input {
+  margin-right: .3rem;
+}
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+.mixer label {
+  border: 1px solid black;
+  padding: .1em .5em;
+}
+.checked {
+  color: white;
+  background-color: black;
+}
+#currentTime {
+  width: 6em;
+}
+@media screen and (max-width: 800px) {
+  .boutons button {
+    flex-shrink: 0;
+    height: 30px;
+    width: 30px;
+    margin: 1px;
+  }
+  .titre {
+  flex-grow: 999;
+  flex-shrink: 999;
+  font-size: 1rem;
+  height: 30px;
+  }
+  .mixer {
+    height: 30px;
+    font-size: .9rem;
+  }
+  .lecteur {
+    height: 90px; /* === Hardcoded height === */
+    width: 100%;
+    margin-top: var(--margin-unit);
+  }
+}
