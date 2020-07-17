@@ -15,8 +15,6 @@
         voices: ["acc", "sop", "alt", "ten", "bas"],
         format: "opus"
       },
-    ];
-    const playlist2 = [
       {
         title: "Tosca chœur nº3",
         fileName: "tosca3",
@@ -31,15 +29,6 @@
         }
       }
     ]
-    const voices = {
-      acc: "",
-      sop1: "Sopranos 1",
-      sop2: "Sopranos 2",
-      alt: "Altos",
-      ten1: "Ténors 1",
-      ten2: "Ténors 2",
-      bas: "Basses"
-    }
   </script>
 </head>
 <body>
@@ -64,10 +53,10 @@
       </div>
 
       <div class="mixer">
-        <label><input type="checkbox" value="1">sopranos</label>
-        <label><input type="checkbox" value="2">altos</label>
-        <label><input type="checkbox" value="3">ténors</label>
-        <label><input type="checkbox" value="4">basses</label>
+        <label data-voice="sop"><input type="checkbox" value="1">sopranos</label>
+        <label data-voice="alt"><input type="checkbox" value="2">altos</label>
+        <label data-voice="ten"><input type="checkbox" value="3">ténors</label>
+        <label data-voice="bas"><input type="checkbox" value="4">basses</label>
         <div id="currentTime"></div>
         <!-- <label for="vol"><input type="range" name="vol" id="">Volume</label> -->
       </div>

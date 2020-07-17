@@ -8,12 +8,15 @@ window.onload = () => {
 let regions = [];
 let markers = [];
 let pageMarkers = [];
+let stabilo = {};
+
 function convertToSeconds(ms) {
   let temp = ms.split(":");
   let minutes = Number(temp[0]);
   let seconds = Number(temp[1]);
   return minutes * 60 + seconds;
 }
+
 function processCSV(csv) {
   let lines = csv.split(/\r\n|\n/);
   for (let i = 0; i < lines.length; i++) {
@@ -44,7 +47,7 @@ function processCSV(csv) {
   // }
 }
 
-// Lecture des fichiers csv (regions et markers), json (décalages de page)
+// Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
 async function initData(index) {
   regions = [];
   markers = [];
@@ -53,50 +56,56 @@ async function initData(index) {
   .then( (response) => response.text() );
   processCSV(markersRaw);
 
-  let json = await fetch(`${playlist[index].fileName}.json`).then(function (
-    response
-  ) {
+  let json = await fetch(`${playlist[index].fileName}.json`)
+  .then(function (response) {
     return response.json();
   });
   addPages(json);
+  
+  let stabiloJson = await fetch(`${playlist[index].fileName}_stabilo.json`)
+  .then(function (response) {
+    return response.json();
+  });
+  stabilo = stabiloJson;
 }
 
 // Ajout des images
 const pages = document.querySelector('.pages');
 const partoche = document.querySelector('.partoche');
-let partocheWidth = window.getComputedStyle(partoche).width;
 let pagesHeight, previousPagesHeight, pagesLoaded;
 function addPages(json) {
-    pages.innerHTML = '';
-    console.log('page vidée');
-    pagesHeight = [];
-    previousPagesHeight = [0];
-    pagesLoaded = 0;
-    pageOffsets = [];
-    for(let i=0; i<json.length; i++) {
-        pageOffsets.push(json[i]);
-    }
-    for (let i=1; i<=pageOffsets.length; i++) {
-      let newImg = document.createElement('img');
-      newImg.onload = function() {
-          pagesLoaded += 1;
-          if (pagesLoaded == pageOffsets.length) {
-              pagesHeight = Array.from(document.querySelectorAll('img')).map(x => x.height);
-              for (let i=1; i<pagesHeight.length; i++) {
-                  previousPagesHeight.push(previousPagesHeight[i-1] + pagesHeight[i]);
-              }
+  let partocheWidth = window.getComputedStyle(partoche).width;
+  pages.innerHTML = '';
+  pagesHeight = [];
+  previousPagesHeight = [0];
+  pagesLoaded = 0;
+  pageOffsets = [];
+  for(let i=0; i<json.length; i++) {
+      pageOffsets.push(json[i]);
+  }
+  for (let i=1; i<=pageOffsets.length; i++) {
+    let newImg = document.createElement('img');
+    
+    newImg.onload = function() {
+      pagesLoaded += 1;
+      if (pagesLoaded == pageOffsets.length) {
+        pagesHeight = Array.from(document.querySelectorAll('img')).map(x => x.height);
+          for (let i=1; i<pagesHeight.length; i++) {
+              previousPagesHeight.push(previousPagesHeight[i-1] + pagesHeight[i]);
           }
       }
-      newImg.src = `page${[i]}.png`;
-      newImg.style.width = partocheWidth;
-      pages.appendChild(newImg);
     }
-    console.log("previousPagesHeight", previousPagesHeight);
-    // progression.innerHTML = "";
+    newImg.src = `${playlist[index].fileName}_page${[i]}.png`;
+    newImg.style.width = partocheWidth;
+    newImg.setAttribute("id", `page${i}`);
+    pages.appendChild(newImg);
+  }
 }
-// window.onresize = () => {
-//   initData(index);
-// }
+
+window.addEventListener('resize', () => {
+  // pages.innerHTML = "";
+  initData(index)
+})
 
 // Lecteur Audio
 const playBtn = document.querySelector("#playBtn");
@@ -146,6 +155,7 @@ function initAudio(index) {
   }
 }
 
+// Fonctions du lecteur
 playBtn.addEventListener("click", () => togglePlayPause());
 document.addEventListener("keydown", (event) => {
   if (event.code == "Space") {
@@ -161,28 +171,6 @@ document.addEventListener("keydown", (event) => {
     forward();
   }
 });
-
-const allCheckboxes = document.querySelectorAll(
-  '.mixer input[type="checkbox"]'
-);
-for (let checkbox of allCheckboxes) {
-  checkbox.addEventListener("change", function() {
-    checkbox.parentNode.classList.toggle("checked")
-    if (checkbox.checked) tracks[checkbox.value].mute(false)
-    else tracks[checkbox.value].mute(true)
-  })
-}
-
-
-// const metronomeCheckbox = document.querySelector("#metronome");
-// metronomeCheckbox.addEventListener("click", function () {
-//   if (metronomeCheckbox.checked) {
-//     tracks[2].mute(false);
-//   } else {
-//     tracks[2].mute(true);
-//   }
-// });
-
 
 function play() {
   tracks.forEach((track) => track.play());
@@ -236,6 +224,7 @@ function formatTime(rawSec) {
   return min + ":" + sec;
 }
 
+// Animation de la partition et du lecteur
 function animate() {
   let curr = tracks[0].seek(this);
   let dur = tracks[0].duration();
@@ -244,7 +233,7 @@ function animate() {
   if (tracks[0].state() === "loaded")
     currentTime.innerHTML = formatTime(curr) + " / " + formatTime(dur);
   titre.style =
-    "background-image: linear-gradient(to right, BlanchedAlmond " +
+    "background-image: linear-gradient(to right, gainsboro " +
     (curr / dur) * 100 +
     "%, white 0);";
 
@@ -267,19 +256,41 @@ function animate() {
   animID = requestAnimationFrame(animate);
 }
 
+// Clic dans la barre de titre
 titre.addEventListener("click", (event) => {
   let width = parseFloat(window.getComputedStyle(titre).width);
   let time = (event.offsetX / width) * tracks[0].duration();
   tracks.forEach((track) => track.seek(time));
   if (tracks[0].playing() === false) play();
 });
-// const balance = document.querySelector("#balance");
-// balance.addEventListener("input", () => {
-//   if      (balance.value == -3) {tracks[0].volume(0);  tracks[1].volume(1)}
-//   else if (balance.value == -2) {tracks[0].volume(.1); tracks[1].volume(1)}
-//   else if (balance.value == -1) {tracks[0].volume(.3); tracks[1].volume(1)}
-//   else if (balance.value == 0)  {tracks[0].volume(1);  tracks[1].volume(1)}
-//   else if (balance.value == 1)  {tracks[0].volume(1);  tracks[1].volume(.3)}
-//   else if (balance.value == 2)  {tracks[0].volume(1);  tracks[1].volume(.1)}
-//   else if (balance.value == 3)  {tracks[0].volume(1);  tracks[1].volume(0)}
-// });
+
+// Unmute des pistes voix et dessin des stabilo
+const allCheckboxes = document.querySelectorAll(
+  '.mixer input[type="checkbox"]'
+);
+for (let checkbox of allCheckboxes) {
+  checkbox.addEventListener("change", function (e) {
+    let voix = e.target.parentNode.attributes["data-voice"].value;
+    checkbox.parentNode.classList.toggle("checked");
+    
+    if (checkbox.checked) {
+      tracks[checkbox.value].mute(false);
+
+      for(let i in stabilo[voix]) {
+        for (let j in stabilo[voix][i]) {
+          let newStabiloDiv = document.createElement("div");
+          let newDivHeight =
+            previousPagesHeight[i] + (pagesHeight[i] * stabilo[voix][i][j]) / 100;
+          newStabiloDiv.classList.add("stabilo", `${voix}`);
+          newStabiloDiv.style = `height: ${newDivHeight}px;`;
+          pages.prepend(newStabiloDiv)
+        }
+      }
+    }
+    else {
+      tracks[checkbox.value].mute(true);
+      document.querySelectorAll(`.stabilo.${voix}`).forEach(e => e.remove());
+    }
+
+  });
+}
