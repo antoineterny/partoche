@@ -43,9 +43,13 @@
 }
 .stabilo {
   position: absolute;
+  display: block;
   background-color: transp;
   opacity: 33%;
   width: 100%;
+}
+.invisible {
+  display: none;
 }
 .sop {
   border-bottom: 10px solid var(--sop-color);
@@ -157,10 +161,10 @@
 .mixer input {
   margin-right: .3rem;
 }
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   position: absolute;
   opacity: 0;
-}
+} */
 .mixer label {
   border: 1px solid black;
   padding: 3px;
@@ -168,7 +172,6 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 75%;
 }
 /* .checked {
   color: white;

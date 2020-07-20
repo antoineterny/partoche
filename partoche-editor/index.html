@@ -9,14 +9,18 @@
   <body>
     <div id="guide1"></div>
     <div id="editor">
-      <img id='editorImage' src='page1.png'>
+      <div id="prev"><<</div>
+        <div id='editorImage'>
+
+        </div>
+      <div id="next">>></div>
     </div>
     <div id="output">
-      <p>Commence par charger une image</p>
+      <p>Commence par charger les pages (.png)</p>
       <button id="copyBtn">Copier</button>
     </div>
     <div id="input">
-      <input type="file">
+      <input type="file" accept=".png" multiple>
       <button id="resetBtn">Reset</button>
     </div>
     <script src="editor.js"></script>

@@ -37,14 +37,8 @@ function processCSV(csv) {
       markers.push(temp);
     }
   }
-  console.log("regions : ",regions);
-  console.log("markers : ",markers);
-  // progression.innerHTML = "";
-  // for (let i=0; i<markers.length; i++) {
-  //   let largeur = (markers[i].time / regions[regions.length -1].end * 958);
-  //   // https://caracteres-speciaux.net/note-de-musique/
-  //   progression.innerHTML += `<div class="delimiteurRegion" style="left: ${largeur}px;">♩=${markers[i].text}</div>`;
-  // }
+  // console.log("regions : ",regions);
+  // console.log("markers : ",markers);
 }
 
 // Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
@@ -67,6 +61,8 @@ async function initData(index) {
     return response.json();
   });
   stabilo = stabiloJson;
+
+  createVoiceButtons();
 }
 
 // Ajout des images
@@ -80,12 +76,11 @@ function addPages(json) {
   previousPagesHeight = [0];
   pagesLoaded = 0;
   pageOffsets = [];
-  for(let i=0; i<json.length; i++) {
+  for (let i=0; i<json.length; i++) {
       pageOffsets.push(json[i]);
   }
   for (let i=1; i<=pageOffsets.length; i++) {
     let newImg = document.createElement('img');
-    
     newImg.onload = function() {
       pagesLoaded += 1;
       if (pagesLoaded == pageOffsets.length) {
@@ -100,10 +95,31 @@ function addPages(json) {
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
   }
+  let readyForStabilo = setInterval(() => {
+    if (pagesHeight.length > 0 && Object.keys(stabilo).length > 0) {
+      clearInterval(readyForStabilo);
+      console.log(pagesHeight);
+      console.log(stabilo);
+      Object.keys(stabilo).forEach(voix =>{
+        for (let i in stabilo[voix]) {
+          for (let j in stabilo[voix][i]) {
+            let newStabiloDiv = document.createElement("div");
+            let newDivHeight =
+              previousPagesHeight[i] +
+              (pagesHeight[i] * stabilo[voix][i][j]) / 100;
+            newStabiloDiv.classList.add("stabilo", "invisible", `${voix}`);
+            newStabiloDiv.setAttribute("data-voice", voix)
+            newStabiloDiv.style = `height: ${newDivHeight}px;`;
+            pages.prepend(newStabiloDiv);
+          }
+        }
+      })
+    }
+  }, 100);
+  
 }
 
 window.addEventListener('resize', () => {
-  // pages.innerHTML = "";
   initData(index)
 })
 
@@ -127,13 +143,14 @@ function initAudio(index) {
   let voices = playlist[index].voices;
   let format = playlist[index].format;
   let loadedTracks = 0;
-  for (let i in voices) {
+  for (let i=0; i<voices.length; i++) {
     tracks[i] = new Howl({ src: [`${fileName}_${voices[i]}.${format}`] });
+    tracks[i]["data-voice"] = voices[i];
   }
 
-  for (let i in tracks) {
+  for (let i = 0; i < tracks.length; i++) {
     tracks[i].on("load", function () {
-      if (i != 0) tracks[i].mute(true)
+      if (i != 0) tracks[i].mute(true);
       console.log(tracks[i]._src, "is loaded");
       loadedTracks += 1;
       checkLoaded();
@@ -264,33 +281,56 @@ titre.addEventListener("click", (event) => {
   if (tracks[0].playing() === false) play();
 });
 
-// Unmute des pistes voix et dessin des stabilo
-const allCheckboxes = document.querySelectorAll(
-  '.mixer input[type="checkbox"]'
-);
-for (let checkbox of allCheckboxes) {
-  checkbox.addEventListener("change", function (e) {
-    let voix = e.target.parentNode.attributes["data-voice"].value;
-    checkbox.parentNode.classList.toggle("checked");
+// Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
+function createVoiceButtons() {
+  const mixer = document.querySelector(".mixer");
+  mixer.innerHTML = '<div id="currentTime"></div>';
+  let voices = playlist[index].voices;
+  let pupitre;
+  for(i=0; i<voices.length; i++){
+    if (voices[i].match(/sop/g)) {pupitre = "Sopranos"}
+    else if (voices[i].match(/alt/g)) {pupitre = "Altos"}
+    else if (voices[i].match(/ten/g)) {pupitre = "Ténors"}
+    else if (voices[i].match(/bas/g)) {pupitre = "Basses"};
+    let numero = voices[i].match(/[1-9]/g);
+    if(numero) pupitre += ` ${numero[0]}`;
     
-    if (checkbox.checked) {
-      tracks[checkbox.value].mute(false);
-
-      for(let i in stabilo[voix]) {
-        for (let j in stabilo[voix][i]) {
-          let newStabiloDiv = document.createElement("div");
-          let newDivHeight =
-            previousPagesHeight[i] + (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-          newStabiloDiv.classList.add("stabilo", `${voix}`);
-          newStabiloDiv.style = `height: ${newDivHeight}px;`;
-          pages.prepend(newStabiloDiv)
+    if(pupitre) {
+      // mixer.innerHTML += 
+      // `<label data-voice="${voices[i]}"><input type="checkbox" value="${i}">${pupitre}</label>`;
+      let newVoiceBtn = document.createElement("label");
+      newVoiceBtn.setAttribute("data-voice", voices[i]);
+      newVoiceBtn.innerText = pupitre;
+      newVoiceBtn.addEventListener("click", function(e) {
+        this.classList.toggle("checked");
+        let allStabilo = document.querySelectorAll(".stabilo");
+        if(this.classList.value === "checked") {
+          tracks.forEach(tr => {
+            if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
+              tr.mute(false);
+            } 
+          })
+          allStabilo.forEach(st => {
+            let stabiloVoice = st.getAttribute("data-voice");
+            if (stabiloVoice === e.target.attributes["data-voice"].value) {
+              st.classList.remove("invisible");
+            } 
+          });
+        } else {
+          tracks.forEach((tr) => {
+            if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
+              tr.mute(true);
+            }
+            allStabilo.forEach(st => {
+              let stabiloVoice = st.getAttribute("data-voice");
+              if (stabiloVoice === e.target.attributes["data-voice"].value) {
+                st.classList.add("invisible");
+              } 
+            });
+          });
         }
-      }
+      })
+      mixer.append(newVoiceBtn);
     }
-    else {
-      tracks[checkbox.value].mute(true);
-      document.querySelectorAll(`.stabilo.${voix}`).forEach(e => e.remove());
-    }
-
-  });
+  }
 }
