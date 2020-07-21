@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>partoche-choral.js</title>
+  <link rel="stylesheet" type="text/css" href="partoche-choral.css">
+  <script src="howler.core.min.js"></script>
+  <script src="partoche-choral.js" defer></script>
+  <script>
+    const playlist = [
+      {
+        title: "Penny Lane (version Swingle Singers)",
+        fileName: "pennylane",
+        voices: ["acc", "sop1", "sop2", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
+        format: "ogg"
+      },
+      {
+        title: "Tosca chœur nº3",
+        fileName: "tosca3",
+        voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "27. Thanks to these lonesome vales",
+        fileName: "dido27",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "opus"
+      },
+    ]
+  </script>
+</head>
+<body>
+  <div class="conteneur">
+
+    <div class="partoche cadre">
+      <div class="pages">
+      </div>
+    </div>
+    
+    <div class="lecteur cadre">
+      <div class="boutons">
+        <div class="btn-group">
+          <button id="playBtn" class=" paused disabled" disabled autocomplete="off"></button>
+          <button id="stopBtn" onclick="stop()"></button>
+        </div>
+        <div id="titre"></div>
+        <div class="btn-group">
+          <button id="prevBtn" onclick="prev()"></button>
+          <button id="nextBtn" onclick="next()"></button>
+        </div>
+      </div>
+
+      <div class="mixer">
+        <!-- <label data-voice="sop"><input type="checkbox" value="1">sopranos</label>
+        <label data-voice="alt"><input type="checkbox" value="2">altos</label>
+        <label data-voice="ten"><input type="checkbox" value="3">ténors</label>
+        <label data-voice="bas"><input type="checkbox" value="4">basses</label> -->
+        <div id="currentTime"></div>
+        <!-- <label for="vol"><input type="range" name="vol" id="">Volume</label> -->
+      </div>
+    </div>
+
+  </div>
+  
+
+</body>
+</html>

@@ -177,28 +177,28 @@
   color: white;
   background-color: black;
 } */
-label[data-voice~="sop"].checked {
+label[data-voice*="sop"].checked {
   background-color: var(--sop-color);
 }
-label[data-voice~="alt"].checked {
+label[data-voice*="alt"].checked {
   background-color: var(--alt-color);
 }
-label[data-voice~="ten"].checked {
+label[data-voice*="ten"].checked {
   background-color: var(--ten-color);
 }
-label[data-voice~="bas"].checked {
+label[data-voice*="bas"].checked {
   background-color: var(--bas-color);
 }
-label[data-voice~="sop"]:hover {
+label[data-voice*="sop"]:hover {
   border: 1px solid var(--sop-color);
 }
-label[data-voice~="alt"]:hover {
+label[data-voice*="alt"]:hover {
   border: 1px solid var(--alt-color);
 }
-label[data-voice~="ten"]:hover {
+label[data-voice*="ten"]:hover {
   border: 1px solid var(--ten-color);
 }
-label[data-voice~="bas"]:hover {
+label[data-voice*="bas"]:hover {
   border: 1px solid var(--bas-color);
 }
 #currentTime {

@@ -7,7 +7,6 @@ window.onload = () => {
 // Traitement du CSV contenant régions et marqueurs
 let regions = [];
 let markers = [];
-let pageMarkers = [];
 let stabilo = {};
 
 function convertToSeconds(ms) {
@@ -45,19 +44,21 @@ function processCSV(csv) {
 async function initData(index) {
   regions = [];
   markers = [];
-  pageMarkers = [];
-  let markersRaw = await fetch(`${playlist[index].fileName}_regions_markers.csv`)
-  .then( (response) => response.text() );
+  let markersRaw = await fetch(
+    `${playlist[index].fileName}/${playlist[index].fileName}_regions_markers.csv`
+  ).then((response) => response.text());
   processCSV(markersRaw);
 
-  let json = await fetch(`${playlist[index].fileName}.json`)
-  .then(function (response) {
+  let json = await fetch(
+    `${playlist[index].fileName}/${playlist[index].fileName}.json`
+  ).then(function (response) {
     return response.json();
   });
   addPages(json);
   
-  let stabiloJson = await fetch(`${playlist[index].fileName}_stabilo.json`)
-  .then(function (response) {
+  let stabiloJson = await fetch(
+    `${playlist[index].fileName}/${playlist[index].fileName}_stabilo.json`
+  ).then(function (response) {
     return response.json();
   });
   stabilo = stabiloJson;
@@ -72,6 +73,7 @@ let pagesHeight, previousPagesHeight, pagesLoaded;
 function addPages(json) {
   let partocheWidth = window.getComputedStyle(partoche).width;
   pages.innerHTML = '';
+  pages.style = "transition-duration: .5s;";
   pagesHeight = [];
   previousPagesHeight = [0];
   pagesLoaded = 0;
@@ -90,7 +92,9 @@ function addPages(json) {
           }
       }
     }
-    newImg.src = `${playlist[index].fileName}_page${[i]}.png`;
+    newImg.src = `${playlist[index].fileName}/${
+      playlist[index].fileName
+    }_page${[i]}.png`;
     newImg.style.width = partocheWidth;
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
@@ -98,8 +102,6 @@ function addPages(json) {
   let readyForStabilo = setInterval(() => {
     if (pagesHeight.length > 0 && Object.keys(stabilo).length > 0) {
       clearInterval(readyForStabilo);
-      console.log(pagesHeight);
-      console.log(stabilo);
       Object.keys(stabilo).forEach(voix =>{
         for (let i in stabilo[voix]) {
           for (let j in stabilo[voix][i]) {
@@ -107,7 +109,7 @@ function addPages(json) {
             let newDivHeight =
               previousPagesHeight[i] +
               (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-            newStabiloDiv.classList.add("stabilo", "invisible", `${voix}`);
+            newStabiloDiv.classList.add("stabilo", "invisible", `${voix.slice(0, 3)}`);
             newStabiloDiv.setAttribute("data-voice", voix)
             newStabiloDiv.style = `height: ${newDivHeight}px;`;
             pages.prepend(newStabiloDiv);
@@ -135,23 +137,27 @@ function initAudio(index) {
   for (let i in tracks) {
     if (tracks[i]) {
       tracks[i].unload();
-      console.log(tracks[i]._src, "is unloaded");
+      // console.log(tracks[i]._src, "is unloaded");
     }
   }
+  tracks = [];
+
 
   let fileName = playlist[index].fileName;
   let voices = playlist[index].voices;
   let format = playlist[index].format;
   let loadedTracks = 0;
   for (let i=0; i<voices.length; i++) {
-    tracks[i] = new Howl({ src: [`${fileName}_${voices[i]}.${format}`] });
+    tracks[i] = new Howl({
+      src: [`${playlist[index].fileName}/${fileName}_${voices[i]}.${format}`],
+    });
     tracks[i]["data-voice"] = voices[i];
   }
 
   for (let i = 0; i < tracks.length; i++) {
     tracks[i].on("load", function () {
       if (i != 0) tracks[i].mute(true);
-      console.log(tracks[i]._src, "is loaded");
+      // console.log(tracks[i]._src, "is loaded");
       loadedTracks += 1;
       checkLoaded();
     });
@@ -216,13 +222,17 @@ function prev() {
   stop();
   index -= 1;
   if (index < 0) index = playlist.length - 1;
+  pages.style = "transition-duration: 0s;";
   initAudio(index);
+  initData(index);
 }
 function next() {
   stop();
   index += 1;
   if (index > playlist.length - 1) index = 0;
+  pages.style = "transition-duration: 0s;";
   initAudio(index);
+  initData(index);
 }
 function forward() {
   let curr = tracks[0].seek(this);
