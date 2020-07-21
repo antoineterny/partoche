@@ -26,18 +26,37 @@
   z-index: 999;
   /* border : 1px solid red; */
 }
-.partoche {
+#partoche {
   position: relative;
   width: 100%;
   flex-grow: 999;
   overflow: hidden;
 }
-.pages {
+/* #list {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: tan;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#list p {
+  font-size: 2vh;
+  line-height: 2em ;
+  width: 100%;
+  text-align: center;
+}
+#list p:hover {
+  background-color: white;
+} */
+#pages {
   transform: translateY(0) ;
   transition-property: transform;
   transition-duration: .5s;
 }
-.pages img {
+#pages img {
   display: block;
   box-shadow: inset 0 0 0 1px grey;
 }
@@ -67,7 +86,7 @@
   border-bottom: 10px solid var(--bas-color);
   box-shadow: 0 10px var(--bas-color);
 }
-.lecteur {
+#lecteur {
   height: 100px; /* === Hardcoded height === */
   width: 100%;
   flex-shrink: 0;
@@ -83,7 +102,7 @@
   display: flex;
   flex-wrap: nowrap;
 }
-.boutons {
+#boutons {
   display: flex;
   flex-shrink: 1;
   justify-content: space-between;
@@ -91,7 +110,7 @@
   background-color: white;
   margin: calc(var(--margin-unit) / 2);
 }
-.boutons button {
+#boutons button {
   height: 40px;
   width: 40px;
   border: none;
@@ -150,22 +169,23 @@
   left: 0;
   opacity: .33;
 } */
-.mixer {
+#mixer {
   display: flex;
   justify-content: space-around;
   height: 30px;
   align-items: center;
   margin: calc(var(--margin-unit) / 2);
   font-size: 1.12rem;
+  white-space: nowrap;
 }
-.mixer input {
+#mixer input {
   margin-right: .3rem;
 }
 /* input[type="checkbox"] {
   position: absolute;
   opacity: 0;
 } */
-.mixer label {
+#mixer label {
   border: 1px solid black;
   padding: 3px;
   width: 100px;
@@ -205,23 +225,23 @@ label[data-voice*="bas"]:hover {
   width: 6em;
 }
 @media screen and (max-width: 800px) {
-  .boutons button {
+  #boutons button {
     flex-shrink: 0;
     height: 30px;
     width: 30px;
     margin: 1px;
   }
-  .titre {
+  #titre {
   flex-grow: 999;
   flex-shrink: 999;
   font-size: 1rem;
   height: 30px;
   }
-  .mixer {
+  #mixer {
     height: 30px;
     font-size: .9rem;
   }
-  .lecteur {
+  #lecteur {
     height: 90px; /* === Hardcoded height === */
     width: 100%;
     margin-top: var(--margin-unit);

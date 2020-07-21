@@ -67,11 +67,11 @@ async function initData(index) {
 }
 
 // Ajout des images
-const pages = document.querySelector('.pages');
-const partoche = document.querySelector('.partoche');
+const pages = document.querySelector('#pages');
+const partoche = document.querySelector('#partoche');
 let pagesHeight, previousPagesHeight, pagesLoaded;
 function addPages(json) {
-  let partocheWidth = window.getComputedStyle(partoche).width;
+  let partocheWidth = getComputedStyle(partoche).width;
   pages.innerHTML = '';
   pages.style = "transition-duration: .5s;";
   pagesHeight = [];
@@ -293,7 +293,7 @@ titre.addEventListener("click", (event) => {
 
 // Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
 function createVoiceButtons() {
-  const mixer = document.querySelector(".mixer");
+  const mixer = document.querySelector("#mixer");
   mixer.innerHTML = '<div id="currentTime"></div>';
   let voices = playlist[index].voices;
   let pupitre;
