@@ -6,6 +6,7 @@ const out = document.querySelector("#output p");
 const input = document.querySelector("#input input");
 const copyBtn = document.getElementById("copyBtn");
 const resetBtn = document.getElementById("resetBtn");
+const resetAll = document.getElementById("resetAll");
 const nextBtn = document.querySelector("#next");
 const prevBtn = document.querySelector("#prev");
 let allImages = document.querySelectorAll(".image")
@@ -14,7 +15,9 @@ let guides = [];
 let pages = [];
 let index = 0;
 
-input.addEventListener('change', function() {
+input.addEventListener('change', () => init());
+
+function init() {
   guides = [];
   pages = [];
   index = 0;
@@ -27,29 +30,45 @@ input.addEventListener('change', function() {
   editorImage.append(pages[index]);
   out.innerText =
     "Et maintenant place tes repères ! ";
-});
+}
 
-nextBtn.addEventListener("click", function() {
+nextBtn.addEventListener("click", () => nextPage() );
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Space") {
+    nextPage();
+  }
+});
+function nextPage() {
   index ++;
   index > input.files.length-1 ? index = 0 : index;
   document.querySelectorAll("#editorImage img").forEach(el => el.remove());
   resetGuides();
   editorImage.append(pages[index]);
-  if (guides[index].length > 0) alert("attention ce n'est pas vide !")
-})
+  drawExistingGuides();
+}
 
 prevBtn.addEventListener("click", function() {
   index --;
   index < 0 ? (index = input.files.length - 1) : index;
-  document.querySelectorAll("#editorImage img").forEach(el => el.remove());
   resetGuides();
+  document.querySelectorAll("#editorImage img").forEach(el => el.remove());
   editorImage.append(pages[index]);
-  if (guides[index].length > 0) alert("attention ce n'est pas vide !")
+  drawExistingGuides();
 })
 
 pg.addEventListener('mousemove', function(event) {
   guide1.style=`top:${event.pageY}px;`;
 });
+window.addEventListener("mousemove", function (event) {
+  let pgRect = pg.getBoundingClientRect();
+  if (event.clientX < pgRect.left || event.clientX > pgRect.right || event.clientY < pgRect.top || event.clientY > pgRect.bottom) {
+    console.log("x", event.clientX, pgRect.left, pgRect.right);
+    guide1.classList.add("invisible");
+  } else {
+    guide1.classList.remove("invisible");
+  };
+});
+
 guide1.addEventListener('click', function(event) {
   let newGuide = document.createElement("div");
   let pgHeight = parseFloat(getComputedStyle(pg).getPropertyValue("height"));
@@ -69,6 +88,18 @@ function updateOutDisplay() {
   out.innerHTML += `&nbsp;&nbsp;[${guides[guides.length - 1]}]<br>]`;
 }
 
+function drawExistingGuides() {
+  if (guides[index].length > 0) {
+    for (let g of guides[index]) {
+      let newGuide = document.createElement("div");
+      let pgHeight = parseFloat(getComputedStyle(pg).getPropertyValue("height"));
+      newGuide.className = "guide";
+      newGuide.setAttribute("style", `top:${g * pgHeight / 100}px`);
+      editor.appendChild(newGuide);
+    }
+  }
+}
+
 function resetGuides() {
   let divGuides = document.querySelectorAll('.guide');
   divGuides.forEach((el) => el.remove());
@@ -76,10 +107,19 @@ function resetGuides() {
 }
 
 resetBtn.addEventListener('click', () => {
-  resetGuides();
   guides[index] = [];
+  resetGuides();
   updateOutDisplay();
 });
+
+resetAll.addEventListener("click", () => {
+  guides = [];
+  index = 0;
+  document.querySelectorAll("#editorImage img").forEach((el) => el.remove());
+  document.querySelectorAll(".guide").forEach((el) => el.remove());
+  init();
+  updateOutDisplay();
+})
 
 function copyText(element) {
   selection = window.getSelection();

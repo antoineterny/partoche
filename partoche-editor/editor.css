@@ -55,7 +55,7 @@ body {
 }
 #output, #input {
   margin: .5em auto .5em;
-  padding : .5em;
+  padding : .5em 1em .5em .5em;
   width: 750px;
   background-color: white;
   display: flex;
@@ -65,8 +65,14 @@ body {
 #output p {
   font-family: monospace;
   font-size: 1.25em;
-
+  margin-left: 1em;
 }
 #input {
   margin: 0 auto;
+}
+input, button {
+  padding: .5em 1em;
+}
+.invisible {
+  opacity: 0%;
 }
