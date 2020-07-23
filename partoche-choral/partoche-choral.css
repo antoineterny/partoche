@@ -224,16 +224,16 @@ label[data-voice*="bas"].checked {
   background-color: var(--bas-color);
 }
 label[data-voice*="sop"]:hover {
-  border: 1px solid var(--sop-color);
+  box-shadow: inset 0 0 0 3px var(--sop-color);
 }
 label[data-voice*="alt"]:hover {
-  border: 1px solid var(--alt-color);
+  box-shadow: inset 0 0 0 3px var(--alt-color);
 }
 label[data-voice*="ten"]:hover {
-  border: 1px solid var(--ten-color);
+  box-shadow: inset 0 0 0 3px var(--ten-color);
 }
 label[data-voice*="bas"]:hover {
-  border: 1px solid var(--bas-color);
+  box-shadow: inset 0 0 0 3px var(--bas-color);
 }
 #currentTime {
   width: 6em;

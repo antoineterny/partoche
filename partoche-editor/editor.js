@@ -21,6 +21,7 @@ function init() {
   guides = [];
   pages = [];
   index = 0;
+  document.querySelectorAll("#editorImage img").forEach((el) => el.remove());
   for (let i = 0; i < input.files.length; i++ ) {
       let image = document.createElement("img");
       image.src = URL.createObjectURL(input.files[i]);
@@ -39,6 +40,8 @@ document.addEventListener("keydown", (event) => {
   }
 });
 function nextPage() {
+  if (document.querySelector("#editorImage img").src.match(/editor-accueil/g))
+    return;
   index ++;
   index > input.files.length-1 ? index = 0 : index;
   document.querySelectorAll("#editorImage img").forEach(el => el.remove());
@@ -48,6 +51,8 @@ function nextPage() {
 }
 
 prevBtn.addEventListener("click", function() {
+  if (document.querySelector("#editorImage img").src.match(/editor-accueil/g))
+    return;
   index --;
   index < 0 ? (index = input.files.length - 1) : index;
   resetGuides();
@@ -62,7 +67,6 @@ pg.addEventListener('mousemove', function(event) {
 window.addEventListener("mousemove", function (event) {
   let pgRect = pg.getBoundingClientRect();
   if (event.clientX < pgRect.left || event.clientX > pgRect.right || event.clientY < pgRect.top || event.clientY > pgRect.bottom) {
-    console.log("x", event.clientX, pgRect.left, pgRect.right);
     guide1.classList.add("invisible");
   } else {
     guide1.classList.remove("invisible");
@@ -70,6 +74,8 @@ window.addEventListener("mousemove", function (event) {
 });
 
 guide1.addEventListener('click', function(event) {
+  if (document.querySelector("#editorImage img").src.match(/editor-accueil/g))
+    return;
   let newGuide = document.createElement("div");
   let pgHeight = parseFloat(getComputedStyle(pg).getPropertyValue("height"));
   newGuide.className = "guide";
@@ -81,6 +87,7 @@ guide1.addEventListener('click', function(event) {
 });
 
 function updateOutDisplay() {
+  if (guides.length === 0) return;
   out.innerHTML = "[<br>";
   for (i=0; i<guides.length-1; i++) {
     out.innerHTML += `&nbsp;&nbsp;[${guides[i]}],<br>`;
@@ -107,12 +114,16 @@ function resetGuides() {
 }
 
 resetBtn.addEventListener('click', () => {
+  if (document.querySelector("#editorImage img").src.match(/editor-accueil/g))
+    return;
   guides[index] = [];
   resetGuides();
   updateOutDisplay();
 });
 
 resetAll.addEventListener("click", () => {
+  if (document.querySelector("#editorImage img").src.match(/editor-accueil/g))
+    return;
   guides = [];
   index = 0;
   document.querySelectorAll("#editorImage img").forEach((el) => el.remove());

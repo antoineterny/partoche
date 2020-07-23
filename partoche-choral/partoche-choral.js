@@ -187,11 +187,21 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.code == "ArrowLeft") {
     event.preventDefault();
-    backward();
+    if (markers.length === 0) {
+      backward();
+    }
+    else {
+      previousMarker();
+    }
   }
   if (event.code == "ArrowRight") {
     event.preventDefault();
-    forward();
+    if (markers.length === 0) {
+      forward();
+    }
+    else {
+      nextMarker();
+    }
   }
 });
 
@@ -242,6 +252,45 @@ function backward() {
   let curr = tracks[0].seek(this);
   if (curr < 5) curr = 5;
   tracks.forEach((track) => track.seek(curr - 5));
+}
+function nextMarker() {
+  let curr = tracks[0].seek(this);
+  if (curr < markers[0].time) {
+    tracks.forEach((track) => track.seek(markers[0].time));
+  }
+  else if (curr > markers[markers.length-1].time) {
+    return
+  }
+  else {
+    for (i=0; i<markers.length-1; i++) {
+      if (curr > markers[i].time && curr < markers[i+1].time) {
+        tracks.forEach((track) => track.seek(markers[i+1].time));
+      }
+    }
+  }
+}
+function previousMarker() {
+  let curr = tracks[0].seek(this);
+  if (curr < markers[0].time + 1) {
+    tracks.forEach((track) => track.seek(0));
+  } 
+  else if ((curr > markers[markers.length - 1].time) && (curr < markers[markers.length - 1].time +1)) {
+    tracks.forEach((track) => track.seek(markers[markers.length - 2].time));
+  } 
+  else if (curr > markers[markers.length - 1].time +1) {
+    tracks.forEach((track) => track.seek(markers[markers.length - 1].time));
+  } 
+  else {
+    for (i = 0; i < markers.length -1; i++) {
+      if (curr > markers[i].time && curr < markers[i + 1].time) {
+        if (curr < markers[i].time + 1) {
+          tracks.forEach((track) => track.seek(markers[i - 1].time));
+        } else {
+          tracks.forEach((track) => track.seek(markers[i].time));
+        }
+      }
+    }
+  }
 }
 function formatTime(rawSec) {
   let min = Math.floor((rawSec % 3600) / 60);
