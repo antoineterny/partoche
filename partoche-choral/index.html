@@ -19,14 +19,15 @@
         title: "Penny Lane (version Swingle Singers)",
         fileName: "pennylane",
         voices: ["acc", "sop1", "sop2", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
-        format: "ogg"
+        format: "mp3"
       },
       { 
         title: "27. Thanks to these lonesome vales",
         fileName: "dido27",
         voices: ["acc", "sop", "alt", "ten", "bas"],
-        format: "opus"
+        format: "mp3"
       },
+
     ]
   </script>
 </head>
@@ -36,11 +37,8 @@
     <div id="partoche" class="cadre">
       <div id="pages">
       </div>
-      <!-- <div id="list">
-        <p>Penny Lane (version Swingle Singers)</p>
-        <p>Tosca chœur nº3</p>
-        <p>27. Thanks to these lonesome vales</p>
-      </div> -->
+      <div id="menu">
+      </div>
     </div>
     
     <div id="lecteur" class="cadre">
@@ -52,6 +50,7 @@
         <div id="titre"></div>
         <div class="btn-group">
           <button id="prevBtn" onclick="prev()"></button>
+          <button id="menuBtn" onclick="toggleMenu()"></button>
           <button id="nextBtn" onclick="next()"></button>
         </div>
       </div>

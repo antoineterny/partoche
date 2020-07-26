@@ -32,25 +32,29 @@
   flex-grow: 999;
   overflow: hidden;
 }
-/* #list {
+#menu {
   position: absolute;
   width: 100%;
   bottom: 0;
-  background-color: tan;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: white;
+  transition-property: transform, box-shadow;
+  transition-duration: .8s;
+  transform: translateY(100%);
+  overflow-y: auto;
 }
-#list p {
-  font-size: 2vh;
+#menu.visible {
+  box-shadow: 0 -1px 10px black;
+  transform: translateY(0);
+}
+#menu p {
+  font-size: 1.5rem;
   line-height: 2em ;
   width: 100%;
   text-align: center;
 }
-#list p:hover {
-  background-color: white;
-} */
+#menu p:hover {
+  background-color: #eee;
+}
 #pages {
   transform: translateY(0) ;
   transition-property: transform;
@@ -64,7 +68,7 @@
   position: absolute;
   display: block;
   background-color: transp;
-  opacity: 33%;
+  opacity: 0.33;
   width: 100%;
 }
 .invisible {
@@ -130,7 +134,7 @@
   background-image: url(svg/pauseB.svg);
 }
 .disabled {
-  opacity: 33%;
+  opacity: 0.33;
 }
 #prevBtn {
   background-image: url(svg/prevW.svg);
@@ -140,6 +144,10 @@
 }
 #stopBtn {
   background-image: url(svg/stopW.svg);
+  margin-right: 0;
+}
+#menuBtn {
+  background-image: url(svg/menuW.svg);
   margin-right: 0;
 }
 #prevBtn:hover {
@@ -185,7 +193,7 @@
 } */
 #mixer {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   height: 30px;
   align-items: center;
   margin: calc(var(--margin-unit) / 2);
@@ -202,10 +210,12 @@
 #mixer label {
   border: 1px solid black;
   padding: 3px;
-  width: 100px;
+  width: 6em;
+  margin: 0 2px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 /* .checked {
   color: white;
@@ -277,7 +287,7 @@ label[data-voice*="bas"]:hover {
   }
   #boutons {
     flex-direction: column;
-    /* flex-grow: 1; */
+    flex-grow: 1;
     margin-bottom: 0;
   }
   #boutons button {
@@ -288,7 +298,8 @@ label[data-voice*="bas"]:hover {
   }
   #titre {
     width: 83px;
-    padding-left: 0;
+    padding-left: 0.1em;
+    text-align: center;
     height: unset;
     white-space: unset;
     border-bottom: none;
@@ -300,5 +311,6 @@ label[data-voice*="bas"]:hover {
   }
   #mixer label {
     overflow: hidden;
+    margin: 2px 0;
   }
 }

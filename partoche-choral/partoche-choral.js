@@ -1,7 +1,32 @@
-let index = 0;
+let index;
 window.onload = () => {
-  initAudio(index);
-  initData(index);
+  // initAudio(index);
+  // initData(index);
+  function initMenu() {
+    const menu = document.querySelector("#menu");
+    menu.innerHTML = "";
+    for (let i=0; i<playlist.length; i++) {
+      let newP = document.createElement("p");
+      newP.innerText = playlist[i].title;
+      newP.addEventListener("click", () => {
+        index = i;
+        initAudio(i);
+        initData(i);
+        toggleMenu();
+      })
+      document.querySelector("#menu").append(newP)
+    }
+    let partocheHeight = parseInt(getComputedStyle(partoche).height);
+    menu.style = `max-height: ${partocheHeight}px`;
+    toggleMenu();
+  }
+  initMenu();
+}
+
+// Menu
+function toggleMenu() {
+  pause();
+  menu.classList.toggle("visible");
 }
 
 // Traitement du CSV contenant régions et marqueurs
