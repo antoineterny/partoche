@@ -67,7 +67,7 @@
 .stabilo {
   position: absolute;
   display: block;
-  background-color: transp;
+  background-color: transparent;
   opacity: 0.33;
   width: 100%;
 }
@@ -158,6 +158,9 @@
 }
 #stopBtn:hover {
   background-image: url(svg/stopB.svg);
+}
+#menuBtn:hover {
+  background-image: url(svg/menuB.svg);
 }
 #titre {
   flex-grow: 1;
@@ -270,6 +273,9 @@ label[data-voice*="bas"]:hover {
     width: 100%;
     margin-top: var(--margin-unit);
   }
+  #menu p {
+    font-size: 1rem;
+  }
 }
 @media screen and (min-aspect-ratio: 3/2) {
   .conteneur {
@@ -296,12 +302,18 @@ label[data-voice*="bas"]:hover {
     width: 40px;
     margin: 3px;
   }
+  #stopBtn, #prevBtn, #nextBtn {
+    display: none;
+  }
   #titre {
     width: 83px;
     padding-left: 0.1em;
-    text-align: center;
-    height: unset;
-    white-space: unset;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    text-align: start;
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-all;
     border-bottom: none;
   }
   #mixer {
@@ -312,5 +324,8 @@ label[data-voice*="bas"]:hover {
   #mixer label {
     overflow: hidden;
     margin: 2px 0;
+  }
+  #currentTime {
+    text-align: center;
   }
 }

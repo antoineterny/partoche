@@ -34,10 +34,11 @@ body {
 }
 #editorImage {
   width: 750px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 #editorImage img {
   width: 100%;
+  display: block;
 }
 #guide1 {
   position: relative;

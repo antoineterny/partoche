@@ -100,7 +100,7 @@ function addPages(json) {
   pages.innerHTML = '';
   pages.style = "transition-duration: .5s;";
   pagesHeight = [];
-  previousPagesHeight = [0];
+  previousPagesHeight = [];
   pagesLoaded = 0;
   pageOffsets = [];
   for (let i=0; i<json.length; i++) {
@@ -111,9 +111,11 @@ function addPages(json) {
     newImg.onload = function() {
       pagesLoaded += 1;
       if (pagesLoaded == pageOffsets.length) {
-        pagesHeight = Array.from(document.querySelectorAll('img')).map(x => x.height);
-          for (let i=1; i<pagesHeight.length; i++) {
-              previousPagesHeight.push(previousPagesHeight[i-1] + pagesHeight[i]);
+        pagesHeight = Array.from(
+          document.querySelectorAll("#pages img")
+        ).map((x) => parseFloat(getComputedStyle(x).height));
+          for (let i=0; i<pagesHeight.length; i++) {
+              previousPagesHeight.push(getTotalPreviousHeight(i+1));
           }
       }
     }
@@ -132,8 +134,8 @@ function addPages(json) {
           for (let j in stabilo[voix][i]) {
             let newStabiloDiv = document.createElement("div");
             let newDivHeight =
-              previousPagesHeight[i] +
-              (pagesHeight[i] * stabilo[voix][i][j]) / 100;
+            previousPagesHeight[i] +
+            (pagesHeight[i] * stabilo[voix][i][j]) / 100;
             newStabiloDiv.classList.add("stabilo", "invisible", `${voix.slice(0, 3)}`);
             newStabiloDiv.setAttribute("data-voice", voix)
             newStabiloDiv.style = `height: ${newDivHeight}px;`;
@@ -417,4 +419,12 @@ function createVoiceButtons() {
       mixer.append(newVoiceBtn);
     }
   }
+}
+
+function getTotalPreviousHeight(pageNbr) {
+  if (pageNbr === 1) return 0;
+  let tempArray = pagesHeight.slice(0, pageNbr-1);
+  return tempArray.reduce((total, current) => {
+    return total + current
+  })
 }
