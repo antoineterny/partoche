@@ -68,27 +68,24 @@
   position: absolute;
   display: block;
   background-color: transparent;
-  opacity: 0.33;
+  opacity: 0.4;
   width: 100%;
+  transform: translateY(-50%);
 }
 .invisible {
   display: none;
 }
 .sop {
-  border-bottom: 10px solid var(--sop-color);
-  box-shadow: 0 10px var(--sop-color);
+  background-color: var(--sop-color);
 }
 .alt {
-  border-bottom: 10px solid var(--alt-color);
-  box-shadow: 0 10px var(--alt-color);
+  background-color: var(--alt-color);
 }
 .ten {
-  border-bottom: 10px solid var(--ten-color);
-  box-shadow: 0 10px var(--ten-color);
+  background-color: var(--ten-color);
 }
 .bas {
-  border-bottom: 10px solid var(--bas-color);
-  box-shadow: 0 10px var(--bas-color);
+  background-color: var(--bas-color);
 }
 #lecteur {
   height: 100px; /* === Hardcoded height === */
@@ -142,6 +139,12 @@
 #nextBtn {
   background-image: url(svg/nextW.svg);
 }
+#backwBtn {
+  background-image: url(svg/backwW.svg);
+}
+#forwBtn {
+  background-image: url(svg/forwW.svg);
+}
 #stopBtn {
   background-image: url(svg/stopW.svg);
   margin-right: 0;
@@ -162,11 +165,12 @@
 #menuBtn:hover {
   background-image: url(svg/menuB.svg);
 }
+
 #titre {
   flex-grow: 1;
   font-size: 1.5rem;
   white-space: nowrap;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
   user-select: none;
   height: 40px;
@@ -175,6 +179,7 @@
   margin: 0 6px 0 3px;
   padding-left: 0.5em;
   border-bottom: 1px solid black;
+  position: relative;
   /* background-image: linear-gradient(to right, rgb(213, 188, 238) 50%, #fff 0); */
   /* Juste besoin de faire varier ce poucentage pour avoir une barre de progression */
 }
@@ -194,6 +199,7 @@
   left: 0;
   opacity: .33;
 } */
+
 #mixer {
   display: flex;
   /* justify-content: space-around; */
@@ -251,6 +257,22 @@ label[data-voice*="bas"]:hover {
 #currentTime {
   width: 6em;
 }
+.marker {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 2.5px 3px 2.5px;
+  border-color: transparent transparent black transparent;
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  /* transform: translateY(100%); */
+}
+.marker-text {
+  font-size: .75rem;
+  transform: translateX(-0.3rem);
+}
+
 @media screen and (max-width: 800px) {
   #boutons button {
     flex-shrink: 0;
@@ -266,7 +288,7 @@ label[data-voice*="bas"]:hover {
   }
   #mixer {
     height: 30px;
-    font-size: .9rem;
+    font-size: .5rem;
   }
   #lecteur {
     height: 90px; /* === Hardcoded height === */
@@ -298,8 +320,8 @@ label[data-voice*="bas"]:hover {
   }
   #boutons button {
     flex-shrink: 0;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     margin: 3px;
   }
   #stopBtn, #prevBtn, #nextBtn {

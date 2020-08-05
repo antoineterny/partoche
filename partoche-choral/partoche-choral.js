@@ -88,7 +88,6 @@ async function initData(index) {
   });
   stabilo = stabiloJson;
 
-  createVoiceButtons();
 }
 
 // Ajout des images
@@ -96,6 +95,7 @@ const pages = document.querySelector('#pages');
 const partoche = document.querySelector('#partoche');
 let pagesHeight, previousPagesHeight, pagesLoaded;
 function addPages(json) {
+  pages.innerHTML = "";
   let partocheWidth = getComputedStyle(partoche).width;
   pages.innerHTML = '';
   pages.style = "transition-duration: .5s;";
@@ -126,6 +126,8 @@ function addPages(json) {
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
   }
+  
+  document.querySelectorAll("#mixer label").forEach((x) => x.remove());
   let readyForStabilo = setInterval(() => {
     if (pagesHeight.length > 0 && Object.keys(stabilo).length > 0) {
       clearInterval(readyForStabilo);
@@ -133,18 +135,21 @@ function addPages(json) {
         for (let i in stabilo[voix]) {
           for (let j in stabilo[voix][i]) {
             let newStabiloDiv = document.createElement("div");
-            let newDivHeight =
+            let newDivTop =
             previousPagesHeight[i] +
             (pagesHeight[i] * stabilo[voix][i][j]) / 100;
             newStabiloDiv.classList.add("stabilo", "invisible", `${voix.slice(0, 3)}`);
             newStabiloDiv.setAttribute("data-voice", voix)
-            newStabiloDiv.style = `height: ${newDivHeight}px;`;
+            newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
+            // newStabiloDiv.style.height = "20px";
             pages.prepend(newStabiloDiv);
           }
         }
-      })
+      });
     }
-  }, 100);
+  }, 50);
+
+
   
 }
 
@@ -196,6 +201,10 @@ function initAudio(index) {
       playBtn.classList.add("paused");
       titre.innerText = playlist[index].title;
       animID = requestAnimationFrame(animate);
+
+      createVoiceButtons();
+      createTitreMarkers();
+
       // stopped = false;
       tracks[0].on("end", () => {
         playBtn.classList.remove("playing");
@@ -421,6 +430,21 @@ function createVoiceButtons() {
   }
 }
 
+// Création des marqueurs
+function createTitreMarkers() {
+  if (markers.length > 0) {
+    let dur = tracks[0].duration(); 
+    for (let marker of markers) {
+      let newMarker = document.createElement('div');
+      let newMarkerText = document.createElement('div');
+      newMarker.classList.add('marker');
+      newMarker.style = `left: ${marker.time / dur * 100}%;`
+      newMarkerText.classList.add('marker-text');
+      newMarkerText.innerHTML = marker.text;
+      document.querySelector('#titre').appendChild(newMarker).appendChild(newMarkerText)
+    }
+  }
+}
 function getTotalPreviousHeight(pageNbr) {
   if (pageNbr === 1) return 0;
   let tempArray = pagesHeight.slice(0, pageNbr-1);
