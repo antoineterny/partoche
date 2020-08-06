@@ -53,6 +53,10 @@ body {
   width: 750px;
   height: 0;
   border-bottom: 1px solid blue;
+  /* height: 20px;
+  background-color: blue;
+  transform: translateY(-50%);
+  opacity: 0.3; */
 }
 #output, #input {
   margin: .5em auto .5em;

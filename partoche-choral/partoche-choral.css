@@ -350,4 +350,8 @@ label[data-voice*="bas"]:hover {
   #currentTime {
     text-align: center;
   }
+  .marker ,
+.marker-text {
+  display: none;
+}
 }
