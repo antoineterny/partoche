@@ -341,8 +341,8 @@ function animate() {
   let avance = .5;
 
   if (tracks[0].state() === "loaded")
-    currentTime.innerText = formatTime(curr);
-    totalTime.innerText = formatTime(dur);
+    currentTime.innerHTML = formatTime(curr);
+    totalTime.innerHTML = formatTime(dur);
   titre.style =
     "background-image: linear-gradient(to right, gainsboro " +
     (curr / dur) * 100 +
