@@ -92,33 +92,48 @@
 #lecteur {
   height: 100px; /* === Hardcoded height === */
   width: 100%;
+  padding: var(--margin-unit);
   flex-shrink: 0;
+  display: flex;
   margin-top: calc(3px + var(--margin-unit));
-  overflow: hidden;
+  overflow: auto;
 }
 .cadre {
   border: 1px solid black;
   box-shadow: 0 0 0 2px white,
               0 0 0 5px black;
 }
-.btn-group {
+#play-group, #menu-group {
   display: flex;
-  flex-wrap: nowrap;
-}
-#boutons {
-  display: flex;
-  flex-shrink: 1;
+  flex-grow: 0;
+  flex-direction: column;
   align-items: center;
-  background-color: white;
-  margin: calc(var(--margin-unit) / 2);
+  width: 60px;
 }
-#boutons button {
-  height: 40px;
-  width: 40px;
+#arrows-group {
+  width: 76px;
+  margin: 0 var(--margin-unit);
+  line-height: 16px;
+}
+#main-group {
+  flex-grow: 1;
+  margin: 0 var(--margin-unit) 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+button {
   border: none;
   background-color: transparent;
   background-repeat: no-repeat;
-  margin-right: 3px;
+}
+#play-group button, #menu-group button {
+  height: 60px;
+  width: 60px;
+}
+#arrows-group button {
+  height: 36px;
+  width: 36px; 
 }
 .paused {
   background-image: url(svg/playW.svg);
@@ -135,17 +150,17 @@
 .disabled {
   opacity: 0.33;
 }
-#prevBtn {
-  background-image: url(svg/prevW.svg);
+#backwardBtn {
+  background-image: url(svg/backwardW.svg);
 }
-#nextBtn {
-  background-image: url(svg/nextW.svg);
+#forwardBtn {
+  background-image: url(svg/forwardW.svg);
 }
-#backwBtn {
-  background-image: url(svg/backwW.svg);
+#previousMarkerBtn {
+  background-image: url(svg/prevMarker.svg);
 }
-#forwBtn {
-  background-image: url(svg/forwW.svg);
+#nextMarkerBtn {
+  background-image: url(svg/nextMarker.svg);
 }
 #stopBtn {
   background-image: url(svg/stopW.svg);
@@ -167,48 +182,25 @@
 #menuBtn:hover {
   background-image: url(svg/menuB.svg);
 }
-
 #titre {
-  flex-grow: 1;
+  flex-grow: 0;
   font-size: 1.5rem;
   white-space: nowrap;
   /* overflow: hidden; */
   text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
   user-select: none;
-  height: 40px;
+  height: 35px;
   display: flex;
   align-items: center;
-  margin: 0 6px 0 3px;
   padding-left: 0.5em;
   border-bottom: 1px solid black;
   position: relative;
-  /* background-image: linear-gradient(to right, rgb(213, 188, 238) 50%, #fff 0); */
-  /* Juste besoin de faire varier ce poucentage pour avoir une barre de progression */
 }
-/* .temps {
-  display: flex;
-  height: 40px;
-  justify-content: space-between;
-  align-items: center;
-  margin: calc(var(--margin-unit) / 2);
-} */
-/* .progression {
-  position: absolute;
-  background-color: black;
-  height: 40px;
-  width: 40px;
-  top: 0;
-  left: 0;
-  opacity: .33;
-} */
-
 #mixer {
   display: flex;
-  /* justify-content: space-around; */
-  height: 30px;
+  height: 20px;
   align-items: center;
-  margin: calc(var(--margin-unit) / 2);
-  font-size: 1.12rem;
+  font-size: 16px;
   white-space: nowrap;
 }
 #mixer input {
@@ -257,9 +249,6 @@ label[data-voice*="ten"]:hover {
 label[data-voice*="bas"]:hover {
   box-shadow: inset 0 0 0 3px var(--bas-color);
 }
-#currentTime {
-  width: 6em;
-}
 .marker {
   width: 0;
   height: 0;
@@ -272,8 +261,8 @@ label[data-voice*="bas"]:hover {
   /* transform: translateY(100%); */
 }
 .marker-text {
-  font-size: .75rem;
-  transform: translateX(-0.3rem);
+  font-size: .7rem;
+  transform: translateX(-.3em) translateY(.3em);
 }
 
 @media screen and (max-width: 800px) {
@@ -350,8 +339,10 @@ label[data-voice*="bas"]:hover {
     overflow: hidden;
     margin: 2px 0;
   }
-  #currentTime {
+  #currentTime, #totalTime {
     text-align: center;
+    display: block;
+    height: 0px;
   }
   .marker , .marker-text {
   display: none;

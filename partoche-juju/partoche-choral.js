@@ -341,7 +341,8 @@ function animate() {
   let avance = .5;
 
   if (tracks[0].state() === "loaded")
-    currentTime.innerHTML = formatTime(curr) + " / " + formatTime(dur);
+    currentTime.innerText = formatTime(curr);
+    totalTime.innerText = formatTime(dur);
   titre.style =
     "background-image: linear-gradient(to right, gainsboro " +
     (curr / dur) * 100 +
@@ -377,7 +378,6 @@ titre.addEventListener("click", (event) => {
 // Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
 function createVoiceButtons() {
   const mixer = document.querySelector("#mixer");
-  mixer.innerHTML = '<div id="currentTime"></div>';
   let voices = playlist[index].voices;
   let pupitre;
   for(i=0; i<voices.length; i++){

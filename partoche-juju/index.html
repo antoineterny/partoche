@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>partoche pour Juju</title>
+  <link rel="stylesheet" type="text/css" href="partoche-choral.css">
+  <script src="howler.core.min.js"></script>
+  <script src="partoche-choral.js" defer></script>
+  <script>
+    const playlist = [
+      { 
+        title: "Humpty Dumpty",
+        fileName: "humpty",
+        voices: ["acc", "sop", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "Hey Diddle, Diddle!",
+        fileName: "heydiddle",
+        voices: ["acc", "sop", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "Hickory, dickory, dock",
+        fileName: "hickory",
+        voices: ["acc", "sop", "ten", "bas"],
+        format: "mp3"
+      },
+    ]
+  </script>
+</head>
+<body>
+  <div class="conteneur">
+
+    <div id="partoche" class="cadre">
+      <div id="pages">
+      </div>
+      <div id="menu">
+      </div>
+    </div>
+    
+    <div id="lecteur" class="cadre">
+      <div id="play-group">
+        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
+        <div id="currentTime"></div>
+      </div>
+      <div id="arrows-group">
+        <button id="backwardBtn" onclick="backward()"></button>
+        <button id="forwardBtn" onclick="forward()"></button>
+        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
+        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
+      </div>
+      <div id="main-group">
+        <div id="titre"></div>
+        <div id="mixer"></div>
+      </div>
+      <div id="menu-group">
+        <button id="menuBtn" onclick="toggleMenu()"></button>
+        <div id="totalTime"></div>
+      </div>
+    </div>
+
+  </div>
+  
+
+</body>
+</html>
