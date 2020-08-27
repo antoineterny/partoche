@@ -150,9 +150,10 @@ function addPages(json) {
   }, 50);
 }
 
-window.addEventListener('resize', () => {
-  location.reload();
-})
+window.addEventListener("resize", () => {
+  initData(index);
+  initAudio(index);
+});
 
 // Lecteur Audio
 const playBtn = document.querySelector("#playBtn");

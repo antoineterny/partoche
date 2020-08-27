@@ -155,14 +155,26 @@ button {
 #backwardBtn {
   background-image: url(svg/backwardW.svg);
 }
+#backwardBtn:hover {
+  background-image: url(svg/backwardB.svg);
+}
 #forwardBtn {
   background-image: url(svg/forwardW.svg);
 }
+#forwardBtn:hover {
+  background-image: url(svg/forwardB.svg);
+}
 #previousMarkerBtn {
-  background-image: url(svg/prevMarker.svg);
+  background-image: url(svg/prevmarker.svg);
+}
+#previousMarkerBtn:hover {
+  background-image: url(svg/prevmarkerBB.svg);
 }
 #nextMarkerBtn {
-  background-image: url(svg/nextMarker.svg);
+  background-image: url(svg/nextmarker.svg);
+}
+#nextMarkerBtn:hover {
+  background-image: url(svg/nextmarkerBB.svg);
 }
 #stopBtn {
   background-image: url(svg/stopW.svg);
@@ -171,12 +183,6 @@ button {
 #menuBtn {
   background-image: url(svg/menuW.svg);
   margin-right: 0;
-}
-#prevBtn:hover {
-  background-image: url(svg/prevB.svg);
-}
-#nextBtn:hover {
-  background-image: url(svg/nextB.svg);
 }
 #stopBtn:hover {
   background-image: url(svg/stopB.svg);
