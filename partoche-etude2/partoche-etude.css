@@ -15,6 +15,7 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  outline: none;
 }
 .conteneur {
   display: flex;
@@ -91,7 +92,7 @@
 }
 #lecteur {
   width: 100%;
-  padding: calc(var(--margin-unit) /2);
+  padding: calc(var(--margin-unit) /2) calc(var(--margin-unit) /2) 0 calc(var(--margin-unit) /2);
   flex-shrink: 0;
   display: flex;
   margin-top: calc(var(--margin-unit) /2);
@@ -265,13 +266,56 @@ label[data-voice*="bas"]:hover {
   border-right: 1px solid black;
   position: absolute;
   bottom: 0;
-  transform: translateX(-50%);
-  /* transform: translateY(100%); */
+  transform: translateX(-50%) translateY(1px); 
 }
 .marker-text {
   font-size: .7rem;
   font-style: italic;
   transform: translateX(-2px) translateY(5px);
+}
+
+@media (max-width: 640px) {
+  .conteneur {
+    height: calc(100vh - 1.5*var(--margin-unit));
+  }
+  #titre {
+    height: 25px;
+    font-size: 1rem;
+  }
+  #arrows-group {
+    width: 28px;
+  }
+  #previousMarkerBtn, #nextMarkerBtn {
+    display: none;
+  }
+  #play-group, #menu-group {
+  width: 45px;
+  }
+  #main-group {
+    flex-grow: 1;
+    margin: 0 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #play-group button, #menu-group button {
+    height: 45px;
+    width: 45px;
+  }
+  #arrows-group button {
+    height: 28px;
+    width: 28px; 
+    margin-bottom: 3px;
+  }
+  #mixer {
+    font-size: 12px;
+  }
+  .time {
+    font-size: 12px;
+  }
+  .marker-text {
+    font-size: 9px;
+  }
 }
 
 /* 

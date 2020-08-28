@@ -61,8 +61,8 @@ function processCSV(csv) {
       markers.push(temp);
     }
   }
-  console.log("regions : ",regions);
-  console.log("markers : ",markers);
+  // console.log("regions : ",regions);
+  // console.log("markers : ",markers);
 }
 
 // Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
@@ -123,37 +123,10 @@ function addPages(json) {
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
   }
-
-  // document.querySelectorAll("#mixer label").forEach((x) => x.remove());
-  // let readyForStabilo = setInterval(() => {
-  //   if (pagesHeight.length > 0 && Object.keys(stabilo).length > 0) {
-  //     clearInterval(readyForStabilo);
-  //     Object.keys(stabilo).forEach((voix) => {
-  //       for (let i in stabilo[voix]) {
-  //         for (let j in stabilo[voix][i]) {
-  //           let newStabiloDiv = document.createElement("div");
-  //           let newDivTop =
-  //             previousPagesHeight[i] +
-  //             (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-  //           newStabiloDiv.classList.add(
-  //             "stabilo",
-  //             "invisible",
-  //             `${voix.slice(0, 3)}`
-  //           );
-  //           newStabiloDiv.setAttribute("data-voice", voix);
-  //           newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
-  //           // newStabiloDiv.style.height = "20px";
-  //           pages.prepend(newStabiloDiv);
-  //         }
-  //       }
-  //     });
-  //   }
-  // }, 50);
 }
 
 window.addEventListener("resize", () => {
   initData(index);
-  initAudio(index);
 });
 
 // Lecteur Audio
@@ -168,7 +141,7 @@ function initAudio(index) {
   for (let i in tracks) {
     if (tracks[i]) {
       tracks[i].unload();
-      console.log(tracks[i]._src, "is unloaded");
+      // console.log(tracks[i]._src, "is unloaded");
     }
   }
   tracks = [];
@@ -187,7 +160,7 @@ function initAudio(index) {
   for (let i = 0; i < tracks.length; i++) {
     tracks[i].on("load", function () {
       if (i != 0) tracks[i].mute(false);
-      console.log(tracks[i]._src, "is loaded");
+      // console.log(tracks[i]._src, "is loaded");
       loadedTracks += 1;
       checkLoaded();
     });
@@ -390,64 +363,6 @@ titre.addEventListener("click", (event) => {
   tracks.forEach((track) => track.seek(time));
   if (tracks[0].playing() === false) play();
 });
-
-// // Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
-// function createVoiceButtons() {
-//   const mixer = document.querySelector("#mixer");
-//   let voices = playlist[index].voices;
-//   let pupitre;
-//   for (i = 0; i < voices.length; i++) {
-//     if (voices[i].match(/sop/g)) {
-//       pupitre = "sopranos";
-//     } else if (voices[i].match(/alt/g)) {
-//       pupitre = "altos";
-//     } else if (voices[i].match(/ten/g)) {
-//       pupitre = "ténors";
-//     } else if (voices[i].match(/bas/g)) {
-//       pupitre = "basses";
-//     }
-//     let numero = voices[i].match(/[1-9]/g);
-//     if (numero) pupitre += ` ${numero[0]}`;
-
-//     if (pupitre) {
-//       // mixer.innerHTML +=
-//       // `<label data-voice="${voices[i]}"><input type="checkbox" value="${i}">${pupitre}</label>`;
-//       let newVoiceBtn = document.createElement("label");
-//       newVoiceBtn.setAttribute("data-voice", voices[i]);
-//       newVoiceBtn.innerText = pupitre;
-//       newVoiceBtn.addEventListener("click", function (e) {
-//         this.classList.toggle("checked");
-//         let allStabilo = document.querySelectorAll(".stabilo");
-//         if (this.classList.value === "checked") {
-//           tracks.forEach((tr) => {
-//             if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
-//               tr.mute(false);
-//             }
-//           });
-//           allStabilo.forEach((st) => {
-//             let stabiloVoice = st.getAttribute("data-voice");
-//             if (stabiloVoice === e.target.attributes["data-voice"].value) {
-//               st.classList.remove("invisible");
-//             }
-//           });
-//         } else {
-//           tracks.forEach((tr) => {
-//             if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
-//               tr.mute(true);
-//             }
-//             allStabilo.forEach((st) => {
-//               let stabiloVoice = st.getAttribute("data-voice");
-//               if (stabiloVoice === e.target.attributes["data-voice"].value) {
-//                 st.classList.add("invisible");
-//               }
-//             });
-//           });
-//         }
-//       });
-//       mixer.append(newVoiceBtn);
-//     }
-//   }
-// }
 
 // Création des marqueurs
 function createTitreMarkers() {
