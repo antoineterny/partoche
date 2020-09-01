@@ -83,28 +83,29 @@ async function initData(index) {
   markers = [];
 
   let regionsPriRaw = await fetch(
-    `${playlist[index].fileName}_pri_regions_markers.csv`
+    `${playlist[index].fileName}/${playlist[index].fileName}_pri_regions_markers.csv`
   ).then((response) => response.text());
   regions_pri = processCSVregions(regionsPriRaw);
   markers = processCSVmarkers(regionsPriRaw);
   // Les markers doivent être dans le csv de la partie prima
   
   let regionsSecRaw = await fetch(
-    `${playlist[index].fileName}_sec_regions_markers.csv`
+    `${playlist[index].fileName}/${playlist[index].fileName}_sec_regions_markers.csv`
   ).then((response) => response.text());
   regions_sec = processCSVregions(regionsSecRaw);
 
-  let jsonPri = await fetch(`${playlist[index].fileName}_pri.json`).then(function (
-    response
-  ) {
+  let jsonPri = await fetch(
+    `${playlist[index].fileName}/${playlist[index].fileName}_pri.json`
+  ).then(function (response) {
     return response.json();
   });
 
-  let jsonSec = await fetch(`${playlist[index].fileName}_sec.json`).then(function (
-    response
-  ) {
+  let jsonSec = await fetch(
+    `${playlist[index].fileName}/${playlist[index].fileName}_sec.json`
+  ).then(function (response) {
     return response.json();
   });
+
   addPages(jsonPri, jsonSec);
 }
 
@@ -151,7 +152,7 @@ function addPages(jsonPri, jsonSec) {
         }
       }
     };
-    newImg.src = `${playlist[index].fileName}_pri_Page_${[i]}.png`;
+    newImg.src = `${playlist[index].fileName}/${playlist[index].fileName}_pri_Page_${[i]}.png`;
     newImg.style.width = partocheWidth;
     newImg.setAttribute("id", `pri_page${i}`);
     pages_pri.appendChild(newImg);
@@ -171,7 +172,7 @@ function addPages(jsonPri, jsonSec) {
         }
       }
     };
-    newImg.src = `${playlist[index].fileName}_sec_Page_${[i]}.png`;
+    newImg.src = `${playlist[index].fileName}/${playlist[index].fileName}_sec_Page_${[i]}.png`;
     newImg.style.width = partocheWidth;
     newImg.setAttribute("id", `sec_page${i}`);
     pages_sec.appendChild(newImg);
@@ -200,8 +201,16 @@ function initAudio(index) {
   }
   tracks = [];
 
-  let fileName = playlist[index].fileName;
+  const fileName = `${playlist[index].fileName}/${playlist[index].fileName}`;
   const voices = ["pri", "sec"];
+  if (playlist[index].metronome) {
+    voices.push("metronome");
+    if (!document.querySelector("#metronome")) {
+      createMetronomeButton();
+    } else {
+      metronome.checked = false;
+    }
+  }
   let format = playlist[index].format;
   let loadedTracks = 0;
   for (let i = 0; i < voices.length; i++) {
@@ -213,7 +222,7 @@ function initAudio(index) {
 
   for (let i = 0; i < tracks.length; i++) {
     tracks[i].on("load", function () {
-      if (i != 0) tracks[i].mute(false);
+      if (tracks[i]["data-voice"] === "metronome") tracks[i].mute(true);
       console.log(tracks[i]._src, "is loaded");
       loadedTracks += 1;
       checkLoaded();
@@ -363,12 +372,13 @@ function formatTime(rawSec) {
 
 //Gestion du mixage
 const balance = document.querySelector("#balance");
-balance.addEventListener("input", () => {
+balance.addEventListener("input", (e) => {
+  console.log(e);
   if      (balance.value == -3) {tracks[0].volume(0);  tracks[1].volume(1)}
   else if (balance.value == -2) {tracks[0].volume(.1); tracks[1].volume(1)}
-  else if (balance.value == -1) {tracks[0].volume(.3); tracks[1].volume(1)}
+  else if (balance.value == -1) {tracks[0].volume(.33); tracks[1].volume(1)}
   else if (balance.value == 0)  {tracks[0].volume(1);  tracks[1].volume(1)}
-  else if (balance.value == 1)  {tracks[0].volume(1);  tracks[1].volume(.3)}
+  else if (balance.value == 1)  {tracks[0].volume(1);  tracks[1].volume(.33)}
   else if (balance.value == 2)  {tracks[0].volume(1);  tracks[1].volume(.1)}
   else if (balance.value == 3)  {tracks[0].volume(1);  tracks[1].volume(0)}
 });
@@ -428,6 +438,24 @@ titre.addEventListener("click", (event) => {
   if (tracks[0].playing() === false) play();
 });
 
+// Création du bouton métronome
+function createMetronomeButton() {
+  let newLabel = document.createElement("label");
+  newLabel.setAttribute("for", "metronome");
+  newLabel.innerText = "métronome";
+  newLabel.style="flex-grow: 0.2;"
+  let newInput = document.createElement("input");
+  newInput.setAttribute("type", "checkbox");
+  newInput.setAttribute("id", "metronome");
+  newInput.addEventListener("click", function () {
+    if (newInput.checked) {
+      tracks[2].mute(false);
+    } else {
+      tracks[2].mute(true);
+    }
+  });
+  document.querySelector("#mixer").appendChild(newLabel).appendChild(newInput);
+}
 // Création des marqueurs
 function createTitreMarkers() {
   if (markers.length > 0) {

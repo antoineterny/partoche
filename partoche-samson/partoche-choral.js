@@ -25,7 +25,7 @@ window.onload = () => {
 
 // Menu
 function toggleMenu() {
-  pause();
+  // pause();
   menu.classList.toggle("visible");
 }
 
@@ -34,7 +34,7 @@ let regions = [];
 let markers = [];
 let stabilo = {};
 
-function convertToSeconds(ms) {
+function msToSeconds(ms) {
   let temp = ms.split(":");
   let minutes = Number(temp[0]);
   let seconds = Number(temp[1]);
@@ -49,15 +49,15 @@ function processCSV(csv) {
     if (lines[i][0] == "R") {
       let temp = {};
       lines[i][1] = lines[i][1].split("-");
-      temp.start = convertToSeconds(lines[i][2]);
-      temp.end = convertToSeconds(lines[i][3]);
+      temp.start = msToSeconds(lines[i][2]);
+      temp.end = msToSeconds(lines[i][3]);
       temp.page = Number(lines[i][1][0]);
       temp.line = Number(lines[i][1][1]);
       regions.push(temp);
     } else if (lines[i][0] == "M") {
       let temp = {};
       temp.text = lines[i][1];
-      temp.time = convertToSeconds(lines[i][2]);
+      temp.time = msToSeconds(lines[i][2]);
       markers.push(temp);
     }
   }
@@ -87,7 +87,7 @@ async function initData(index) {
     return response.json();
   });
   stabilo = stabiloJson;
-
+  addStabilo();
 }
 
 // Ajout des images
@@ -127,32 +127,41 @@ function addPages(json) {
     pages.appendChild(newImg);
   }
   
-  document.querySelectorAll("#mixer label").forEach((x) => x.remove());
-  let readyForStabilo = setInterval(() => {
-    if (pagesHeight.length > 0 && Object.keys(stabilo).length > 0) {
-      clearInterval(readyForStabilo);
-      Object.keys(stabilo).forEach(voix => {
-        for (let i in stabilo[voix]) {
-          for (let j in stabilo[voix][i]) {
-            let newStabiloDiv = document.createElement("div");
-            let newDivTop =
+  addStabilo();
+}
+
+function addStabilo() {
+  document.querySelectorAll(".stabilo").forEach((x) => x.remove());
+  if (pagesHeight.length === 0 || Object.keys(stabilo).length === 0) {
+    window.requestAnimationFrame(addStabilo);
+    // console.log("échec addStabilo, je retente...")
+  }
+  else {
+    Object.keys(stabilo).forEach((voix) => {
+      for (let i in stabilo[voix]) {
+        for (let j in stabilo[voix][i]) {
+          let newStabiloDiv = document.createElement("div");
+          let newDivTop =
             previousPagesHeight[i] +
             (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-            newStabiloDiv.classList.add("stabilo", "invisible", `${voix.slice(0, 3)}`);
-            newStabiloDiv.setAttribute("data-voice", voix)
-            newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
-            // newStabiloDiv.style.height = "20px";
-            pages.prepend(newStabiloDiv);
-          }
+          newStabiloDiv.classList.add(
+            "stabilo",
+            "invisible",
+            `${voix.slice(0, 3)}`
+          );
+          newStabiloDiv.setAttribute("data-voice", voix);
+          newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
+          pages.prepend(newStabiloDiv);
         }
-      });
-    }
-  }, 50);
+      }
+    });
+  }
 }
 
 window.addEventListener("resize", () => {
   initData(index);
-  initAudio(index);
+  createVoiceButtons();
+  addStabilo();
 });
 
 // Lecteur Audio
@@ -281,16 +290,16 @@ function next() {
   initData(index);
 }
 function forward() {
-  let curr = tracks[0].seek(this);
+  let curr = tracks[0].seek();
   tracks.forEach((track) => track.seek(curr + 5));
 }
 function backward() {
-  let curr = tracks[0].seek(this);
+  let curr = tracks[0].seek();
   if (curr < 5) curr = 5;
   tracks.forEach((track) => track.seek(curr - 5));
 }
 function nextMarker() {
-  let curr = tracks[0].seek(this);
+  let curr = tracks[0].seek();
   if (curr < markers[0].time) {
     tracks.forEach((track) => track.seek(markers[0].time));
   }
@@ -306,7 +315,7 @@ function nextMarker() {
   }
 }
 function previousMarker() {
-  let curr = tracks[0].seek(this);
+  let curr = tracks[0].seek();
   if (curr < markers[0].time + 1) {
     tracks.forEach((track) => track.seek(0));
   } 
@@ -379,6 +388,7 @@ titre.addEventListener("click", (event) => {
 
 // Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
 function createVoiceButtons() {
+  document.querySelectorAll("#mixer label").forEach((x) => x.remove());
   const mixer = document.querySelector("#mixer");
   let voices = playlist[index].voices;
   let pupitre;
@@ -391,8 +401,6 @@ function createVoiceButtons() {
     if(numero) pupitre += ` ${numero[0]}`;
     
     if(pupitre) {
-      // mixer.innerHTML += 
-      // `<label data-voice="${voices[i]}"><input type="checkbox" value="${i}">${pupitre}</label>`;
       let newVoiceBtn = document.createElement("label");
       newVoiceBtn.setAttribute("data-voice", voices[i]);
       newVoiceBtn.innerText = pupitre;
@@ -432,6 +440,7 @@ function createVoiceButtons() {
 
 // Création des marqueurs
 function createTitreMarkers() {
+  document.querySelectorAll(".marker").forEach((x) => x.remove());
   if (markers.length > 0) {
     let dur = tracks[0].duration(); 
     for (let marker of markers) {

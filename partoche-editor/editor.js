@@ -22,6 +22,7 @@ function init() {
   pages = [];
   index = 0;
   document.querySelectorAll("#editorImage img").forEach((el) => el.remove());
+  document.querySelectorAll(".guide").forEach((el) => el.remove());
   for (let i = 0; i < input.files.length; i++ ) {
       let image = document.createElement("img");
       image.src = URL.createObjectURL(input.files[i]);

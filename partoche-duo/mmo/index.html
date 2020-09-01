@@ -12,43 +12,56 @@
   </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../partoche-etude.css">
+    <link rel="stylesheet" href="../partoche-duo.css">
     <script>
-      const morceau = "rustique";
-      const aLa = "♪";
+      // const aLa;
       const playlist = [
         { 
-          title: "Rustique - passage A",
-          fileName: "RustiqueA",
-          format: "mp3"
+          title: "I. Pavane de la Belle au bois dormant",
+          fileName: "mmo1",
+          format: "mp3",
+          metronome: true
         },
         { 
-          title: "Rustique - passage B",
-          fileName: "RustiqueB",
-          format: "mp3"
+          title: "II. Petit Poucet",
+          fileName: "mmo2",
+          format: "mp3",
+          metronome: true
         },
         { 
-          title: "Rustique - passage C",
-          fileName: "RustiqueC",
-          format: "mp3"
+          title: "III. Laideronnette, Impératrice des Pagodes",
+          fileName: "mmo3",
+          format: "mp3",
+          metronome: true
         },
         { 
-          title: "Rustique - passage D",
-          fileName: "RustiqueD",
-          format: "mp3"
+          title: "IV. Les entretiens de la Belle et de la Bête",
+          fileName: "mmo4",
+          format: "mp3",
+          metronome: true
+        },
+        { 
+          title: "V. Le jardin féérique",
+          fileName: "mmo5",
+          format: "mp3",
+          metronome: true
         },
       ];
     </script>
     <script src="../howler.core.min.js"></script>
-    <script src="../partoche-etude.js" defer></script>
-    <title>Poulenc - Rustique</title>
+    <script src="../partoche-duo.js" defer></script>
+    <title>Ravel - Ma mère l'Oye</title>
 </head>
 <body>
   <div class="conteneur">
 
-    <div id="partoche" class="cadre rounded">
-      <div id="pages">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Francis_Poulenc_and_Wanda_Landowska_%28cropped%29.jpg" style="width:100%">
+    <div id="partoche_pri" class="partoche cadre rounded">
+      <div id="pages_pri" class="pages">
+      </div>
+    </div>
+
+    <div id="partoche_sec" class="partoche cadre rounded">
+      <div id="pages_sec" class="pages">
       </div>
       <div id="menu">
       </div>
@@ -69,13 +82,10 @@
         <div id="titre"><i>commence par choisir un titre</i></div>
         <div id="mixer">
           <label for="balance">
-            gauche
+            seconda
             <input type="range" id="balance" name="balance" min="-3" max="3" value="0">
-            droite
+            prima
           </label> 
-          <label for="metronome">
-            <input type="checkbox" name="metronome" id="metronome" checked>métronome
-          </label>
         </div>
       </div>
       <div id="menu-group">
