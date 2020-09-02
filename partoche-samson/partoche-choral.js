@@ -1,48 +1,82 @@
 let index;
 window.onload = () => {
-  // initAudio(index);
-  // initData(index);
-  function initMenu() {
-    const menu = document.querySelector("#menu");
-    menu.innerHTML = "";
-    for (let i=0; i<playlist.length; i++) {
-      let newP = document.createElement("p");
-      newP.innerText = playlist[i].title;
-      newP.addEventListener("click", () => {
-        index = i;
-        initAudio(i);
-        initData(i);
-        toggleMenu();
-      })
-      document.querySelector("#menu").append(newP)
-    }
-    let partocheHeight = parseInt(getComputedStyle(partoche).height);
-    menu.style = `max-height: ${partocheHeight}px`;
-    toggleMenu();
-  }
   initMenu();
 }
+window.addEventListener("resize", () => {
+  if (index) {
+    initData(index);
+    createVoiceButtons(index);
+    addStabilo();
+    restoreVoiceButtonsState()
+  }
+});
 
-// Menu
+//=================
+// Création du menu
+//=================
+function initMenu() {
+  const menu = document.querySelector("#menu");
+  menu.innerHTML = "";
+  for (let i = 0; i < playlist.length; i++) {
+    let newP = document.createElement("p");
+    newP.innerText = playlist[i].title;
+    newP.addEventListener("click", () => {
+      index = i;
+      initAudio(i);
+      initData(i);
+      createVoiceButtons(i);
+      toggleMenu();
+    });
+    document.querySelector("#menu").append(newP);
+  }
+  let partocheHeight = parseInt(getComputedStyle(partoche).height);
+  menu.style = `max-height: ${partocheHeight}px`;
+  toggleMenu();
+}
 function toggleMenu() {
   // pause();
   menu.classList.toggle("visible");
 }
 
+//=================================================
 // Traitement du CSV contenant régions et marqueurs
+//=================================================
 let regions = [];
 let markers = [];
+let pageOffsets = [];
 let stabilo = {};
 
-function msToSeconds(ms) {
-  let temp = ms.split(":");
-  let minutes = Number(temp[0]);
-  let seconds = Number(temp[1]);
-  return minutes * 60 + seconds;
+// Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
+async function initData(index) {
+  let fileName = playlist[index].fileName;
+
+  let regionsMarkersRaw = await fetch(
+    `${fileName}/${fileName}_regions_markers.csv`
+  ).then((response) => response.text());
+  regions = processRegionsMarkers(regionsMarkersRaw)[0];
+  markers = processRegionsMarkers(regionsMarkersRaw)[1];
+
+  let json = await fetch(
+    `${fileName}/${fileName}.json`
+  ).then(function (response) {
+    return response.json();
+  });
+  pageOffsets = json;
+  addPages();
+  
+  let stabiloJson = await fetch(
+    `${fileName}/${fileName}_stabilo.json`
+  ).then(function (response) {
+    return response.json();
+  });
+  stabilo = stabiloJson;
+  // addStabilo();
 }
 
-function processCSV(csv) {
+function processRegionsMarkers(csv) {
   let lines = csv.split(/\r\n|\n/);
+  let tempRegions = [];
+  let tempMarkers = [];
   for (let i = 0; i < lines.length; i++) {
     lines[i] = lines[i].split(",");
     lines[i][0] = lines[i][0].slice(0, 1);
@@ -53,59 +87,28 @@ function processCSV(csv) {
       temp.end = msToSeconds(lines[i][3]);
       temp.page = Number(lines[i][1][0]);
       temp.line = Number(lines[i][1][1]);
-      regions.push(temp);
+      tempRegions.push(temp);
     } else if (lines[i][0] == "M") {
       let temp = {};
       temp.text = lines[i][1];
       temp.time = msToSeconds(lines[i][2]);
-      markers.push(temp);
+      tempMarkers.push(temp);
     }
   }
-  // console.log("regions : ",regions);
-  // console.log("markers : ",markers);
-}
-
-// Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
-async function initData(index) {
-  regions = [];
-  markers = [];
-  let markersRaw = await fetch(
-    `${playlist[index].fileName}/${playlist[index].fileName}_regions_markers.csv`
-  ).then((response) => response.text());
-  processCSV(markersRaw);
-
-  let json = await fetch(
-    `${playlist[index].fileName}/${playlist[index].fileName}.json`
-  ).then(function (response) {
-    return response.json();
-  });
-  addPages(json);
-  
-  let stabiloJson = await fetch(
-    `${playlist[index].fileName}/${playlist[index].fileName}_stabilo.json`
-  ).then(function (response) {
-    return response.json();
-  });
-  stabilo = stabiloJson;
-  addStabilo();
+  return [tempRegions, tempMarkers];
 }
 
 // Ajout des images
 const pages = document.querySelector('#pages');
 const partoche = document.querySelector('#partoche');
 let pagesHeight, previousPagesHeight, pagesLoaded;
-function addPages(json) {
-  pages.innerHTML = "";
-  let partocheWidth = getComputedStyle(partoche).width;
+function addPages() {
   pages.innerHTML = '';
-  pages.style = "transition-duration: .5s;";
+  let partocheWidth = getComputedStyle(partoche).width;
+  // pages.style = "transition-duration: .5s;";
   pagesHeight = [];
   previousPagesHeight = [];
   pagesLoaded = 0;
-  pageOffsets = [];
-  for (let i=0; i<json.length; i++) {
-      pageOffsets.push(json[i]);
-  }
   for (let i=1; i<=pageOffsets.length; i++) {
     let newImg = document.createElement('img');
     newImg.onload = function() {
@@ -126,226 +129,13 @@ function addPages(json) {
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
   }
-  
+  // addStabilo positionne les stabilos en fonction de la hauteur des pages
   addStabilo();
 }
 
-function addStabilo() {
-  document.querySelectorAll(".stabilo").forEach((x) => x.remove());
-  if (pagesHeight.length === 0 || Object.keys(stabilo).length === 0) {
-    window.requestAnimationFrame(addStabilo);
-    // console.log("échec addStabilo, je retente...")
-  }
-  else {
-    Object.keys(stabilo).forEach((voix) => {
-      for (let i in stabilo[voix]) {
-        for (let j in stabilo[voix][i]) {
-          let newStabiloDiv = document.createElement("div");
-          let newDivTop =
-            previousPagesHeight[i] +
-            (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-          newStabiloDiv.classList.add(
-            "stabilo",
-            "invisible",
-            `${voix.slice(0, 3)}`
-          );
-          newStabiloDiv.setAttribute("data-voice", voix);
-          newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
-          pages.prepend(newStabiloDiv);
-        }
-      }
-    });
-  }
-}
-
-window.addEventListener("resize", () => {
-  initData(index);
-  createVoiceButtons();
-  addStabilo();
-});
-
-// Lecteur Audio
-const playBtn = document.querySelector("#playBtn");
-const titre = document.querySelector("#titre");
-let tracks = [];
-// let stopped;
-function initAudio(index) {
-  playBtn.disabled = true;
-  playBtn.classList.add("disabled");
-  titre.innerHTML = "<i>juste un instant, je charge...</i>";
-  for (let i in tracks) {
-    if (tracks[i]) {
-      tracks[i].unload();
-      // console.log(tracks[i]._src, "is unloaded");
-    }
-  }
-  tracks = [];
-
-
-  let fileName = playlist[index].fileName;
-  let voices = playlist[index].voices;
-  let format = playlist[index].format;
-  let loadedTracks = 0;
-  for (let i=0; i<voices.length; i++) {
-    tracks[i] = new Howl({
-      src: [`${playlist[index].fileName}/${fileName}_${voices[i]}.${format}`],
-    });
-    tracks[i]["data-voice"] = voices[i];
-  }
-
-  for (let i = 0; i < tracks.length; i++) {
-    tracks[i].on("load", function () {
-      if (i != 0) tracks[i].mute(true);
-      // console.log(tracks[i]._src, "is loaded");
-      loadedTracks += 1;
-      checkLoaded();
-    });
-  }
-  function checkLoaded() {
-      if (loadedTracks < tracks.length) return;
-      playBtn.disabled = false;
-      playBtn.classList.remove("disabled", "playing");
-      playBtn.classList.add("paused");
-      titre.innerText = playlist[index].title;
-      animID = requestAnimationFrame(animate);
-
-      createVoiceButtons();
-      createTitreMarkers();
-
-      // stopped = false;
-      tracks[0].on("end", () => {
-        playBtn.classList.remove("playing");
-        playBtn.classList.add("paused");
-        // cancelAnimationFrame(animID);
-      });
-  }
-}
-
-// Fonctions du lecteur
-playBtn.addEventListener("click", () => togglePlayPause());
-document.addEventListener("keydown", (event) => {
-  if (event.code == "Space") {
-    event.preventDefault();
-    togglePlayPause();
-  }
-  if (event.code == "ArrowLeft") {
-    event.preventDefault();
-    backward();
-    // if (markers.length === 0) {
-    //   backward();
-    // }
-    // else {
-    //   previousMarker();
-    // }
-  }
-  if (event.code == "ArrowRight") {
-    event.preventDefault();
-    forward();
-    // if (markers.length === 0) {
-    //   forward();
-    // }
-    // else {
-    //   nextMarker();
-    // }
-  }
-});
-
-function play() {
-  tracks.forEach((track) => track.play());
-  playBtn.classList.remove("paused");
-  playBtn.classList.add("playing");
-}
-function pause() {
-  tracks.forEach((track) => track.pause());
-  playBtn.classList.remove("playing");
-  playBtn.classList.add("paused");
-}
-function togglePlayPause() {
-  if (!tracks[0].playing()) {
-    playBtn.onclick = play();
-  } else {
-    playBtn.onclick = pause();
-  }
-}
-function stop() {
-  tracks.forEach((track) => track.stop());
-  playBtn.classList.remove("playing");
-  playBtn.classList.add("paused");
-  // cancelAnimationFrame(animID);
-}
-function prev() {
-  stop();
-  index -= 1;
-  if (index < 0) index = playlist.length - 1;
-  pages.style = "transition-duration: 0s;";
-  initAudio(index);
-  initData(index);
-}
-function next() {
-  stop();
-  index += 1;
-  if (index > playlist.length - 1) index = 0;
-  pages.style = "transition-duration: 0s;";
-  initAudio(index);
-  initData(index);
-}
-function forward() {
-  let curr = tracks[0].seek();
-  tracks.forEach((track) => track.seek(curr + 5));
-}
-function backward() {
-  let curr = tracks[0].seek();
-  if (curr < 5) curr = 5;
-  tracks.forEach((track) => track.seek(curr - 5));
-}
-function nextMarker() {
-  let curr = tracks[0].seek();
-  if (curr < markers[0].time) {
-    tracks.forEach((track) => track.seek(markers[0].time));
-  }
-  else if (curr > markers[markers.length-1].time) {
-    return
-  }
-  else {
-    for (i=0; i<markers.length-1; i++) {
-      if (curr > markers[i].time && curr < markers[i+1].time) {
-        tracks.forEach((track) => track.seek(markers[i+1].time));
-      }
-    }
-  }
-}
-function previousMarker() {
-  let curr = tracks[0].seek();
-  if (curr < markers[0].time + 1) {
-    tracks.forEach((track) => track.seek(0));
-  } 
-  else if ((curr > markers[markers.length - 1].time) && (curr < markers[markers.length - 1].time +1)) {
-    tracks.forEach((track) => track.seek(markers[markers.length - 2].time));
-  } 
-  else if (curr > markers[markers.length - 1].time +1) {
-    tracks.forEach((track) => track.seek(markers[markers.length - 1].time));
-  } 
-  else {
-    for (i = 0; i < markers.length -1; i++) {
-      if (curr > markers[i].time && curr < markers[i + 1].time) {
-        if (curr < markers[i].time + 1) {
-          tracks.forEach((track) => track.seek(markers[i - 1].time));
-        } else {
-          tracks.forEach((track) => track.seek(markers[i].time));
-        }
-      }
-    }
-  }
-}
-function formatTime(rawSec) {
-  let min = Math.floor((rawSec % 3600) / 60);
-  let sec = Math.floor(rawSec % 60);
-  min < 10 ? (min = "0" + min) : min;
-  sec < 10 ? (sec = "0" + sec) : sec;
-  return min + ":" + sec;
-}
-
+//========================================
 // Animation de la partition et du lecteur
+//========================================
 function animate() {
   let curr = tracks[0].seek(this);
   let dur = tracks[0].duration();
@@ -378,16 +168,10 @@ function animate() {
   animID = requestAnimationFrame(animate);
 }
 
-// Clic dans la barre de titre
-titre.addEventListener("click", (event) => {
-  let width = parseFloat(window.getComputedStyle(titre).width);
-  let time = (event.offsetX / width) * tracks[0].duration();
-  tracks.forEach((track) => track.seek(time));
-  if (tracks[0].playing() === false) play();
-});
-
-// Création des boutons pour chaque voix et addEventListener pour tracks et stabilo
-function createVoiceButtons() {
+//============================================
+// Création des boutons, stabilo et marqueurs
+//============================================
+function createVoiceButtons(index) {
   document.querySelectorAll("#mixer label").forEach((x) => x.remove());
   const mixer = document.querySelector("#mixer");
   let voices = playlist[index].voices;
@@ -438,6 +222,53 @@ function createVoiceButtons() {
   }
 }
 
+function restoreVoiceButtonsState() {
+  for (let tr of tracks) {
+    if (tr._muted === false) {
+      document.querySelectorAll("#mixer label").forEach((label) => {
+        if (label.getAttribute("data-voice") === tr["data-voice"]) {
+          label.classList.add("checked");
+        }
+      });
+    }
+  }
+}
+
+function addStabilo() {
+  document.querySelectorAll(".stabilo").forEach((x) => x.remove());
+  if (pagesHeight.length === 0 || Object.keys(stabilo).length === 0) {
+    window.requestAnimationFrame(addStabilo);
+  } else {
+    Object.keys(stabilo).forEach((voix) => {
+      for (let i in stabilo[voix]) {
+        for (let j in stabilo[voix][i]) {
+          let newStabiloDiv = document.createElement("div");
+          let newDivTop =
+            previousPagesHeight[i] +
+            (pagesHeight[i] * stabilo[voix][i][j]) / 100;
+          newStabiloDiv.classList.add(
+            "stabilo",
+            `${voix.slice(0, 3)}`,
+            "invisible"
+          );
+          newStabiloDiv.setAttribute("data-voice", voix);
+          newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
+          for (let tr of tracks) {
+            if (
+              tr["data-voice"] === voix &&
+              tr.state() === "loaded" &&
+              tr._muted === false
+            ) {
+              newStabiloDiv.classList.remove("invisible");
+            }
+          }
+          pages.prepend(newStabiloDiv);
+        }
+      }
+    });
+  }
+}
+
 // Création des marqueurs
 function createTitreMarkers() {
   document.querySelectorAll(".marker").forEach((x) => x.remove());
@@ -454,10 +285,27 @@ function createTitreMarkers() {
     }
   }
 }
+
+//======================
+// Fonctions utilitaires
+//======================
 function getTotalPreviousHeight(pageNbr) {
   if (pageNbr === 1) return 0;
   let tempArray = pagesHeight.slice(0, pageNbr-1);
   return tempArray.reduce((total, current) => {
     return total + current
   })
+}
+function formatTime(rawSec) {
+  let min = Math.floor((rawSec % 3600) / 60);
+  let sec = Math.floor(rawSec % 60);
+  min < 10 ? (min = "0" + min) : min;
+  sec < 10 ? (sec = "0" + sec) : sec;
+  return min + ":" + sec;
+}
+function msToSeconds(ms) {
+  let temp = ms.split(":");
+  let minutes = Number(temp[0]);
+  let seconds = Number(temp[1]);
+  return minutes * 60 + seconds;
 }

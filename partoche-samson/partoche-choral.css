@@ -112,7 +112,7 @@
 }
 #arrows-group {
   width: 76px;
-  margin: 0 var(--margin-unit);
+  margin: 0 var(--margin-unit) 0 3px;
   line-height: 0;
 }
 #main-group {
@@ -261,17 +261,16 @@ label[data-voice*="bas"]:hover {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 2.5px 3px 2.5px;
+  border-width: 0 3px 3px 3px;
   border-color: transparent transparent black transparent;
   position: absolute;
   bottom: 0;
-  transform: translateX(-50%);
-  /* transform: translateY(100%); */
+  transform: translateX(-50%) translateY(1px);
 }
 .marker-text {
-  font-size: .7rem;
+  font-size: 10px;
   font-style: italic;
-  transform: translateX(-.3em) translateY(.3em);
+  transform: translateX(-4px) translateY(4px);
 }
 
 @media (orientation: portrait) and (max-width: 400px) {
