@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../partoche-etude.css">
+    <script>
+      const morceau = "rustique";
+      const playlist = [
+        { titre: "RustiqueA", description: "Rustique - passage A" },
+        { titre: "RustiqueB", description: "Rustique - passage B" },
+        { titre: "RustiqueC", description: "Rustique - passage C" },
+        { titre: "RustiqueD", description: "Rustique - passage D" },
+      ];
+    </script>
+    <script src="../partoche-etude.js" defer></script>
+    <title>Poulenc - Rustique</title>
+</head>
+<body>
+  <h1>Rustique (Francis Poulenc, <i>Villageoises</i>)</h1>
+  <div class="conteneur">
+
+    <div class="partoche cadre">
+      <div class="pages">
+      </div>
+    </div>
+
+    <div class="lecteur cadre">
+      <audio id="audio1" src="" preload="auto"></audio>
+      <audio id="audio2" src="" preload="auto"></audio>
+      <audio id="audio3" src="" preload="auto"></audio>
+      <div class="boutons">
+        <button id="btn1" class="play"></button>
+        <button id="stop"></button>
+        <h2 class="titre">Passage A</h2>
+          <button id="prev"></button>
+          <button id="next"></button>
+      </div>
+      <div id="curseur">
+      </div>
+      <div id="progression">
+      </div>
+      <div id="temps">
+        <div id="tempsCourant">00:00</div>
+        <div id="tempsTotal">00:00</div>
+      </div>
+      <div id="balance-et-metronome">
+        <p>gauche<input type="range" id="balance" min="-100" max="100" value = "0">droite</p>
+        <label><input type="checkbox" id="metronome" checked>Métronome</label>
+      </div>
+    </div>
+    <p><i>En cas de caprice du lecteur, un petit rechargement de la page (Ctrl-R ou F5) devrait remettre les choses en ordre de marche.</i></p>
+  </div>
+</body>
+</html>

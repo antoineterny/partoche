@@ -3,6 +3,7 @@ window.onload = () => {
   initMenu();
 }
 window.addEventListener("resize", () => {
+  console.log("width:", window.innerWidth,"height:", window.innerHeight, "ratio:", window.innerWidth/window.innerHeight);
   if (index) {
     initData(index);
     createVoiceButtons(index);
@@ -34,7 +35,7 @@ function initMenu() {
   toggleMenu();
 }
 function toggleMenu() {
-  // pause();
+  document.querySelectorAll(".fleche").forEach(x => x.classList.toggle("invisible"));
   menu.classList.toggle("visible");
 }
 
@@ -177,10 +178,10 @@ function createVoiceButtons(index) {
   let voices = playlist[index].voices;
   let pupitre;
   for(i=0; i<voices.length; i++){
-    if (voices[i].match(/sop/g)) {pupitre = "sopranos"}
-    else if (voices[i].match(/alt/g)) {pupitre = "altos"}
-    else if (voices[i].match(/ten/g)) {pupitre = "ténors"}
-    else if (voices[i].match(/bas/g)) {pupitre = "basses"};
+    if (voices[i].match(/sop/g)) {pupitre = "sop"}
+    else if (voices[i].match(/alt/g)) {pupitre = "alt"}
+    else if (voices[i].match(/ten/g)) {pupitre = "tén"}
+    else if (voices[i].match(/bas/g)) {pupitre = "bas"};
     let numero = voices[i].match(/[1-9]/g);
     if(numero) pupitre += ` ${numero[0]}`;
     
@@ -272,7 +273,10 @@ function addStabilo() {
 // Création des marqueurs
 function createTitreMarkers() {
   document.querySelectorAll(".marker").forEach((x) => x.remove());
-  if (markers.length > 0) {
+  if (markers.length === 0) {
+    document.querySelector("#previousMarkerBtn").classList.add('disabled');
+    document.querySelector("#nextMarkerBtn").classList.add('disabled');
+  } else {
     let dur = tracks[0].duration(); 
     for (let marker of markers) {
       let newMarker = document.createElement('div');
@@ -300,6 +304,13 @@ function formatTime(rawSec) {
   let min = Math.floor((rawSec % 3600) / 60);
   let sec = Math.floor(rawSec % 60);
   min < 10 ? (min = "0" + min) : min;
+  sec < 10 ? (sec = "0" + sec) : sec;
+  return min + ":" + sec;
+}
+function exactTime(rawSec) {
+  console.log(rawSec)
+  let min = Math.floor((rawSec % 3600) / 60);
+  let sec = (rawSec % 60).toFixed(3);
   sec < 10 ? (sec = "0" + sec) : sec;
   return min + ":" + sec;
 }

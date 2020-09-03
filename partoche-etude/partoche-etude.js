@@ -1,9 +1,38 @@
-let index = 0;
-window.onload = function() {
-  init(index);
+let index;
+window.onload = () => {
+  // initAudio(index);
+  // initData(index);
+  function initMenu() {
+    const menu = document.querySelector("#menu");
+    menu.innerHTML = "";
+    for (let i = 0; i < playlist.length; i++) {
+      let newP = document.createElement("p");
+      newP.innerText = playlist[i].title;
+      newP.addEventListener("click", () => {
+        index = i;
+        initAudio(i);
+        initData(i);
+        toggleMenu();
+      });
+      document.querySelector("#menu").append(newP);
+    }
+    let partocheHeight = parseInt(getComputedStyle(partoche).height);
+    menu.style = `max-height: ${partocheHeight}px`;
+    toggleMenu();
+  }
+  initMenu();
+};
+
+// Menu
+function toggleMenu() {
+  pause();
+  menu.classList.toggle("visible");
 }
 
-const titre = document.querySelector('.titre');
+// Traitement du CSV contenant régions et marqueurs
+let regions = [];
+let markers = [];
+let stabilo = {};
 
 function convertToSeconds(ms) {
   let temp = ms.split(":");
@@ -12,10 +41,6 @@ function convertToSeconds(ms) {
   return minutes * 60 + seconds;
 }
 
-// Traitement du CSV contenant régions et marqueurs
-let regions = [];
-let markers = [];
-let pageMarkers = [];
 function processCSV(csv) {
   let lines = csv.split(/\r\n|\n/);
   for (let i = 0; i < lines.length; i++) {
@@ -36,173 +61,331 @@ function processCSV(csv) {
       markers.push(temp);
     }
   }
-  console.log("regions : ",regions);
-  console.log("markers : ",markers);
-  progression.innerHTML = "";
-  for (let i=0; i<markers.length; i++) {
-    let largeur = (markers[i].time / regions[regions.length -1].end * 958);
-    // https://caracteres-speciaux.net/note-de-musique/
-    progression.innerHTML += `<div class="delimiteurRegion" style="left: ${largeur}px;">♩=${markers[i].text}</div>`;
-  }
+  // console.log("regions : ",regions);
+  // console.log("markers : ",markers);
 }
 
-// Lecture des fichiers csv (regions et markers), json (décalages de page)
-async function init(index) {
+// Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
+async function initData(index) {
   regions = [];
   markers = [];
-  pageMarkers = [];
-  let markersRaw = await fetch(`${playlist[index].titre}_regions_markers.csv`)
-  .then( (response) => response.text() );
+  let markersRaw = await fetch(
+    `${playlist[index].fileName}_regions_markers.csv`
+  ).then((response) => response.text());
   processCSV(markersRaw);
 
-  let json = await fetch(`${morceau}.json`).then(
-    function (response) {
-      return response.json();
-    }
-  );
+  let json = await fetch(
+    `${morceau}.json`
+  ).then(function (response) {
+    return response.json();
+  });
   addPages(json);
 
-  titre.innerHTML = playlist[index].description;
-  audio1.src = `${playlist[index].titre}_droite.mp3`;
-  audio2.src = `${playlist[index].titre}_gauche.mp3`;
-  audio3.src = `${playlist[index].titre}_metronome.mp3`;
-
-  metronomeCheckbox.checked = true;
-  stopAudio();
-  audio1.addEventListener('durationchange', function() {
-    document.querySelector("#tempsTotal").innerText = formatTime(audio1.duration);
-  } )
+  // let stabiloJson = await fetch(
+  //   `${playlist[index].fileName}/${playlist[index].fileName}_stabilo.json`
+  // ).then(function (response) {
+  //   return response.json();
+  // });
+  // stabilo = stabiloJson;
 }
 
-
-// Add images
-const pages = document.querySelector('.pages');
+// Ajout des images
+const pages = document.querySelector("#pages");
+const partoche = document.querySelector("#partoche");
 let pagesHeight, previousPagesHeight, pagesLoaded;
 function addPages(json) {
-    pages.innerHTML = '';
-    pagesHeight = [];
-    previousPagesHeight = [0];
-    pagesLoaded = 0;
-    pageOffsets = [];
-    for(let i=0; i<json.length; i++) {
-        pageOffsets.push(json[i]);
-    }
-    for (let i=1; i<=pageOffsets.length; i++) {
-      let newImg = document.createElement('img');
-      newImg.onload = function() {
-          pagesLoaded += 1;
-          if (pagesLoaded == pageOffsets.length) {
-              pagesHeight = Array.from(document.querySelectorAll('img')).map(x => x.height);
-              for (let i=1; i<pagesHeight.length; i++) {
-                  previousPagesHeight.push(previousPagesHeight[i-1] + pagesHeight[i]);
-              }
-          }
+  pages.innerHTML = "";
+  let partocheWidth = getComputedStyle(partoche).width;
+  pages.innerHTML = "";
+  pages.style = "transition-duration: .5s;";
+  pagesHeight = [];
+  previousPagesHeight = [];
+  pagesLoaded = 0;
+  pageOffsets = [];
+  for (let i = 0; i < json.length; i++) {
+    pageOffsets.push(json[i]);
+  }
+  for (let i = 1; i <= pageOffsets.length; i++) {
+    let newImg = document.createElement("img");
+    newImg.onload = function () {
+      pagesLoaded += 1;
+      if (pagesLoaded == pageOffsets.length) {
+        pagesHeight = Array.from(
+          document.querySelectorAll("#pages img")
+        ).map((x) => parseFloat(getComputedStyle(x).height));
+        for (let i = 0; i < pagesHeight.length; i++) {
+          previousPagesHeight.push(getTotalPreviousHeight(i + 1));
+        }
       }
-      newImg.src = `page${[i]}.png`;
-      pages.appendChild(newImg);
-    }
-    console.log("previousPagesHeight", previousPagesHeight);
-    // progression.innerHTML = "";
+    };
+    newImg.src = `${morceau}_Page_${[i]}.png`;
+    newImg.style.width = partocheWidth;
+    newImg.setAttribute("id", `page${i}`);
+    pages.appendChild(newImg);
+  }
 }
 
-// Décalage des pages et du curseur
-const curseur     = document.getElementById('curseur');
-const progression = document.getElementById("progression");
-const audio1      = document.getElementById('audio1');
-const audio2      = document.getElementById('audio2');
-const audio3      = document.getElementById('audio3');
-const tousAudio   = document.querySelectorAll('audio');
-let avance = .5;
-function formatTime(time) {
-    var mins = Math.floor((time % 3600) / 60);
-    var secs = Math.floor(time % 60);
-    if (secs < 10) { secs = "0" + secs; }
-    if (mins < 10) { mins = "0" + mins; }
-    return mins + ":" + secs; // mm:ss
-}
-audio1.addEventListener('timeupdate', () => {
-    for (let i=0; i<regions.length; i++) {
-      if (audio1.currentTime > (regions[i].start - avance) 
-        && audio1.currentTime < (regions[i].end - avance)) {
-          let prevPagesH = previousPagesHeight[regions[i].page - 1];
-          let currentPageH = pagesHeight[regions[i].page - 1];
-          let currentPageOffset = pageOffsets[regions[i].page - 1][regions[i].line - 1];
-          pages.style =
-            "transform: translateY(-" +
-            (prevPagesH + (currentPageH * currentPageOffset) / 100) +
-            "px)";
-      }
-    }
-    // TODO: rendre le déplacement plus fluide
-    curseur.style = "left:" + (audio1.currentTime / audio1.duration * progression.clientWidth + 12) + "px";
-    document.querySelector('#tempsCourant').innerText = formatTime(audio1.currentTime); 
-    // TODO: faire afficher le temps total avant la lecture !!!
-
+window.addEventListener("resize", () => {
+  initData(index);
 });
 
-// Lecteur audio
-const btn1 = document.querySelector("#btn1");
-const metronomeCheckbox = document.getElementById('metronome');
-const balance = document.getElementById("balance");
-btn1.addEventListener('click', function() {
-    if (audio1.paused || audio1.ended) {
-        tousAudio.forEach((element) => { element.play(); });
-        btn1.classList.remove("play");
-        btn1.classList.add("pause");
+// Lecteur Audio
+const playBtn = document.querySelector("#playBtn");
+const titre = document.querySelector("#titre");
+let tracks = [];
+// let stopped;
+function initAudio(index) {
+  playBtn.disabled = true;
+  playBtn.classList.add("disabled");
+  titre.innerHTML = "<i>juste un instant, je charge...</i>";
+  for (let i in tracks) {
+    if (tracks[i]) {
+      tracks[i].unload();
+      // console.log(tracks[i]._src, "is unloaded");
     }
-    else {
-        tousAudio.forEach((element) => { element.pause(); })
-        btn1.classList.remove("pause");
-        btn1.classList.add("play");
-    }
-});
-function stopAudio() {
-  tousAudio.forEach((element) => { element.pause(); });
-  tousAudio.forEach((element) => { element.currentTime = 0; });
-  btn1.classList.remove("pause");
-  btn1.classList.add("play");
+  }
+  tracks = [];
+
+  let fileName = playlist[index].fileName;
+  const voices = ["droite", "gauche", "metronome"];
+  let format = playlist[index].format;
+  let loadedTracks = 0;
+  for (let i = 0; i < voices.length; i++) {
+    tracks[i] = new Howl({
+      src: [`${fileName}_${voices[i]}.${format}`],
+    });
+    tracks[i]["data-voice"] = voices[i];
+  }
+
+  for (let i = 0; i < tracks.length; i++) {
+    tracks[i].on("load", function () {
+      if (i != 0) tracks[i].mute(false);
+      // console.log(tracks[i]._src, "is loaded");
+      loadedTracks += 1;
+      checkLoaded();
+    });
+  }
+  function checkLoaded() {
+    if (loadedTracks < tracks.length) return;
+    playBtn.disabled = false;
+    playBtn.classList.remove("disabled", "playing");
+    playBtn.classList.add("paused");
+    titre.innerText = playlist[index].title;
+    animID = requestAnimationFrame(animate);
+
+    // createVoiceButtons();
+    createTitreMarkers();
+
+    // stopped = false;
+    tracks[0].on("end", () => {
+      playBtn.classList.remove("playing");
+      playBtn.classList.add("paused");
+      // cancelAnimationFrame(animID);
+    });
+  }
 }
-document.querySelector('#stop').addEventListener('click', function() {
-    stopAudio();
-})
-metronomeCheckbox.addEventListener("click", function () {
-  if (metronomeCheckbox.checked == true) {
-    audio3.volume = 1;
-  } else {
-    audio3.volume = 0;
+
+// Fonctions du lecteur
+playBtn.addEventListener("click", () => togglePlayPause());
+document.addEventListener("keydown", (event) => {
+  if (event.code == "Space") {
+    event.preventDefault();
+    togglePlayPause();
+  }
+  if (event.code == "ArrowLeft") {
+    event.preventDefault();
+    backward();
+    // if (markers.length === 0) {
+    //   backward();
+    // }
+    // else {
+    //   previousMarker();
+    // }
+  }
+  if (event.code == "ArrowRight") {
+    event.preventDefault();
+    forward();
+    // if (markers.length === 0) {
+    //   forward();
+    // }
+    // else {
+    //   nextMarker();
+    // }
   }
 });
-balance.addEventListener("input", function () {
-  if (balance.value > 0) {
-    audio1.volume = 1;
-    audio2.volume = (100 - Number(balance.value)) / 100;
-  } else if (balance.value < 0) {
-    audio1.volume = (100 + Number(balance.value)) / 100;
-    audio2.volume = 1;
-  } else {
-    audio1.volume = 1;
-    audio2.volume = 1;
-  }
-});
 
-// Changement de passage
-document.querySelector("#prev").addEventListener("click", function () {
-  index--;
-  if (index < 0) index = playlist.length - 1; 
-  init(index);
-});
-document.querySelector("#next").addEventListener("click", function () {
-  index++; 
+function play() {
+  tracks.forEach((track) => track.play());
+  playBtn.classList.remove("paused");
+  playBtn.classList.add("playing");
+}
+function pause() {
+  tracks.forEach((track) => track.pause());
+  playBtn.classList.remove("playing");
+  playBtn.classList.add("paused");
+}
+function togglePlayPause() {
+  if (!tracks[0].playing()) {
+    playBtn.onclick = play();
+  } else {
+    playBtn.onclick = pause();
+  }
+}
+function stop() {
+  tracks.forEach((track) => track.stop());
+  playBtn.classList.remove("playing");
+  playBtn.classList.add("paused");
+  // cancelAnimationFrame(animID);
+}
+function prev() {
+  stop();
+  index -= 1;
+  if (index < 0) index = playlist.length - 1;
+  pages.style = "transition-duration: 0s;";
+  initAudio(index);
+  initData(index);
+}
+function next() {
+  stop();
+  index += 1;
   if (index > playlist.length - 1) index = 0;
-  init(index);
+  pages.style = "transition-duration: 0s;";
+  initAudio(index);
+  initData(index);
+}
+function forward() {
+  let curr = tracks[0].seek(this);
+  tracks.forEach((track) => track.seek(curr + 5));
+}
+function backward() {
+  let curr = tracks[0].seek(this);
+  if (curr < 5) curr = 5;
+  tracks.forEach((track) => track.seek(curr - 5));
+}
+function nextMarker() {
+  let curr = tracks[0].seek(this);
+  if (curr < markers[0].time) {
+    tracks.forEach((track) => track.seek(markers[0].time));
+  } else if (curr > markers[markers.length - 1].time) {
+    return;
+  } else {
+    for (i = 0; i < markers.length - 1; i++) {
+      if (curr > markers[i].time && curr < markers[i + 1].time) {
+        tracks.forEach((track) => track.seek(markers[i + 1].time));
+      }
+    }
+  }
+}
+function previousMarker() {
+  let curr = tracks[0].seek(this);
+  if (curr < markers[0].time + 1) {
+    tracks.forEach((track) => track.seek(0));
+  } else if (
+    curr > markers[markers.length - 1].time &&
+    curr < markers[markers.length - 1].time + 1
+  ) {
+    tracks.forEach((track) => track.seek(markers[markers.length - 2].time));
+  } else if (curr > markers[markers.length - 1].time + 1) {
+    tracks.forEach((track) => track.seek(markers[markers.length - 1].time));
+  } else {
+    for (i = 0; i < markers.length - 1; i++) {
+      if (curr > markers[i].time && curr < markers[i + 1].time) {
+        if (curr < markers[i].time + 1) {
+          tracks.forEach((track) => track.seek(markers[i - 1].time));
+        } else {
+          tracks.forEach((track) => track.seek(markers[i].time));
+        }
+      }
+    }
+  }
+}
+function formatTime(rawSec) {
+  let min = Math.floor((rawSec % 3600) / 60);
+  let sec = Math.floor(rawSec % 60);
+  min < 10 ? (min = "0" + min) : min;
+  sec < 10 ? (sec = "0" + sec) : sec;
+  return min + ":" + sec;
+}
+
+//Gestion du mixage
+const metronomeCheckbox = document.querySelector("#metronome");
+metronomeCheckbox.addEventListener("click", function () {
+  if (metronomeCheckbox.checked) {
+    tracks[2].mute(false);
+  } else {
+    tracks[2].mute(true);
+  }
+});
+const balance = document.querySelector("#balance");
+balance.addEventListener("input", () => {
+  if      (balance.value == -3) {tracks[0].volume(0);  tracks[1].volume(1)}
+  else if (balance.value == -2) {tracks[0].volume(.1); tracks[1].volume(1)}
+  else if (balance.value == -1) {tracks[0].volume(.3); tracks[1].volume(1)}
+  else if (balance.value == 0)  {tracks[0].volume(1);  tracks[1].volume(1)}
+  else if (balance.value == 1)  {tracks[0].volume(1);  tracks[1].volume(.3)}
+  else if (balance.value == 2)  {tracks[0].volume(1);  tracks[1].volume(.1)}
+  else if (balance.value == 3)  {tracks[0].volume(1);  tracks[1].volume(0)}
 });
 
-// Barre de progression cliquable
-// TODO : rendre "draggable"
-document.getElementById('progression').addEventListener('click', function(e) {
-  tousAudio.forEach((element) => {
-    element.currentTime = e.offsetX / this.clientWidth * element.duration;
+// Animation de la partition et du lecteur
+function animate() {
+  let curr = tracks[0].seek(this);
+  let dur = tracks[0].duration();
+  let avance = 0.5;
+
+  if (tracks[0].state() === "loaded") currentTime.innerHTML = formatTime(curr);
+  totalTime.innerHTML = formatTime(dur);
+  titre.style =
+    "background-image: linear-gradient(to right, gainsboro " +
+    (curr / dur) * 100 +
+    "%, white 0);";
+
+  for (let i = 0; i < regions.length; i++) {
+    if (curr > regions[i].start - avance && curr < regions[i].end - avance) {
+      let prevPagesH = previousPagesHeight[regions[i].page - 1];
+      let currentPageH = pagesHeight[regions[i].page - 1];
+      let currentPageOffset =
+        pageOffsets[regions[i].page - 1][regions[i].line - 1];
+      pages.style =
+        "transform: translateY(-" +
+        (prevPagesH + (currentPageH * currentPageOffset) / 100) +
+        "px)";
+    }
+  }
+
+  animID = requestAnimationFrame(animate);
+}
+
+// Clic dans la barre de titre
+titre.addEventListener("click", (event) => {
+  let width = parseFloat(window.getComputedStyle(titre).width);
+  let time = (event.offsetX / width) * tracks[0].duration();
+  tracks.forEach((track) => track.seek(time));
+  if (tracks[0].playing() === false) play();
+});
+
+// Création des marqueurs
+function createTitreMarkers() {
+  if (markers.length > 0) {
+    let dur = tracks[0].duration();
+    for (let marker of markers) {
+      let newMarker = document.createElement("div");
+      let newMarkerText = document.createElement("div");
+      newMarker.classList.add("marker");
+      newMarker.style = `left: ${(marker.time / dur) * 100}%;`;
+      newMarkerText.classList.add("marker-text");
+      newMarkerText.innerHTML = aLa + "=" + marker.text;
+      document
+        .querySelector("#titre")
+        .appendChild(newMarker)
+        .appendChild(newMarkerText);
+    }
+  }
+}
+function getTotalPreviousHeight(pageNbr) {
+  if (pageNbr === 1) return 0;
+  let tempArray = pagesHeight.slice(0, pageNbr - 1);
+  return tempArray.reduce((total, current) => {
+    return total + current;
   });
-})
-
-
+}

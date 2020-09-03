@@ -3,11 +3,14 @@
 //================================
 const playBtn = document.querySelector("#playBtn");
 const titre = document.querySelector("#titre");
+const masque = document.querySelector("#masque");
 let tracks = [];
 // let stopped;
 function initAudio(index) {
+  masque.style = "display: flex";
   playBtn.disabled = true;
   playBtn.classList.add("disabled");
+  document.querySelector("#arrows-group").classList.add("disabled");
   titre.innerHTML = "<i>juste un instant, je charge...</i>";
   for (let i in tracks) {
     if (tracks[i]) {
@@ -33,26 +36,28 @@ function initAudio(index) {
       if (i != 0) tracks[i].mute(true);
       // console.log(tracks[i]._src, "is loaded");
       loadedTracks += 1;
-      checkLoaded();
+      onceAudioLoaded();
     });
   }
-  function checkLoaded() {
-      if (loadedTracks < tracks.length) return;
-      playBtn.disabled = false;
-      playBtn.classList.remove("disabled", "playing");
+  function onceAudioLoaded() {
+    if (loadedTracks < tracks.length) return;
+    masque.style = "display: none";
+    playBtn.disabled = false;
+    playBtn.classList.remove("disabled", "playing");
+    playBtn.classList.add("paused");
+    document.querySelector("#arrows-group").classList.remove("disabled");
+    titre.innerText = playlist[index].title;
+    animID = requestAnimationFrame(animate);
+
+    // createVoiceButtons();
+    createTitreMarkers();
+
+    // stopped = false;
+    tracks[0].on("end", () => {
+      playBtn.classList.remove("playing");
       playBtn.classList.add("paused");
-      titre.innerText = playlist[index].title;
-      animID = requestAnimationFrame(animate);
-
-      // createVoiceButtons();
-      createTitreMarkers();
-
-      // stopped = false;
-      tracks[0].on("end", () => {
-        playBtn.classList.remove("playing");
-        playBtn.classList.add("paused");
-        // cancelAnimationFrame(animID);
-      });
+      // cancelAnimationFrame(animID);
+    });
   }
 }
 
@@ -98,28 +103,14 @@ function next() {
   initAudio(index);
   initData(index);
 }
-function forward() {
+function backward(sec) {
   let curr = tracks[0].seek();
-  tracks.forEach((track) => track.seek(curr + 5));
+  if (curr < sec) curr = sec;
+  tracks.forEach((track) => track.seek(curr - sec));
 }
-function backward() {
+function forward(sec) {
   let curr = tracks[0].seek();
-  if (curr < 5) curr = 5;
-  tracks.forEach((track) => track.seek(curr - 5));
-}
-function nextMarker() {
-  let curr = tracks[0].seek();
-  if (curr < markers[0].time) {
-    tracks.forEach((track) => track.seek(markers[0].time));
-  } else if (curr > markers[markers.length - 1].time) {
-    return;
-  } else {
-    for (i = 0; i < markers.length - 1; i++) {
-      if (curr > markers[i].time && curr < markers[i + 1].time) {
-        tracks.forEach((track) => track.seek(markers[i + 1].time));
-      }
-    }
-  }
+  tracks.forEach((track) => track.seek(curr + sec));
 }
 function previousMarker() {
   let curr = tracks[0].seek();
@@ -144,6 +135,43 @@ function previousMarker() {
     }
   }
 }
+function nextMarker() {
+  let curr = tracks[0].seek();
+  if (curr < markers[0].time) {
+    tracks.forEach((track) => track.seek(markers[0].time));
+  } else if (curr > markers[markers.length - 1].time) {
+    return;
+  } else {
+    for (i = 0; i < markers.length - 1; i++) {
+      if (curr > markers[i].time && curr < markers[i + 1].time) {
+        tracks.forEach((track) => track.seek(markers[i + 1].time));
+      }
+    }
+  }
+}
+function previousRegion() {
+  let curr = tracks[0].seek();
+  if (curr < regions[0].end) {
+    tracks.forEach((track) => track.seek(0));
+  } else {
+    for (i=1; i<regions.length; i++) {
+      if (curr > regions[i].start && curr < regions[i].start + 1) {
+        tracks.forEach((track) => track.seek(regions[i - 1].start));
+      } else if (curr > regions[i].start && curr < regions[i].end) {
+        tracks.forEach((track) => track.seek(regions[i].start));
+      }
+    }
+  }
+}
+function nextRegion() {
+  let curr = tracks[0].seek();
+  if (curr > regions[regions.length -1].start) return;
+  for (let region of regions) {
+    if (curr > region.start && curr < region.end) {
+      tracks.forEach((track) => track.seek(region.end));
+    }
+  }
+}
 
 //===========================
 // Commandes du lecteur audio
@@ -158,11 +186,19 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.code == "ArrowLeft") {
     event.preventDefault();
-    backward();
+    backward(3);
   }
   if (event.code == "ArrowRight") {
     event.preventDefault();
-    forward();
+    forward(3);
+  }
+  if (event.code == "ArrowUp") {
+    event.preventDefault();
+    previousRegion();
+  }
+  if (event.code == "ArrowDown") {
+    event.preventDefault();
+    nextRegion();
   }
 });
 
@@ -174,14 +210,18 @@ titre.addEventListener("click", (event) => {
   if (tracks[0].playing() === false) play();
 });
 
-// Clic dans la partoche
-partoche.addEventListener("click", (event) => {
-  let width = parseFloat(window.getComputedStyle(partoche).width);
-  if (!menu.classList.contains("visible")) {
-    if (event.offsetX / width < 0.33) {
-      backward();
-    } else if (event.offsetX / width > 0.66) {
-      forward();
-    }
-  }
-});
+// Clic dans les flèches sur la partoche
+const flechegauche = document.querySelector("#flechegauche");
+const flechedroite = document.querySelector("#flechedroite");
+flechegauche.addEventListener('click', function() {
+  if (document.querySelector('#menu').classList.contains('visible')) return;
+  flechegauche.style.opacity = 1;
+  setTimeout(() => {flechegauche.style.opacity = 0;}, 50)
+  previousRegion();
+})
+flechedroite.addEventListener('click', function() {
+  if (document.querySelector("#menu").classList.contains("visible")) return;
+  flechedroite.style.opacity = 1;
+  setTimeout(() => {flechedroite.style.opacity = 0;}, 50)
+  nextRegion();
+})
