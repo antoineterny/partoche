@@ -213,7 +213,6 @@ button {
 }
 #mixer {
   display: flex;
-  height: 20px;
   align-items: center;
   font-size: 16px;
   white-space: nowrap;

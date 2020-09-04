@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../partoche-etude.css">
+    <script>
+      const morceau = "sonatine";
+      const playlist = [
+        { titre: "sonatineB", description: "Sonatine en sol majeur — passage B" },
+        { titre: "sonatineC", description: "Sonatine en sol majeur — passage C" },
+        { titre: "sonatineA", description: "Sonatine en sol majeur — passage A" },
+        { titre: "sonatineD", description: "Sonatine en sol majeur — passage D" },
+        { titre: "sonatineE", description: "Sonatine en sol majeur — passage E" },
+        { titre: "sonatineF", description: "Sonatine en sol majeur — passage F" },
+      ];
+    </script>
+    <script src="../partoche-etude.js" defer></script>
+    <title>Beethoven - Sonatine en sol majeur (1er mvt)</title>
+</head>
+<body>
+  <h1>Beethoven - Sonatine en sol majeur (I<sup>er</sup> mvt)</h1>
+  <div class="conteneur">
+
+    <div class="partoche cadre">
+      <div class="pages">
+      </div>
+    </div>
+
+    <div class="lecteur cadre">
+      <audio id="audio1" src="" preload="auto"></audio>
+      <audio id="audio2" src="" preload="auto"></audio>
+      <audio id="audio3" src="" preload="auto"></audio>
+      <div class="boutons">
+        <button id="btn1" class="play"></button>
+        <button id="stop"></button>
+        <h2 class="titre">Passage A</h2>
+          <button id="prev"></button>
+          <button id="next"></button>
+      </div>
+      <div id="curseur">
+      </div>
+      <div id="progression">
+      </div>
+      <div id="temps">
+        <div id="tempsCourant">00:00</div>
+        <div id="tempsTotal">00:00</div>
+      </div>
+      <div id="balance-et-metronome">
+        <p>gauche<input type="range" id="balance" min="-100" max="100" value = "0">droite</p>
+        <label><input type="checkbox" id="metronome" checked>Métronome</label>
+      </div>
+    </div>
+    <p><i>En cas de caprice du lecteur, un petit rechargement de la page (Ctrl-R ou F5) 
+      devrait remettre les choses en ordre de marche.</i></p>
+  </div>
+</body>
+</html>
