@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+    const el = document.createElement('pwa-update');
+    document.body.appendChild(el);
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>partoche pour Juju</title>
+  <title>Partoche pour Juju</title>
   <link rel="stylesheet" type="text/css" href="partoche-choral.css">
+  <link rel="stylesheet" type="text/css" href="partoche-choral-queries.css">
+  <link rel='manifest' href='manifest.json'>
   <script src="howler.core.min.js"></script>
-  <script src="partoche-choral.js" defer></script>
   <script>
     const playlist = [
       { 
@@ -36,33 +51,36 @@
     <div id="partoche" class="cadre">
       <div id="pages">
       </div>
-      <div id="menu">
-      </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
     </div>
     
-    <div id="lecteur" class="cadre">
+    <div id="lecteur">
       <div id="play-group">
         <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
         <div id="currentTime" class="time"></div>
       </div>
-      <div id="arrows-group">
-        <button id="backwardBtn" onclick="backward()"></button>
-        <button id="forwardBtn" onclick="forward()"></button>
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
         <button id="previousMarkerBtn" onclick="previousMarker()"></button>
         <button id="nextMarkerBtn" onclick="nextMarker()"></button>
       </div>
       <div id="main-group">
-        <div id="titre"><i>merci de choisir un titre ci-dessus</i></div>
+        <div id="titre"><i>Commence par choisir un titre</i></div>
         <div id="mixer"></div>
       </div>
       <div id="menu-group">
         <button id="menuBtn" onclick="toggleMenu()"></button>
         <div id="totalTime" class="time"></div>
       </div>
+      <div id="masque">juste un instant, je charge...</div>
     </div>
 
   </div>
   
-
+  <script src="partoche-audio.js"></script>
+  <script src="partoche-choral.js"></script>
 </body>
 </html>

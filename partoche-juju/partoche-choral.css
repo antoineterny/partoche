@@ -24,14 +24,32 @@
   width: calc(100vw - 2*var(--margin-unit));
   margin: var(--margin-unit);
   z-index: 999;
-  /* border : 1px solid red; */
 }
+
+
+/*------------partoche------------*/
 #partoche {
   position: relative;
   width: 100%;
   flex-grow: 999;
   overflow: hidden;
 }
+#pages {
+  transform: translateY(0) ;
+  transition-property: transform;
+  transition-duration: .5s;
+}
+#pages img {
+  display: block;
+  box-shadow: inset 0 0 0 1px grey;
+}
+.cadre {
+  border: 1px solid black;
+  box-shadow: 0 0 0 2px white,
+              0 0 0 5px black;
+}
+
+/*------------menu------------*/
 #menu {
   position: absolute;
   width: 100%;
@@ -48,7 +66,7 @@
 }
 #menu p {
   font-size: 1.5rem;
-  line-height: 2em ;
+  line-height: 2em;
   width: 100%;
   text-align: center;
   user-select: none;
@@ -57,15 +75,42 @@
 #menu p:hover {
   background-color: #eee;
 }
-#pages {
-  transform: translateY(0) ;
-  transition-property: transform;
-  transition-duration: .5s;
+
+/*------------flèches------------*/
+.fleche {
+  color: white;
+  font-size: 33vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 33%;
+  opacity: 0;
 }
-#pages img {
-  display: block;
-  box-shadow: inset 0 0 0 1px grey;
+#flechegauche {
+  left: 0;
+  background: linear-gradient(to right, grey, transparent);
 }
+#flechedroite {
+  right: 0;
+  background: linear-gradient(to left, grey, transparent);
+}
+.flecheanimation {
+  animation-duration: .5s;
+  animation-name: flash;
+}
+@keyframes flash {
+  from {
+    opacity: .75;
+  } 
+  to {
+    opacity: 0;
+  }
+}
+
+/*------------stabilo------------*/
 .stabilo {
   position: absolute;
   display: block;
@@ -73,9 +118,6 @@
   opacity: 0.4;
   width: 100%;
   transform: translateY(-50%);
-}
-.invisible {
-  display: none;
 }
 .sop {
   background-color: var(--sop-color);
@@ -89,19 +131,17 @@
 .bas {
   background-color: var(--bas-color);
 }
+
+/*------------lecteur------------*/
 #lecteur {
-  height: 100px; /* === Hardcoded height === */
+  height: 80px;
   width: 100%;
-  padding: var(--margin-unit);
   flex-shrink: 0;
   display: flex;
   margin-top: calc(3px + var(--margin-unit));
-  overflow: auto;
-}
-.cadre {
-  border: 1px solid black;
-  box-shadow: 0 0 0 2px white,
-              0 0 0 5px black;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
 }
 #play-group, #menu-group {
   display: flex;
@@ -111,21 +151,29 @@
   width: 60px;
 }
 #arrows-group {
-  width: 76px;
-  margin: 0 var(--margin-unit);
+  width: 80px;
+  margin-left: 6px;
+  display: flex;
   line-height: 0;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
 }
 #main-group {
   flex-grow: 1;
-  margin: 0 var(--margin-unit) 0 0;
+  margin: 0 var(--margin-unit);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+/*------------boutons------------*/
 button {
   border: none;
   background-color: transparent;
   background-repeat: no-repeat;
+  display: inline-block;
 }
 #play-group button, #menu-group button {
   height: 60px;
@@ -133,9 +181,11 @@ button {
   flex-shrink: 0;
 }
 #arrows-group button {
-  height: 36px;
-  width: 36px; 
-  margin-bottom: 3px;
+  height: 37px;
+  width: 37px; 
+}
+#backwardBtn, #forwardBtn {
+  margin-bottom: 5px;
 }
 .paused {
   background-image: url(svg/playW.svg);
@@ -155,14 +205,26 @@ button {
 #backwardBtn {
   background-image: url(svg/backwardW.svg);
 }
+#backwardBtn:hover {
+  background-image: url(svg/backwardB.svg);
+}
 #forwardBtn {
   background-image: url(svg/forwardW.svg);
 }
+#forwardBtn:hover {
+  background-image: url(svg/forwardB.svg);
+}
 #previousMarkerBtn {
-  background-image: url(svg/prevMarker.svg);
+  background-image: url(svg/prevmarker.svg);
+}
+#previousMarkerBtn:hover {
+  background-image: url(svg/prevmarkerBB.svg);
 }
 #nextMarkerBtn {
-  background-image: url(svg/nextMarker.svg);
+  background-image: url(svg/nextmarker.svg);
+}
+#nextMarkerBtn:hover {
+  background-image: url(svg/nextmarkerBB.svg);
 }
 #stopBtn {
   background-image: url(svg/stopW.svg);
@@ -172,21 +234,17 @@ button {
   background-image: url(svg/menuW.svg);
   margin-right: 0;
 }
-#prevBtn:hover {
-  background-image: url(svg/prevB.svg);
-}
-#nextBtn:hover {
-  background-image: url(svg/nextB.svg);
-}
 #stopBtn:hover {
   background-image: url(svg/stopB.svg);
 }
 #menuBtn:hover {
   background-image: url(svg/menuB.svg);
 }
+
+/*------------titre------------*/
 #titre {
   flex-grow: 0;
-  font-size: 1.5rem;
+  font-size: 24px;
   white-space: nowrap;
   /* overflow: hidden; */
   text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
@@ -194,39 +252,36 @@ button {
   height: 35px;
   display: flex;
   align-items: center;
-  padding-left: 0.5em;
+  padding-left: 13px;
   border-bottom: 1px solid black;
   position: relative;
+  margin-bottom: 13px;
 }
+
+/*------------mixer------------*/
 #mixer {
   display: flex;
-  height: 20px;
   align-items: center;
-  font-size: 16px;
   white-space: nowrap;
+  transform: translateY(-1px);
 }
-#mixer input {
-  margin-right: .3rem;
-}
-/* input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-} */
 #mixer label {
+  font-size: 18px;
   font-variant: small-caps;
   border: 1px solid black;
-  padding: 3px;
-  width: 6em;
+  padding: 2px;
   margin: 0 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
 }
-/* .checked {
-  color: white;
-  background-color: black;
-} */
+#mixer label:first-of-type {
+  margin-left: 0;
+}
+#mixer label:last-of-type {
+  margin-right: 0;
+}
 label[data-voice*="sop"].checked {
   background-color: var(--sop-color);
 }
@@ -251,24 +306,57 @@ label[data-voice*="ten"]:hover {
 label[data-voice*="bas"]:hover {
   box-shadow: inset 0 0 0 3px var(--bas-color);
 }
+
+/*------------markers------------*/
 .marker {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 2.5px 3px 2.5px;
+  border-width: 0 3px 3px 3px;
   border-color: transparent transparent black transparent;
   position: absolute;
   bottom: 0;
-  transform: translateX(-50%);
-  /* transform: translateY(100%); */
+  transform: translateX(-50%) translateY(1px);
 }
 .marker-text {
-  font-size: .7rem;
+  font-size: 10px;
   font-style: italic;
-  transform: translateX(-.3em) translateY(.3em);
+  transform: translateX(-4px) translateY(4px);
 }
 
-@media (orientation: portrait) and (max-width: 400px) {
+/*------------masque------------*/
+#masque {
+  display: none;
+  font-size: 24px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  background-color: white;
+  color: white;
+  animation: pulse 1.5s infinite alternate;
+  animation-timing-function: ease-out;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-style: italic;
+}
+@keyframes pulse {
+  0% { color:white; }
+  100% {color:black;}
+}
+
+
+/*---------à la fin---------*/
+.invisible {
+  display: none;
+}
+
+/*------------media queries------------*/
+/* @media (orientation: portrait) and (max-width: 400px) {
   #lecteur {
     padding: 5px;
   }
@@ -299,7 +387,7 @@ label[data-voice*="bas"]:hover {
     padding: 1px;
   }
   #lecteur {
-    height: 90px; /* === Hardcoded height === */
+    height: 90px; 
     width: 100%;
   }
   #menu p {
@@ -377,7 +465,6 @@ label[data-voice*="bas"]:hover {
   #lecteur {
     padding: 5px;
     align-items: center;
-    width: calc(60px + var(--margin-unit));
   }
   #main-group {
     margin: 5px 0;
@@ -392,4 +479,4 @@ label[data-voice*="bas"]:hover {
   #mixer label {
     font-size: .66rem;
   }
-}
+} */

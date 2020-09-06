@@ -1,0 +1,6 @@
+#previousMarkerBtn, #nextMarkerBtn {
+  display: none;
+}
+#arrows-group {
+  width: 37px;
+}

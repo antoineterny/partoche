@@ -1,0 +1,15 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.antoineterny.pde",
+                   "sha256_cert_fingerprints": ["5E:05:CE:5B:66:59:4C:28:AF:5C:1A:51:C4:14:56:BA:96:DD:21:39:08:E9:CE:3F:ED:62:20:A8:18:5C:A7:F6"] }
+    },{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.antoineterny.twa",
+        "sha256_cert_fingerprints": [
+          "54:D9:BB:98:4E:01:E5:E8:3A:77:14:5A:EF:BC:6D:20:15:B2:51:0F:D5:31:50:8E:96:32:56:F6:D7:46:E9:F7"
+        ]
+      }
+    }
+]
