@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Démo du partoche de base</title>
+  <link rel="stylesheet" type="text/css" href="partoche-base.css">
+  <script src="../howler.core.min.js"></script>
+  <script>
+    const playlist = [
+      { 
+        title: "Chopin - Étude op. 10 n°5 (Dinu Lipatti)",
+        fileName: "chopin1005",
+        // voices: [],
+        format: "mp3"
+      },
+      { 
+        title: "Beethoven - Quatuor n° 10, 3ème mvt (Budapest Quartet)",
+        fileName: "beeth743",
+        // voices: [],
+        format: "mp3"
+      },
+      { 
+        title: "Puccini - Manon Lescaut « Donna non vidi mai » (Beniamino Gigli)",
+        fileName: "donna",
+        // voices: [],
+        format: "mp3"
+      },
+    ]
+  </script>
+</head>
+<body>
+  <div class="conteneur">
+
+    <div id="partoche" class="cadre">
+      <div id="pages">
+      </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
+    </div>
+    
+    <div id="lecteur">
+      <div id="play-group">
+        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
+        <div id="currentTime" class="time"></div>
+      </div>
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
+        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
+        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
+      </div>
+      <div id="main-group">
+        <div id="titre"><i>Commence par choisir un titre</i></div>
+        <!-- <div id="mixer"></div> -->
+      </div>
+      <div id="menu-group">
+        <button id="menuBtn" onclick="toggleMenu()"></button>
+        <div id="totalTime" class="time"></div>
+      </div>
+      <div id="masque">juste un instant, je charge...</div>
+    </div>
+
+  </div>
+  
+  <script src="partoche-audio.js"></script>
+  <script src="partoche-base.js"></script>
+</body>
+</html>
