@@ -4,11 +4,11 @@ window.onload = () => {
 }
 window.addEventListener("resize", () => {
   console.log("width:", window.innerWidth,"height:", window.innerHeight, "ratio:", window.innerWidth/window.innerHeight);
-  if (index) {
-    initData(index);
-    createVoiceButtons(index);
-    addStabilo();
-    restoreVoiceButtonsState()
+  if (index !== undefined) {
+    initData(index)
+    addStabilo()
+    // createVoiceButtons(index);
+    // restoreVoiceButtonsState()
   }
 });
 
@@ -223,17 +223,19 @@ function createVoiceButtons(index) {
   }
 }
 
-function restoreVoiceButtonsState() {
-  for (let tr of tracks) {
-    if (tr._muted === false) {
-      document.querySelectorAll("#mixer label").forEach((label) => {
-        if (label.getAttribute("data-voice") === tr["data-voice"]) {
-          label.classList.add("checked");
-        }
-      });
-    }
-  }
-}
+// Visiblement ne sert plus à rien :-)
+// function restoreVoiceButtonsState() {
+//   console.log("restoreVoiceButtonsState fired")
+//   for (let tr of tracks) {
+//     if (tr._muted === false) {
+//       document.querySelectorAll("#mixer label").forEach((label) => {
+//         if (label.getAttribute("data-voice") === tr["data-voice"]) {
+//           label.classList.add("checked");
+//         }
+//       });
+//     }
+//   }
+// }
 
 function addStabilo() {
   document.querySelectorAll(".stabilo").forEach((x) => x.remove());

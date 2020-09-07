@@ -4,7 +4,7 @@ window.onload = () => {
 }
 window.addEventListener("resize", () => {
   console.log("width:", window.innerWidth,"height:", window.innerHeight, "ratio:", window.innerWidth/window.innerHeight);
-  if (index) {
+  if (index !== undefined) {
     initData(index);
     // createVoiceButtons(index);
     // addStabilo();
