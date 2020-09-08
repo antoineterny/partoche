@@ -125,7 +125,7 @@ function addPages() {
     }
     newImg.src = `${playlist[index].fileName}/${
       playlist[index].fileName
-    }_page${[i]}.png`;
+    }_Page_${[i]}.png`;
     newImg.style.width = partocheWidth;
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);

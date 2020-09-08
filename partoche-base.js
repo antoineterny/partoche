@@ -2,15 +2,16 @@ let index;
 window.onload = () => {
   initMenu();
 }
-window.addEventListener("resize", () => {
+
+window.onresize = function() {
   console.log("width:", window.innerWidth,"height:", window.innerHeight, "ratio:", window.innerWidth/window.innerHeight);
   if (index !== undefined) {
-    initData(index)
-    addStabilo()
+    initData(index);
     // createVoiceButtons(index);
+    // addStabilo();
     // restoreVoiceButtonsState()
   }
-});
+} 
 
 //=================
 // Création du menu
@@ -25,7 +26,7 @@ function initMenu() {
       index = i;
       initAudio(i);
       initData(i);
-      createVoiceButtons(i);
+      // createVoiceButtons(i);
       toggleMenu();
     });
     document.querySelector("#menu").append(newP);
@@ -45,7 +46,6 @@ function toggleMenu() {
 let regions = [];
 let markers = [];
 let pageOffsets = [];
-let stabilo = {};
 
 // Lecture des fichiers csv (regions et markers), json (décalages de page), stabiloJson
 async function initData(index) {
@@ -64,14 +64,6 @@ async function initData(index) {
   });
   pageOffsets = json;
   addPages();
-  
-  let stabiloJson = await fetch(
-    `${fileName}/${fileName}_stabilo.json`
-  ).then(function (response) {
-    return response.json();
-  });
-  stabilo = stabiloJson;
-  // addStabilo();
 }
 
 function processRegionsMarkers(csv) {
@@ -102,11 +94,12 @@ function processRegionsMarkers(csv) {
 // Ajout des images
 const pages = document.querySelector('#pages');
 const partoche = document.querySelector('#partoche');
-let pagesHeight, previousPagesHeight, pagesLoaded;
+let pagesHeight = []
+let previousPagesHeight = []
+let pagesLoaded = 0
 function addPages() {
-  pages.innerHTML = '';
+  document.querySelectorAll("#pages img").forEach(x => x.remove())
   let partocheWidth = getComputedStyle(partoche).width;
-  // pages.style = "transition-duration: .5s;";
   pagesHeight = [];
   previousPagesHeight = [];
   pagesLoaded = 0;
@@ -123,22 +116,40 @@ function addPages() {
           }
       }
     }
-    newImg.src = `${playlist[index].fileName}/${
-      playlist[index].fileName
-    }_page${[i]}.png`;
+    newImg.src = `${playlist[index].fileName}/${playlist[index].fileName}_Page_${[i]}.png`;
     newImg.style.width = partocheWidth;
     newImg.setAttribute("id", `page${i}`);
     pages.appendChild(newImg);
   }
   // addStabilo positionne les stabilos en fonction de la hauteur des pages
-  addStabilo();
+  // addStabilo();
+}
+
+// Ajout des marqueurs s'il y en a
+function createTitreMarkers() {
+  document.querySelectorAll(".marker").forEach((x) => x.remove());
+  if (markers.length === 0) {
+    document.querySelector("#previousMarkerBtn").classList.add('disabled');
+    document.querySelector("#nextMarkerBtn").classList.add('disabled');
+  } else {
+    let dur = tracks[0].duration(); 
+    for (let marker of markers) {
+      let newMarker = document.createElement('div');
+      let newMarkerText = document.createElement('div');
+      newMarker.classList.add('marker');
+      newMarker.style = `left: ${marker.time / dur * 100}%;`
+      newMarkerText.classList.add('marker-text');
+      newMarkerText.innerHTML = marker.text;
+      document.querySelector('#titre').appendChild(newMarker).appendChild(newMarkerText)
+    }
+  }
 }
 
 //========================================
 // Animation de la partition et du lecteur
 //========================================
 function animate() {
-  let curr = tracks[0].seek(this);
+  let curr = tracks[0].seek();
   let dur = tracks[0].duration();
   let avance = .5;
 
@@ -169,128 +180,6 @@ function animate() {
   animID = requestAnimationFrame(animate);
 }
 
-//============================================
-// Création des boutons, stabilo et marqueurs
-//============================================
-function createVoiceButtons(index) {
-  document.querySelectorAll("#mixer label").forEach((x) => x.remove());
-  const mixer = document.querySelector("#mixer");
-  let voices = playlist[index].voices;
-  let pupitre;
-  for(i=0; i<voices.length; i++){
-    if (voices[i].match(/sop/g)) {pupitre = "sop"}
-    else if (voices[i].match(/alt/g)) {pupitre = "alt"}
-    else if (voices[i].match(/ten/g)) {pupitre = "tén"}
-    else if (voices[i].match(/bas/g)) {pupitre = "bas"};
-    let numero = voices[i].match(/[1-9]/g);
-    if(numero) pupitre += ` ${numero[0]}`;
-    
-    if(pupitre) {
-      let newVoiceBtn = document.createElement("label");
-      newVoiceBtn.setAttribute("data-voice", voices[i]);
-      newVoiceBtn.innerText = pupitre;
-      newVoiceBtn.addEventListener("click", function(e) {
-        this.classList.toggle("checked");
-        let allStabilo = document.querySelectorAll(".stabilo");
-        if(this.classList.value === "checked") {
-          tracks.forEach(tr => {
-            if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
-              tr.mute(false);
-            } 
-          })
-          allStabilo.forEach(st => {
-            let stabiloVoice = st.getAttribute("data-voice");
-            if (stabiloVoice === e.target.attributes["data-voice"].value) {
-              st.classList.remove("invisible");
-            } 
-          });
-        } else {
-          tracks.forEach((tr) => {
-            if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
-              tr.mute(true);
-            }
-            allStabilo.forEach(st => {
-              let stabiloVoice = st.getAttribute("data-voice");
-              if (stabiloVoice === e.target.attributes["data-voice"].value) {
-                st.classList.add("invisible");
-              } 
-            });
-          });
-        }
-      })
-      mixer.append(newVoiceBtn);
-    }
-  }
-}
-
-// Visiblement ne sert plus à rien :-)
-// function restoreVoiceButtonsState() {
-//   console.log("restoreVoiceButtonsState fired")
-//   for (let tr of tracks) {
-//     if (tr._muted === false) {
-//       document.querySelectorAll("#mixer label").forEach((label) => {
-//         if (label.getAttribute("data-voice") === tr["data-voice"]) {
-//           label.classList.add("checked");
-//         }
-//       });
-//     }
-//   }
-// }
-
-function addStabilo() {
-  document.querySelectorAll(".stabilo").forEach((x) => x.remove());
-  if (pagesHeight.length === 0 || Object.keys(stabilo).length === 0) {
-    window.requestAnimationFrame(addStabilo);
-  } else {
-    Object.keys(stabilo).forEach((voix) => {
-      for (let i in stabilo[voix]) {
-        for (let j in stabilo[voix][i]) {
-          let newStabiloDiv = document.createElement("div");
-          let newDivTop =
-            previousPagesHeight[i] +
-            (pagesHeight[i] * stabilo[voix][i][j]) / 100;
-          newStabiloDiv.classList.add(
-            "stabilo",
-            `${voix.slice(0, 3)}`,
-            "invisible"
-          );
-          newStabiloDiv.setAttribute("data-voice", voix);
-          newStabiloDiv.style = `top: ${newDivTop}px; height: 20px`;
-          for (let tr of tracks) {
-            if (
-              tr["data-voice"] === voix &&
-              tr.state() === "loaded" &&
-              tr._muted === false
-            ) {
-              newStabiloDiv.classList.remove("invisible");
-            }
-          }
-          pages.prepend(newStabiloDiv);
-        }
-      }
-    });
-  }
-}
-
-// Création des marqueurs
-function createTitreMarkers() {
-  document.querySelectorAll(".marker").forEach((x) => x.remove());
-  if (markers.length === 0) {
-    document.querySelector("#previousMarkerBtn").classList.add('disabled');
-    document.querySelector("#nextMarkerBtn").classList.add('disabled');
-  } else {
-    let dur = tracks[0].duration(); 
-    for (let marker of markers) {
-      let newMarker = document.createElement('div');
-      let newMarkerText = document.createElement('div');
-      newMarker.classList.add('marker');
-      newMarker.style = `left: ${marker.time / dur * 100}%;`
-      newMarkerText.classList.add('marker-text');
-      newMarkerText.innerHTML = marker.text;
-      document.querySelector('#titre').appendChild(newMarker).appendChild(newMarkerText)
-    }
-  }
-}
 
 //======================
 // Fonctions utilitaires

@@ -8,7 +8,7 @@ window.addEventListener("resize", () => {
     initData(index);
     createVoiceButtons(index);
     addStabilo();
-    restoreVoiceButtonsState()
+    // restoreVoiceButtonsState()
   }
 });
 
