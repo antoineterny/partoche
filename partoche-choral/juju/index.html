@@ -10,29 +10,37 @@
 
     gtag('config', 'UA-176566871-1');
   </script>
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+    const el = document.createElement('pwa-update');
+    document.body.appendChild(el);
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Démo du partoche de base</title>
-  <link rel="stylesheet" type="text/css" href="../css/partoche-base.css">
-  <script src="../js/howler.core.min.js"></script>
+  <title>Partoche pour Juju</title>
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral.css">
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral-queries.css">
+  <!-- <link rel='manifest' href='manifest.json'> -->
+  <script src="../../js/howler.core.min.js"></script>
   <script>
     const playlist = [
       { 
-        title: "Chopin - Étude op. 10 n°5 (D. Lipatti)",
-        fileName: "chopin1005",
-        // voices: [],
+        title: "Humpty Dumpty",
+        fileName: "humpty",
+        voices: ["acc", "sop", "ten", "bas"],
         format: "mp3"
       },
       { 
-        title: "Beethoven - Quatuor n° 10, III (Budapest Quartet)",
-        fileName: "beeth743",
-        // voices: [],
+        title: "Hey Diddle, Diddle!",
+        fileName: "heydiddle",
+        voices: ["acc", "sop", "ten", "bas"],
         format: "mp3"
       },
       { 
-        title: "Puccini - « Donna non vidi mai » (B. Gigli)",
-        fileName: "donna",
-        // voices: [],
+        title: "Hickory, dickory, dock",
+        fileName: "hickory",
+        voices: ["acc", "sop", "ten", "bas"],
         format: "mp3"
       },
     ]
@@ -62,7 +70,7 @@
       </div>
       <div id="main-group">
         <div id="titre"><i>Commence par choisir un titre</i></div>
-        <!-- <div id="mixer"></div> -->
+        <div id="mixer"></div>
       </div>
       <div id="menu-group">
         <button id="menuBtn" onclick="toggleMenu()"></button>
@@ -73,7 +81,8 @@
 
   </div>
   
-  <script src="../js/partoche-audio.js"></script>
-  <script src="../js/partoche-base.js"></script>
+  <script src="../../js/partoche-audio.js"></script>
+  <script src="../../js/partoche-base.js"></script>
+  <script src="../../js/partoche-choral.js"></script>
 </body>
 </html>

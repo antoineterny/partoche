@@ -1,58 +1,120 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../partoche-etude.css">
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
+    <link rel="stylesheet" href="../../css/partoche-etude.css">
     <script>
+      // const partocheType = "etude";
       const morceau = "sonatine";
+      const aLa = "𝅘𝅥";
       const playlist = [
-        { titre: "sonatineB", description: "Sonatine en sol majeur — passage B" },
-        { titre: "sonatineC", description: "Sonatine en sol majeur — passage C" },
-        { titre: "sonatineA", description: "Sonatine en sol majeur — passage A" },
-        { titre: "sonatineD", description: "Sonatine en sol majeur — passage D" },
-        { titre: "sonatineE", description: "Sonatine en sol majeur — passage E" },
-        { titre: "sonatineF", description: "Sonatine en sol majeur — passage F" },
+        { 
+          title: "Sonatine en sol - passage A",
+          fileName: "sonatineA",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Sonatine en sol - passage B",
+          fileName: "sonatineB",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Sonatine en sol - passage C",
+          fileName: "sonatineC",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Sonatine en sol - passage D",
+          fileName: "sonatineD",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Sonatine en sol - passage E",
+          fileName: "sonatineE",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Sonatine en sol - passage F",
+          fileName: "sonatineF",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
       ];
     </script>
-    <script src="../partoche-etude.js" defer></script>
+    
     <title>Beethoven - Sonatine en sol majeur (1er mvt)</title>
 </head>
+
 <body>
-  <h1>Beethoven - Sonatine en sol majeur (I<sup>er</sup> mvt)</h1>
   <div class="conteneur">
 
-    <div class="partoche cadre">
-      <div class="pages">
+    <div id="partoche" class="cadre rounded">
+      <div id="pages">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Beethoven_Hornemann.jpg" style="width:100%">
       </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
+    </div>
+    
+    <div id="lecteur">
+
+      <div id="play-group">
+        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
+        <div id="currentTime" class="time"></div>
+      </div>
+
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
+        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
+        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
+      </div>
+
+      <div id="main-group">
+        <div id="titre"><i>commence par choisir un titre</i></div>
+        <div id="mixer">
+          <label for="balance">
+            gauche
+            <input type="range" id="balance" name="balance" min="-3" max="3" value="0">
+            droite
+          </label> 
+          <label for="metronome">
+            <input type="checkbox" name="metronome" id="metronome" checked>métronome
+          </label>
+        </div>
+      </div>
+
+      <div id="menu-group">
+        <button id="menuBtn" onclick="toggleMenu()"></button>
+        <div id="totalTime" class="time"></div>
+      </div>
+
+      <div id="masque">juste un instant, je charge...</div>
+      
     </div>
 
-    <div class="lecteur cadre">
-      <audio id="audio1" src="" preload="auto"></audio>
-      <audio id="audio2" src="" preload="auto"></audio>
-      <audio id="audio3" src="" preload="auto"></audio>
-      <div class="boutons">
-        <button id="btn1" class="play"></button>
-        <button id="stop"></button>
-        <h2 class="titre">Passage A</h2>
-          <button id="prev"></button>
-          <button id="next"></button>
-      </div>
-      <div id="curseur">
-      </div>
-      <div id="progression">
-      </div>
-      <div id="temps">
-        <div id="tempsCourant">00:00</div>
-        <div id="tempsTotal">00:00</div>
-      </div>
-      <div id="balance-et-metronome">
-        <p>gauche<input type="range" id="balance" min="-100" max="100" value = "0">droite</p>
-        <label><input type="checkbox" id="metronome" checked>Métronome</label>
-      </div>
-    </div>
-    <p><i>En cas de caprice du lecteur, un petit rechargement de la page (Ctrl-R ou F5) 
-      devrait remettre les choses en ordre de marche.</i></p>
   </div>
+  <script src="../../js/howler.core.min.js"></script>
+  <script src="../../js/partoche-audio.js"></script>
+  <script src="../../js/partoche-base.js"></script>
+  <script src="../../js/partoche-etude.js"></script>
+
 </body>
 </html>

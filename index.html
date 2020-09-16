@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#ffc40d">
+  <meta name="apple-mobile-web-app-title" content="partoche">
+  <meta name="application-name" content="partoche">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="theme-color" content="#ffc40d">
+
+  <title>partoche</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'IM Fell English', serif;
+    }
+    body {
+      max-width: 70ch;
+      margin: auto;
+      padding: 1em;
+      margin-bottom: 2em;;
+    }
+    h1 {
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      margin-top: 1em;
+    }
+    h3 {
+      margin-top: .5em;
+    }
+    h2, h3 {
+      margin-bottom: 0.25em;
+    }
+    .cadre {
+      border: 1px solid black;
+      box-shadow: 0 0 0 2px white,
+                  0 0 0 5px black;
+      margin: 1em 0 1.5em;
+      padding: 1em;
+    }
+    .cadre:hover {
+      box-shadow: 0 0 0 2px white,
+                  0 0 0 5px black,
+                  8px 8px 8px 0 grey;
+      /* background-color: #f1f1f1; */
+    }
+    .boutons {
+      display:flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    button {
+      font-size: 1rem;
+      padding: .35em .5em;
+      margin: .75em .5em .25em .25em;
+      border: 1px solid grey;
+      border-radius: .2em;
+      background: linear-gradient(hsl(45, 100%, 70%), hsl(45, 100%, 53%)) ;
+      border: 1px solid hsl(45, 100%, 33%);
+    }
+    button:hover {
+      background: linear-gradient(hsl(45, 100%, 53%), hsl(45, 100%, 80%) ) ;
+      border: 1px solid hsl(45, 100%, 33%);
+      cursor: pointer;
+    }
+    li {
+      margin-left: 1em;
+      margin-bottom: .3em;
+    }
+  </style>
+
+  <link rel='manifest' href='manifest.json'>
+</head>
+
+<body>
+  <img src="android-chrome-192x192.png" style="float:left; width:6em; height:6em; transform:rotate(-5deg); margin:.5em 1em 0 0;">
+  <h1>partoche.js</h1>
+  <p>Une petite application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition correspondante.</p>
+  
+  <!-- <div id="base" class="cadre">
+    <h3>Partoche BASE</h3>
+    <p>Un simple lecteur de partition, qui sert de base aux autres versions. Une seul piste audio et une seule partition.<br>
+    C'est une simple démonstration du cœur du programme.</p>
+    <a href="partoche-base/index.html"><button>démo</button></a>
+  </div> -->
+
+  <div id="etude" class="cadre">
+    <h3>Partoche ÉTUDE</h3>
+    <p>Conçu pour l'apprentissage d'un morceau de piano, on peut régler le mixage entre la main gauche et la main droite, et activer ou non le métronome. L'idée est de répéter chaque section du morceau de plus en plus vite, mains séparément en écoutant l'autre main, ou la même, ou les deux...</p>
+    <div class="boutons">
+      <a href="partoche-etude/rustique/index.html"><button>Rustique (Poulenc)</button></a>
+      <a href="partoche-etude/sonatine/index.html"><button>Sonatine en sol (Beethoven)</button></a>
+      <!-- <a href="partoche-etude/mistral/index.html"><button>Mistral gagnant (Renaud)</button></a> -->
+    </div>
+  </div>
+  
+  <div id="duo" class="cadre">
+    <h3>Partoche DUO</h3>
+    <p>Conçu pour préparer un morceau de piano à quatre mains, on peut régler le mixage entre les deux parties, et les deux partitions sont affichées.</p>
+    <div class="boutons">
+      <a href="partoche-duo/mmo/index.html"><button>Ma mère l'Oye (Ravel)</button></a>
+      <a href="partoche-duo/dvorak/index.html"><button>Danse slave (Dvorak)</button></a>
+    </div>
+  </div>
+  
+  <div id="duo" class="cadre">
+    <h3>Partoche CHORAL</h3>
+    <p>Conçu pour aider les choristes dans leur préparation individuelle entre deux répétitions (ou en temps de confinement...), on entend toujours l'accompagnement sur lequel on ajoute la voix qu'on souhaite apprendre, qui se retrouve surlignée dans la partition.</p>
+    <div class="boutons">
+      <a href="partoche-choral/didon/index.html"><button>Didon et Énée (Purcell)</button></a>
+      <a href="partoche-choral/samson/index.html"><button>Samson et Dalila (Saint-Saëns)</button></a>
+    </div>
+  </div>
+
+  <h2>Comment utiliser partoche ?</h2>
+  <h3>Pour toutes les versions</h3>
+  <ul>
+    <li>Vous êtes invité à choisir un morceau dans le menu déroulant</li>
+    <li>Il faut attendre un peu que les fichiers nécessaires se chargent, pour certains morceaux ça peut prendre du temps.</li>
+    <li>Le bouton <img src="img/svg-imfell/play.svg" style="width:1em;height: 1em;"> lance la lecture, et se change en <img src="img/svg-imfell/pause.svg" style="width:1em;height: 1em;"> qui l'interrompt.</li>
+    <li>Le bouton <img src="img/svg-imfell/menu.svg" style="width:1em;height: 1em;"> fait apparaître le menu où on peut choisir le morceau.</li>
+    <li>Les boutons <img src="img/svg-imfell/backward.svg" style="width:1em;height: 1em;"> et <img src="img/svg-imfell/forward.svg" style="width:1em;height: 1em;"> font respectivement reculer et avancer de 3 secondes, et les boutons <img src="img/svg-imfell/prevmarker.svg" style="width:1em;height: 1em;"> et <img src="img/svg-imfell/nextmarker.svg" style="width:1em;height: 1em;"> font atteindre le marqueur le plus proche. 
+      <br>Dans les partoches qui n'ont pas de marqueurs, ils sont désactivés.</li>
+    <li>On peut également cliquer (toucher) les tiers gauche et droite de la partoche pour se déplacer à la ligne la plus proche, ou encore cliquer directement dans la barre de progression.</li>
+  </ul>
+
+  <h3>Pour partoche étude et duo</h3>
+  <ul>
+    <li>On peut ajuster le mixage entre main gauche et main droite (partie prima) et main gauche (partie seconda) en faisant glisser le curseur : <br>
+      gauche <input type="range" style="transform: translateY(.5em);"> droite</li>
+    <li>Le métronome, s'il est présent, s'active et se désactive en cliquant sur la case à cocher : <br>
+      <input type="checkbox" checked> métronome</li>
+  </ul>
+
+  <h3>Pour partoche choral</h3>
+  <ul>
+    <li>Des boutons &laquo; SOP &raquo;	, &laquo; ALT &raquo;	etc. permettent d'entendre les parties de chœur et surligner les paroles correspondantes.</li>
+  </ul>
+
+  <h2>Compatibilté</h3>
+    <ul>
+      <li><strong>Partoche ne fonctionne pas sous internet explorer.</strong> Il nécessite un navigateur moderne tel que <a href="https://www.mozilla.org/fr/firefox/new/">Firefox</a> ou <a href="https://www.google.com/intl/fr/chrome/">Chrome</a>.</li>
+      <li>Partoche fonctionne sur les tablettes et téléphones Android et Apple récents. Si l'interface n'apparaît pas complètement, vous pouvez glisser avec le doigt pour faire apparaître la partie qui dépasse de l'écran. En général un utilisation en mode paysage est plus adaptée.</li>
+      <li>Le code de partoche utilise la Web Audio API par l'intermédiaire de <a href="https://github.com/goldfire/howler.js">howler.js</a></li>
+    </ul>
+
+  <script>
+    function isIE() {
+      ua = navigator.userAgent;
+      /* MSIE used to detect old browsers and Trident used to newer ones*/
+      var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+      
+      return is_ie; 
+    }
+    /* Create an alert to show if the browser is IE or not */
+    if (isIE()){
+        alert('Ce site ne fonctionnera pas avec internet explorer. Réessayez avec un navigateur tel que Firefox ou Chrome.');
+    }
+  </script>
+  <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+    const el = document.createElement('pwa-update');
+    document.body.appendChild(el);
+  </script>
+</body>
+</html>

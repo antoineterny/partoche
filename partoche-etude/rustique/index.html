@@ -12,59 +12,70 @@
   </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../partoche-etude.css">
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
+    <link rel="stylesheet" href="../../css/partoche-etude.css">
     <script>
+      const partocheType = "etude";
       const morceau = "rustique";
       const aLa = "♪";
       const playlist = [
         { 
           title: "Rustique - passage A",
           fileName: "RustiqueA",
+          voices: ["droite", "gauche", "metronome"],
           format: "mp3"
         },
         { 
           title: "Rustique - passage B",
           fileName: "RustiqueB",
+          voices: ["droite", "gauche", "metronome"],
           format: "mp3"
         },
         { 
           title: "Rustique - passage C",
           fileName: "RustiqueC",
+          voices: ["droite", "gauche", "metronome"],
           format: "mp3"
         },
         { 
           title: "Rustique - passage D",
           fileName: "RustiqueD",
+          voices: ["droite", "gauche", "metronome"],
           format: "mp3"
         },
       ];
     </script>
-    <script src="../howler.core.min.js"></script>
-    <script src="../partoche-etude.js" defer></script>
+    <script src="../../js/howler.core.min.js"></script>
+    
     <title>Poulenc - Rustique</title>
 </head>
+
 <body>
   <div class="conteneur">
 
     <div id="partoche" class="cadre rounded">
       <div id="pages">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Francis_Poulenc_and_Wanda_Landowska_%28cropped%29.jpg" style="width:100%">
+        <img src="https://i.telegraph.co.uk/multimedia/archive/02517/poulenc_2517886b.jpg" style="width:100%">
       </div>
-      <div id="menu">
-      </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
     </div>
     
     <div id="lecteur">
+
       <div id="play-group">
         <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
         <div id="currentTime" class="time"></div>
       </div>
-      <div id="arrows-group">
-        <button id="backwardBtn" onclick="backward()"></button>
-        <button id="forwardBtn" onclick="forward()"></button>
+
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
         <button id="previousMarkerBtn" onclick="previousMarker()"></button>
         <button id="nextMarkerBtn" onclick="nextMarker()"></button>
       </div>
+
       <div id="main-group">
         <div id="titre"><i>commence par choisir un titre</i></div>
         <div id="mixer">
@@ -78,14 +89,21 @@
           </label>
         </div>
       </div>
+
       <div id="menu-group">
         <button id="menuBtn" onclick="toggleMenu()"></button>
         <div id="totalTime" class="time"></div>
       </div>
+
+      <div id="masque">juste un instant, je charge...</div>
+      
     </div>
 
   </div>
   
+  <script src="../../js/partoche-audio.js"></script>
+  <script src="../../js/partoche-base.js"></script>
+  <script src="../../js/partoche-etude.js"></script>
 
 </body>
 </html>

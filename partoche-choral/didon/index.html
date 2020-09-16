@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
+
+  <!-- <script type="module">
+    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+    const el = document.createElement('pwa-update');
+    document.body.appendChild(el);
+  </script> -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Didon et Énée</title>
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral.css">
+  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral-queries.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <!-- <link rel="manifest" href="/partoche-choral/didon/site.webmanifest"> -->
+  <script src="../../js/howler.core.min.js"></script>
+  <script>
+    const playlist = [
+      { 
+        title: "2. Banish sorrow, banish care",
+        fileName: "didon02",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "5. When monarchs unite",
+        fileName: "didon05",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "8. Fear no danger to ensue",
+        fileName: "didon08",
+        voices: ["acc", "sop1", "sop2", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "10. Cupid only throws the dart",
+        fileName: "didon10",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "14. To the hills and the vales!",
+        fileName: "didon14",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "17. Harm's our delight",
+        fileName: "didon17",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "19. Ho ho ho! (1)",
+        fileName: "didon19",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "21. Ho ho ho! (2)",
+        fileName: "didon21",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "27. Thanks to these lonesome vales",
+        fileName: "didon27",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "31. Haste haste to town",
+        fileName: "didon31",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "34. Come away, fellow sailors",
+        fileName: "didon34",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "38. Destruction's our delight",
+        fileName: "didon38",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "41. Great minds against themselves conspire",
+        fileName: "didon41",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+      { 
+        title: "44. With drooping wings ye Cupids come",
+        fileName: "didon44",
+        voices: ["acc", "sop", "alt", "ten", "bas"],
+        format: "mp3"
+      },
+    ]
+  </script>
+</head>
+<body>
+  <div class="conteneur">
+
+    <div id="partoche" class="cadre">
+      <div id="pages">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Gu%C3%A9rin_%C3%89n%C3%A9e_racontant_%C3%A0_Didon_les_malheurs_de_la_ville_de_Troie_Louvre_5184.jpg/752px-Gu%C3%A9rin_%C3%89n%C3%A9e_racontant_%C3%A0_Didon_les_malheurs_de_la_ville_de_Troie_Louvre_5184.jpg" style="width: 100%">
+      </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
+    </div>
+    
+    <div id="lecteur">
+      <div id="play-group">
+        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
+        <div id="currentTime" class="time"></div>
+      </div>
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
+        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
+        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
+      </div>
+      <div id="main-group">
+        <div id="titre"><i>Commence par choisir un titre</i></div>
+        <div id="mixer"></div>
+      </div>
+      <div id="menu-group">
+        <button id="menuBtn" onclick="toggleMenu()"></button>
+        <div id="totalTime" class="time"></div>
+      </div>
+      <div id="masque">juste un instant, je charge...</div>
+    </div>
+
+  </div>
+  
+  <script src="../../js/partoche-audio.js"></script>
+  <script src="../../js/partoche-base.js"></script>
+  <script src="../../js/partoche-choral.js"></script>
+  <script src="partoche-didon.js"></script>
+</body>
+</html>
