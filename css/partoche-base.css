@@ -20,7 +20,7 @@
 .conteneur {
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
   height: calc(100vh - 2*var(--margin-unit));
   width: calc(100vw - 2*var(--margin-unit));
   margin: var(--margin-unit);
@@ -96,6 +96,9 @@
 #flechedroite {
   right: 0;
   background: linear-gradient(to left, grey, transparent);
+}
+#flechegauche:hover, #flechedroite:hover {
+  cursor: pointer;
 }
 /* .flecheanimation {
   animation-duration: .5s;

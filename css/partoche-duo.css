@@ -21,7 +21,7 @@
 .conteneur {
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
   height: calc(100vh - var(--margin-unit));
   width: calc(100vw - 2*var(--margin-unit));
   margin: var(--margin-unit) var(--margin-unit) 0 var(--margin-unit);

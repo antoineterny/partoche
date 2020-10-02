@@ -1,36 +1,23 @@
 {
   "name": "partoche",
   "short_name": "partoche",
+  "lang": "fr",
+  "start_url": "/partoche/index.html",
+  "display": "fullscreen",
+  "orientation": "any",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "description": "partoche est une application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition.",
   "icons": [
     {
-      "src": "https://antoineterny.com/partoche/android-chrome-192x192.png",
+      "src": "android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://antoineterny.com/partoche/android-chrome-512x512.png",
+      "src": "android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "fullscreen",
-  "start_url": "https://antoineterny.com/partoche/index.html",
-  "url": "https://antoineterny.com/partoche/index.html",
-  "lang": "French",
-  "screenshots": [
-    {
-      "src": "img/screenshots/partoche_screenshot_784x419.png",
-      "sizes": "750x1334",
-      "type": "image/png"
-    },
-    {
-      "src": "img/screenshots/partoche_screenshot_500x699.png",
-      "sizes": "500x699",
-      "type": "image/png"
-    }
-  ],
-  "orientation": "landscape",
-  "description": "partoche.js est une petite application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition correspondante."
+  ]
 }
