@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partoche-embed exemple avec des vidéos</title>
+  <link rel="stylesheet" href="../partoche-embed.css">
+</head>
+<body>
+  <div class="container">
+  <h1>La sonate &laquo; au clair de lune &raquo; de Beethoven</h1>
+  <p>J'ai enregistré ce premier mouvement page par page à la demande de mon élève Pierre pendant le confinement. Ce n'est pas d'un intérêt artistique énorme dans la mesure où je l'ai fait en lecture à vue, néanmoins les fichiers existent et ça m'a permis de m'en servir pour tester la foncionnalité vidéo de <em>partoche-embed</em>.
+  </p>
+  <p>Un exemple d'utilisation de la version audio est visible sur <a href="../liapounov-sonate/index.html">cette page</a>.</p>
+
+  <h2>Première page</h2>
+  <p>L'une des pages les plus célèbres de la littérature pour piano. Ce n'est pas le moment de faire une fausse note ! <br>
+    Il est important de noter la mesure à C barré, donc la pulsation à la blanche, deux fois pas mesure. On a souvent entendu ce morceau joué un peu trop lentement (comme dans cette première vidéo, j'avoue) et à quatre temps dans les conservatoires, mais ça ne doit pas faire oublier le véritable mouvement voulu par Beethoven. <br>
+    A l'entrée du thème (repère B), on croit voir une polyrythmie avec la croche pointée - double, mais c'est en réalité une notation simplifiée, et la double-croche doit tomber exactement entre la dernière croche de triolet et la barre de mesure. Un rapport 5/6 - 1/6, impossible à noter dans une mesure binaire avec les notations disponibles à l'époque de Beethoven, et très lourde à 12/8. Et d'ailleurs ce morceau n'est pas à 12/8 car 12/8 est une mesure à 4 temps et ici on est à 2 temps ! 
+    </p>
+  <div class="partoche" id="lune1" data-type="video">
+    <div class="partition cadre" style="height: 300px;">
+      <div class="pages"></div>
+      <div class="fleche flechegauche">↸</div>
+      <div class="fleche flechedroite">↵</div>
+    </div>
+  </div>
+
+  <h2>Deuxième page</h2>
+  <p>A la deuxième ligne, on remarque que l'éditeur s'est demandé s'il y avait une faute de frappe dans la rencontre entre un do à la main droite et un si à la main gauche. Il semble que c'est bien la vesion en petites notes et accompagnée d'un point d'interrogation qui est la bonne, la dissonnance est préparée au premier temps, rien de choquant. D'ailleurs quelques mesures plus loin on retrouve la même dissonnance, avec les mêmes notes, dans la seule main droite, et il n'y a pas de doute sur la justesse du texte.</p>
+  <div class="partoche" id="lune2" data-type="video">
+    <div class="partition cadre" style="height: 300px;">
+      <div class="pages"></div>
+      <div class="fleche flechegauche">↸</div>
+      <div class="fleche flechedroite">↵</div>
+    </div>
+  </div>
+
+  <h2>Troisième page</h2>
+  <p>Des nouveautés dans l'écriture ici, la mélodie ne fait plus systématiquement des octaves avec l'accompagnement, et la main droite passe à une seule voix au passage H. On a tout vu en matière de doigtés pour ce passage, il y en a autant que de pianistes, mais je pense que le plus simple tant pour les doigts que pour la mémoire est d'utiliser toujours 1 - 3 - 2 - 4 dans les diminués. Même si ce n'est pas toujours ce que je fais dans la vidéo...</p>
+  <div class="partoche" id="lune3" data-type="video">
+    <div class="partition cadre" style="height: 300px;">
+      <div class="pages"></div>
+      <div class="fleche flechegauche">↸</div>
+      <div class="fleche flechedroite">↵</div>
+    </div>
+  </div>
+
+  <h2>Quatrième page</h2>
+  <p>La réexposition, en grande partie transposition de l'exposition, ne présente pas de nouveautés sur le plan pianistique, mais plutôt sur le plan de l'expressivité, où la tessiture plus aigue et l'inflexion du discours incitent à un jeu plus extérieur.</p>
+  <div class="partoche" id="lune4" data-type="video">
+    <div class="partition cadre" style="height: 300px;">
+      <div class="pages"></div>
+      <div class="fleche flechegauche">↸</div>
+      <div class="fleche flechedroite">↵</div>
+    </div>
+  </div>
+
+  <h2>Dernière page</h2>
+  <p>Comme souvent chez Beethoven, la réexposition est suivie d'un petit développement, ici c'est très court, dans le passage M, mais c'est l'occasion de trouver une configuration inédite jusqu'ici avec cette marche des deux mains en noires.<br>
+Ensuite vient la coda, avec le thème, réduit à son seul rythme, au pouce de la main gauche, pendant que la main droite rappelle le développement. Attention aux quatrièmes temps qui passent à deux voix, il faut de la souplesse pour bien lier chaque voix.</p>
+  <div class="partoche" id="lune5" data-type="video">
+    <div class="partition cadre" style="height: 300px;">
+      <div class="pages"></div>
+      <div class="fleche flechegauche">↸</div>
+      <div class="fleche flechedroite">↵</div>
+    </div>
+  </div>
+
+  </div><!-- fin du container -->
+  <script src="../partoche-embed.js"></script>
+</body>
+</html>

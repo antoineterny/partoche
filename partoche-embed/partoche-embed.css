@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Work+Sans:ital@0;1&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Work Sans', sans-serif;
+}
+
+body {
+  background-color: #cecece;
+}
+
+.container {
+  background-color: white;
+  min-height: 100vh;
+  max-width: 960px;
+  margin: auto;
+  padding: 2.5em;
+  line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 .5em;
+  color: #3d3d3d;
+  font-family: 'IM Fell English', serif;
+}
+
+ul {
+  margin: 1em 0 1em 2em;
+}
+ul li {
+  margin-bottom: 6px;
+}
+p {
+  margin-bottom: .5em;
+  color: #3d3d3d;
+}
+
+
+/*------------partoche------------*/
+.partoche {
+  margin: 1em 0 2em;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+}
+.partition {
+  position: relative;
+  width: calc(100% - 10px);
+  left: 5px;
+  flex-grow: 1;
+  overflow: hidden;
+  min-height: 50px;
+  resize: vertical;
+}
+.pages {
+  transform: translateY(0) ;
+  transition-property: transform;
+  transition-duration: .5s;
+}
+.pages img {
+  display: block;
+  box-shadow: inset 0 0 0 1px grey;
+}
+.cadre {
+  border: 1px solid black;
+  box-shadow: 0 0 0 2px white,
+              0 0 0 5px black;
+}
+
+/*------------lecteur------------*/
+.lecteur {
+  position: relative;
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-bottom: 1em;
+}
+.play-group {
+  display: flex;
+  flex-grow: 0;
+  flex-direction: column;
+  align-items: center;
+}
+.main-group {
+  flex-grow: 1;
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.controls-group {
+  width: 66px;
+}
+.time {
+  /* font-family: 'IM Fell English', serif; */
+  font-size: 10px;
+  line-height: 1;
+  margin-top: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+video {
+  width: 100%;
+  margin-top: 16px;
+  outline: none;
+}
+
+/*------------boutons------------*/
+button {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  display: inline-block;
+  outline: none;
+}
+.play-group button, .menu-group button {
+  height: 30px;
+  width: 30px;
+}
+.paused {
+  background-image: url(../img/svg-circle/play.svg);
+}
+.playing {
+  background-image: url(../img/svg-circle/pause.svg);
+}
+.paused:hover {
+  background-image: url(../img/svg-circle/playB.svg);
+}
+.playing:hover {
+  background-image: url(../img/svg-circle/pauseB.svg);
+}
+.stopBtn {
+  background-image: url(../img/svg-circle/stop.svg);
+}
+.stopBtn:hover {
+  background-image: url(../img/svg-circle/stopB.svg);
+}
+.disabled {
+  opacity: 0.33;
+}
+
+/*------------flèches------------*/
+.fleche {
+  color: white;
+  font-size: 33vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 33%;
+  opacity: 0;
+}
+.flechegauche {
+  left: 0;
+  background: linear-gradient(to right, grey, transparent);
+}
+.flechedroite {
+  right: 0;
+  background: linear-gradient(to left, grey, transparent);
+}
+.flechegauche:hover, .flechedroite:hover {
+  cursor: pointer;
+}
+
+/*------------titre------------*/
+.titre {
+  font-family: 'IM Fell English', serif;
+  position: relative;
+  flex-grow: 0;
+  font-size: 24px;
+  white-space: nowrap;
+  overflow: visible; /* permet d'afficher les marqueurs, qui débordent*/
+  text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-bottom: 1px solid black;
+}
+
+/*---------à la fin---------*/
+footer {
+  color: white;
+  background-color: black;
+  width: 100%;
+}
+
+/*---------à la fin---------*/
+.invisible {
+  display: none;
+}
