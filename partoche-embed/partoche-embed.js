@@ -1,10 +1,11 @@
 class Partoche {
-    constructor(id) {
+    constructor(id, dataset) {
         this.id = id
-        this.audioFile = `${id}.mp3`
-        this.videoFile = `${id}.m4v`
+        this.type = dataset.type
+        this.mediaFile = `${id}.${dataset.format}`
         this.jsonFile = `${id}.json`
         this.csvFile = `${id}_regions_markers.csv`
+        this.title = dataset.title
         this.regions = []
         this.markers = []
         this.pageOffsets = []
@@ -27,21 +28,30 @@ window.onload = () => {
     const partocheInstances = document.querySelectorAll('.partoche')
     partocheInstances.forEach(partocheDiv => {
         // Création objet Partoche
-        const newPartoche = new Partoche(partocheDiv.id)
+        const newPartoche = new Partoche(partocheDiv.id, partocheDiv.dataset)
         if (partocheDiv.getAttribute('data-type') === "audio") {
+            partocheDiv.innerHTML = `<div class="lecteur"><div class="play-group"><div class="controls-group"> <button class="playBtn paused"></button> <button class="stopBtn"></button></div><div class="time-group"><div class="currentTime time">00:00</div><div class="time"> / </div><div class="totalTime time">00:00</div></div></div><div class="main-group"><div class="titre">${partocheDiv.dataset.title}</div></div></div><div class="partition cadre" style="height: 180px;"><div class="pages"></div><div class="fleche flechegauche">↸</div><div class="fleche flechedroite">↵</div></div>`
             // Création audio player
             const newAudioPlayer = document.createElement('audio')
-            newAudioPlayer.setAttribute('src', newPartoche.audioFile)
+            newAudioPlayer.setAttribute('src', newPartoche.mediaFile)
             newAudioPlayer.setAttribute('id', `${newPartoche.id}-player`)
             newAudioPlayer.setAttribute('preload', "metadata")
-            newAudioPlayer.onended = () => newAudioPlayer.currentTime = 0
+            newAudioPlayer.onended = () => {
+                newAudioPlayer.currentTime = 0
+                newAudioPlayer.parentNode.querySelector('.playBtn').classList.remove("playing");
+                newAudioPlayer.parentNode.querySelector('.playBtn').classList.add("paused");
+            }
+            newAudioPlayer.onpause = () => {
+                newAudioPlayer.parentNode.querySelector('.playBtn').classList.remove("playing");
+                newAudioPlayer.parentNode.querySelector('.playBtn').classList.add("paused");
+            }
             newAudioPlayer.onplay = (event) => {
                 const allPlayers = document.querySelectorAll('video, audio')
                 allPlayers.forEach(player => {
                     if (player.id !== event.target.getAttribute('id')) player.pause()
                 })
             }
-            partocheDiv.appendChild(newAudioPlayer)
+            partocheDiv.querySelector('.controls-group').appendChild(newAudioPlayer)
             // Association du bouton play-pause
             const playBtn = partocheDiv.querySelector('.playBtn')
             const stopBtn = partocheDiv.querySelector('.stopBtn')
@@ -63,9 +73,10 @@ window.onload = () => {
             })
 
         } else if (partocheDiv.getAttribute('data-type') === "video") {
+            partocheDiv.innerHTML = `<div class="partition cadre" style="height: 300px;"><div class="pages"></div><div class="fleche flechegauche">↸</div><div class="fleche flechedroite">↵</div></div>`
             // Création video player
             const newVideoPlayer = document.createElement('video')
-            newVideoPlayer.setAttribute('src', newPartoche.videoFile)
+            newVideoPlayer.setAttribute('src', newPartoche.mediaFile)
             newVideoPlayer.setAttribute('id', `${newPartoche.id}-player`)
             newVideoPlayer.setAttribute('controls', true)
             newVideoPlayer.onended = () => newVideoPlayer.currentTime = 0
@@ -225,8 +236,8 @@ function animate() {
         let avance = .5;
 
         if (partocheDiv.getAttribute('data-type') === 'audio') {
-            partocheDiv.querySelector('.currentTime').innerHTML = formatTime(curr) + " / " + formatTime(dur)
-            // partocheDiv.querySelector('.totalTime').innerHTML = formatTime(dur)
+            partocheDiv.querySelector('.currentTime').innerHTML = formatTime(curr)
+            partocheDiv.querySelector('.totalTime').innerHTML = formatTime(dur)
             partocheDiv.querySelector('.titre').style =
                     `background-image: linear-gradient(to right, gainsboro ${(curr / dur) * 100}%, white 0);`
         }

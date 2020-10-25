@@ -91,9 +91,12 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 30px;
 }
 .controls-group {
   width: 66px;
+  display: flex;
+  justify-content: space-between;
 }
 .time {
   /* font-family: 'IM Fell English', serif; */
@@ -101,6 +104,12 @@ p {
   line-height: 1;
   margin-top: 1px;
   font-variant-numeric: tabular-nums;
+}
+.time-group {
+  width: 66px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 video {
