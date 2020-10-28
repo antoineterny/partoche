@@ -33,13 +33,13 @@
   <title>partoche</title>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Work+Sans:ital@0;1&display=swap');
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'IM Fell English', serif;
+      font-family: 'Work Sans', sans-serif;
+      line-height: 1.8;
     }
     body {
       max-width: 70ch;
@@ -47,35 +47,45 @@
       padding: 1em;
       margin-bottom: 2em;;
     }
+    p {
+      margin-bottom: 1.2em;
+    }
     h1 {
       margin-bottom: 0.5em;
+      font-family: 'IM Fell English', serif;
+      font-size: 2.5rem;
     }
     h2 {
       margin-top: 1em;
       position: relative;
+      font-family: 'IM Fell English', serif;
     }
     h2::after {
       content: "";
       position: absolute;
       left: 0;
-      top: 1.1em;
+      top: 80%;
       height: 2px;
       width: 100%;
-      background-color: #ffc40d;
+      background-color: hsl(45, 100%, 53%);
       z-index: -1;
     }
     h3 {
       margin-top: .5em;
+      font-family: 'IM Fell English', serif;
     }
     h2, h3 {
       margin-bottom: 0.25em;
+    }
+    .chapo {
+      font-size: 1.3rem;
     }
     .cadre {
       border: 1px solid black;
       box-shadow: 0 0 0 2px white,
                   0 0 0 5px black;
       margin: 1em 0 1.5em;
-      padding: 1em;
+      padding: 1em 2em;
     }
     .cadre:hover {
       box-shadow: 0 0 0 2px white,
@@ -96,6 +106,9 @@
       border-radius: .2em;
       background: linear-gradient(hsl(45, 100%, 70%), hsl(45, 100%, 53%)) ;
       border: 1px solid hsl(45, 100%, 33%);
+      font-family: 'IM Fell English', serif;
+      font-weight: 600;
+      letter-spacing: .75px;
     }
     button:hover {
       background: linear-gradient(hsl(45, 100%, 53%), hsl(45, 100%, 80%) ) ;
@@ -104,7 +117,7 @@
     }
     li {
       margin-left: 1em;
-      margin-bottom: .3em;
+      margin-bottom: 1em;
     }
     label {
       font-size: 18px;
@@ -112,12 +125,16 @@
       border: 1px solid black;
       padding: 1px 5px;
       margin: 0 2px;
+      font-family: 'IM Fell English', serif;
     }
     label[data-voice="sop"]:hover {
       box-shadow: inset 0 0 0 3px  hsl(180,50%,80%);
     }
     label[data-voice="alt"]:hover {
       box-shadow: inset 0 0 0 3px  hsl(270,50%,80%);
+    }
+    span {
+      font-family: 'IM Fell English', serif;
     }
     #divInstall {
       position: fixed;
@@ -130,11 +147,13 @@
       transition: opacity 1s;
     }
     #butInstall {
+      font-family: 'Work Sans', sans-serif;
       font-weight: bold;
       padding: .5em 1em;
       border: 2px solid black;
     }
     #noInstall {
+      font-family: 'Work Sans', sans-serif;
       background: transparent;
       color: white;
       padding: .5em 1em;
@@ -150,8 +169,7 @@
 <body>
   <img src="mstile-144x144.png" alt="logo partoche" style="float:left; width:6em; height:6em; transform:rotate(-5deg); margin:.5em 1em 0 0;">
   <h1>partoche</h1>
-  <p>Une petite application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition correspondante.</p>
-  
+  <p class="chapo">Une petite application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition correspondante.</p>
   <!-- <div id="base" class="cadre">
     <h3>Partoche BASE</h3>
     <p>Un simple lecteur de partition, qui sert de base aux autres versions. Une seul piste audio et une seule partition.<br>
@@ -178,12 +196,21 @@
     </div>
   </div>
   
-  <div id="duo" class="cadre">
+  <div id="choral" class="cadre">
     <h3>Partoche CHORAL</h3>
     <p>Conçu pour aider les choristes dans leur préparation individuelle entre deux répétitions (ou en temps de confinement...), on entend toujours l'accompagnement sur lequel on ajoute la voix qu'on souhaite apprendre, qui se retrouve surlignée dans la partition.</p>
     <div class="boutons">
       <a href="partoche-choral/didon/index.html"><button>Didon et Énée (Purcell)</button></a>
       <a href="partoche-choral/samson/index.html"><button>Samson et Dalila (Saint-Saëns)</button></a>
+    </div>
+  </div>
+
+  <div id="embed" class="cadre">
+    <h3>Partoche EMBED</h3>
+    <p>Conçu pour s'intégrer dans une page html classique, au milieu de texte, d'images, de liens, et en autant d'instances que nécessaire. Existe en versions audio et video.</p>
+    <div class="boutons">
+      <a href="partoche-embed/liapounov-sonate/index.html"><button>Sonate de Liapounov (audio)</button></a>
+      <a href="partoche-embed/beeth-lune/index.html"><button>Sonate au clair de lune (video)</button></a>
     </div>
   </div>
 
@@ -203,9 +230,9 @@
   <h3>Pour partoche étude et duo</h3>
   <ul>
     <li>On peut ajuster le mixage entre main gauche et main droite (partie prima) et main gauche (partie seconda) en faisant glisser le curseur : <br>
-      gauche <input type="range" style="transform: translateY(.5em);"> droite</li>
+      <span>gauche</span><input type="range" style="transform: translateY(.3em); margin: 0 1em;"><span>droite</span></li>
     <li>Le métronome, s'il est présent, s'active et se désactive en cliquant sur la case à cocher : <br>
-      <input type="checkbox" checked> métronome</li>
+      <input type="checkbox" checked> <span>métronome</span></li>
   </ul>
 
   <h3>Pour partoche choral</h3>
