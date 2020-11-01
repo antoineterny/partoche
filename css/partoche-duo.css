@@ -146,61 +146,61 @@ button {
   margin-bottom: 3px;
 }
 .paused {
-  background-image: url(/img/svg-circle/play.svg);
+  background-image: url(../img/svg-circle/play.svg);
 }
 .playing {
-  background-image: url(/img/svg-circle/pause.svg);
+  background-image: url(../img/svg-circle/pause.svg);
 }
 .paused:hover {
-  background-image: url(/img/svg-circle/playB.svg);
+  background-image: url(../img/svg-circle/playB.svg);
 }
 .playing:hover {
-  background-image: url(/img/svg-circle/pauseB.svg);
+  background-image: url(../img/svg-circle/pauseB.svg);
 }
 .disabled {
   opacity: 0.33;
 }
 #backwardBtn {
-  background-image: url(/img/svg-circle/backward.svg);
+  background-image: url(../img/svg-circle/backward.svg);
 }
 #backwardBtn:hover {
-  background-image: url(/img/svg-circle/backwardB.svg);
+  background-image: url(../img/svg-circle/backwardB.svg);
 }
 #forwardBtn {
-  background-image: url(/img/svg-circle/forward.svg);
+  background-image: url(../img/svg-circle/forward.svg);
 }
 #forwardBtn:hover {
-  background-image: url(/img/svg-circle/forwardB.svg);
+  background-image: url(../img/svg-circle/forwardB.svg);
 }
 #previousMarkerBtn {
-  background-image: url(/img/svg-circle/prevmarker.svg);
+  background-image: url(../img/svg-circle/prevmarker.svg);
 }
 #previousMarkerBtn:hover {
-  background-image: url(/img/svg-circle/prevmarkerB.svg);
+  background-image: url(../img/svg-circle/prevmarkerB.svg);
 }
 #nextMarkerBtn {
-  background-image: url(/img/svg-circle/nextmarker.svg);
+  background-image: url(../img/svg-circle/nextmarker.svg);
 }
 #nextMarkerBtn:hover {
-  background-image: url(/img/svg-circle/nextmarkerB.svg);
+  background-image: url(../img/svg-circle/nextmarkerB.svg);
 }
 #stopBtn {
-  background-image: url(/img/svg-circle/stop.svg);
+  background-image: url(../img/svg-circle/stop.svg);
   margin-right: 0;
 }
 #menuBtn {
-  background-image: url(/img/svg-circle/menu.svg);
+  background-image: url(../img/svg-circle/menu.svg);
   margin-right: 0;
 }
 #menuBtn:hover {
-  background-image: url(/img/svg-circle/menuB.svg);
+  background-image: url(../img/svg-circle/menuB.svg);
   margin-right: 0;
 }
 #stopBtn:hover {
-  background-image: url(/img/svg-circle/stopB.svg);
+  background-image: url(../img/svg-circle/stopB.svg);
 }
 #menuBtn:hover {
-  background-image: url(/img/svg-circle/menuB.svg);
+  background-image: url(../img/svg-circle/menuB.svg);
 }
 #titre {
   flex-grow: 0;
