@@ -87,27 +87,31 @@ window.onload = () => {
 				newAudioPlayer.currentTime = time;
 				if (newAudioPlayer.paused) newAudioPlayer.play();
 			});
-		} else if (partocheDiv.getAttribute('data-type') === 'video') {
-			partocheDiv.innerHTML = `<div class="partition cadre" style="height: 300px;"><div class="pages"></div><div class="fleche flechegauche">↸</div><div class="fleche flechedroite">↵</div></div>`;
-			// Création video player
-			const newVideoPlayer = document.createElement('video');
-			newVideoPlayer.setAttribute('src', newPartoche.mediaFile);
-			newVideoPlayer.setAttribute('id', `${newPartoche.id}-player`);
-			newVideoPlayer.setAttribute('controls', true);
-			newVideoPlayer.onended = () => (newVideoPlayer.currentTime = 0);
-			newVideoPlayer.onplay = event => {
-				const allPlayers = document.querySelectorAll('video, audio');
-				allPlayers.forEach(player => {
-					if (player.id !== event.target.getAttribute('id'))
-						player.pause();
-				});
-			};
-			partocheDiv.appendChild(newVideoPlayer);
-		} else {
-			console.log(
-				'Il faut mettre un data-type="video" ou data-type="audio" à la div .partoche'
-			);
-		}
+		} else if (
+      partocheDiv.getAttribute("data-type") === "video" ||
+      partocheDiv.getAttribute("data-type") === "video-dessus"
+    ) {
+      partocheDiv.innerHTML = `<div class="partition cadre" style="height: 300px;"><div class="pages"></div><div class="fleche flechegauche">↸</div><div class="fleche flechedroite">↵</div></div>`
+      // Création video player
+      const newVideoPlayer = document.createElement("video")
+      newVideoPlayer.setAttribute("src", newPartoche.mediaFile)
+      newVideoPlayer.setAttribute("id", `${newPartoche.id}-player`)
+      newVideoPlayer.setAttribute("controls", true)
+      newVideoPlayer.onended = () => (newVideoPlayer.currentTime = 0)
+      newVideoPlayer.onplay = event => {
+        const allPlayers = document.querySelectorAll("video, audio")
+        allPlayers.forEach(player => {
+          if (player.id !== event.target.getAttribute("id")) player.pause()
+        })
+      }
+      if (partocheDiv.getAttribute("data-type") === "video-dessus") {
+        partocheDiv.prepend(newVideoPlayer)
+      } else {
+        partocheDiv.append(newVideoPlayer)
+      }
+    } else {
+      console.log('Il faut mettre un data-type="video" ou data-type="audio" à la div .partoche')
+    }
 
 		// Clic dans les flèches sur la partoche
 		const flechegauche = partocheDiv.querySelector('.flechegauche');
