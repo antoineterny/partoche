@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-176566871-1');
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
+    <link rel="stylesheet" href="../../css/partoche-etude.css">
+    <script>
+      // const partocheType = "etude";
+      const morceau = "arabesque";
+      const aLa = "𝅘𝅥";
+      const playlist = [
+        { 
+          title: "Arabesque - passage A",
+          fileName: "arabesqueA",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Arabesque - passage B",
+          fileName: "arabesqueB",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        },
+        { 
+          title: "Arabesque - passage C",
+          fileName: "arabesqueC",
+          voices: ["droite", "gauche", "metronome"],
+          format: "mp3"
+        }
+      ];
+    </script>
+    
+    <title>Burgmüller - Arabesque (Op.100 nº2)</title>
+</head>
+
+<body>
+  <div class="conteneur">
+
+    <div id="partoche" class="cadre rounded">
+      <div id="pages">
+        <img src="https://visualhunt.com/photos/6/piano-grand-piano-musical-instrument-music.jpg?s=m" alt="">
+      </div>
+      <div class="fleche" id="flechegauche">«</div>
+      <div class="fleche" id="flechedroite">»</div>
+      <div id="menu"></div>
+    </div>
+    
+    <div id="lecteur">
+
+      <div id="play-group">
+        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
+        <div id="currentTime" class="time"></div>
+      </div>
+
+      <div id="arrows-group" class="disabled">
+        <button id="backwardBtn" onclick="backward(3)"></button>
+        <button id="forwardBtn" onclick="forward(3)"></button>
+        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
+        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
+      </div>
+
+      <div id="main-group">
+        <div id="titre"><i>commence par choisir un titre</i></div>
+        <div id="mixer">
+          <label for="balance">
+            gauche
+            <input type="range" id="balance" name="balance" min="-3" max="3" value="0">
+            droite
+          </label> 
+          <label for="metronome">
+            <input type="checkbox" name="metronome" id="metronome" checked>métronome
+          </label>
+        </div>
+      </div>
+
+      <div id="menu-group">
+        <button id="menuBtn" onclick="toggleMenu()"></button>
+        <div id="totalTime" class="time"></div>
+      </div>
+
+      <div id="masque">juste un instant, je charge...</div>
+      
+    </div>
+
+  </div>
+  <script src="../../js/howler.core.min.js"></script>
+  <script src="../../js/partoche-audio.js"></script>
+  <script src="../../js/partoche-base.js"></script>
+  <script src="../../js/partoche-etude.js"></script>
+
+</body>
+</html>
