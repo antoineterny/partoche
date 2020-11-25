@@ -60,11 +60,12 @@ p {
 
 /*--------------menu--------------*/
 /* #menu {
-  
+  height: 40ch;
+  overflow-y: scroll;
 } */
 #menu h2 {
   font-size: 1.3rem;
-  margin: 0 0 0.2em 0;
+  margin: 0;
   width: 100%;
 }
 .menu-item {
@@ -76,6 +77,9 @@ p {
   padding: .7em 1em;
 }
 .menu-item:hover {
+  background-color: hsla(45, 100%, 53%, 30%);
+}
+.selected {
   background-color: hsl(45, 100%, 53%);
 }
 .menu-item:hover h2 {

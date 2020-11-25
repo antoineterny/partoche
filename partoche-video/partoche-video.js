@@ -31,6 +31,8 @@ let currentPartoche = {}
 window.onload = () => {
   const newPartoche = new Partoche(menuItems[0].id, menuItems[0].dataset)
   player.src = newPartoche.mediaFile
+
+  document.querySelector("#partition").style.height = (partoche.offsetWidth / 960) * 500 + "px"
   
   // Clic dans les flèches sur la partoche
   const flechegauche = partoche.querySelector(".flechegauche")
@@ -57,7 +59,7 @@ window.onload = () => {
 
   // Association des événements aux liens du menu
   document.querySelectorAll('.menu-item').forEach(menuItem => {
-    menuItem.addEventListener('click', function() {
+    menuItem.addEventListener('click', function(e) {
       const newPartoche = new Partoche(menuItem.id, menuItem.dataset)
       player.src = newPartoche.mediaFile
 
@@ -66,6 +68,15 @@ window.onload = () => {
       currentPartoche = newPartoche
       initData(currentPartoche)
       animate(currentPartoche)
+
+      // Mise en couleur de l'élément du menu
+      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('selected'))
+      e.currentTarget.classList.add('selected')
+      console.log(e.currentTarget)
+
+      // Mise à jour du titre
+      document.querySelector("#titrePartoche").innerHTML = 
+        e.currentTarget.querySelector('h2').innerHTML
     })
   })
 }
