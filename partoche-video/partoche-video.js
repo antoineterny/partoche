@@ -1,16 +1,14 @@
 class Partoche {
-  constructor(id, dataset) {
+  constructor(id) {
     this.id = id
-    this.type = dataset.type
-    this.mediaFile = `${id}/${id}.${dataset.format}`
+    this.type = "video"
+    this.mediaFile = `${id}/${id}.mov`
     this.jsonFile = `${id}/${id}.json`
     this.csvFile = `${id}/${id}_regions_markers.csv`
-    this.title = dataset.title
     this.regions = []
     this.markers = []
     this.pageOffsets = []
     this.pagesHeight = []
-    // this.previousPagesHeight = []
     this.pagesLoaded = 0
   }
   totalPreviousHeight(pageNbr) {
@@ -25,16 +23,97 @@ class Partoche {
 const partoche = document.querySelector("#partoche")
 const player = partoche.querySelector("video")
 player.onended = () => (player.currentTime = 0)
-const menuItems = document.querySelectorAll(".menu-item")
+const menu = document.querySelector("#menu")
+const menuItems = document.querySelectorAll("#menu a")
+const prevVideo = document.querySelector("#prev-video")
+const nextVideo = document.querySelector("#next-video")
 let currentPartoche = {}
 
 window.onload = () => {
-  const newPartoche = new Partoche(menuItems[0].id, menuItems[0].dataset)
+  buildMenu(playlist)
+  changeVideo(0)
+  player.pause()
+  document.documentElement.scrollTop = 0
+  document.querySelector("#partition").style.height = (partoche.offsetWidth / 960) * 500 + "px"
+}
+
+function buildMenu(playlist) {
+  for (let i = 0; i < playlist.length; i++) {
+    const newMenuItem = document.createElement("a")
+    newMenuItem.setAttribute("href", "#titrePartoche")
+    newMenuItem.setAttribute("id", playlist[i].id)
+    const newH2 = document.createElement("h2")
+    newH2.innerHTML = playlist[i].titre
+    const newPara = document.createElement("p")
+    newPara.innerHTML = playlist[i].description
+    const newPages = document.createElement("p")
+    newPages.classList.add("info-pages")
+    newPages.innerHTML = "pages " + playlist[i].pages
+    newMenuItem.append(newH2)
+    newMenuItem.append(newPara)
+    newMenuItem.append(newPages)
+
+    newMenuItem.addEventListener("click", () => changeVideo(i))
+
+    menu.append(newMenuItem)
+  }
+}
+
+function changeVideo(i) {
+  // Changement de source vidéo
+  const newPartoche = new Partoche(playlist[i].id)
   player.src = newPartoche.mediaFile
 
-  document.querySelector("#partition").style.height = (partoche.offsetWidth / 960) * 500 + "px"
-  
+  // Initialisation des données
+  partoche.querySelectorAll(".pages img").forEach(img => img.remove())
+  currentPartoche = newPartoche
+  initData(currentPartoche)
+  animate(currentPartoche)
+
   // Clic dans les flèches sur la partoche
+  addListenersToFleches(currentPartoche)
+
+  // Mise en couleur de l'élément du menu
+  document.querySelectorAll("#menu a").forEach(item => {
+    item.classList.remove("selected")
+    if (item.id === playlist[i].id) item.classList.add("selected")
+  })
+
+  // Mise à jour du titre
+  document.querySelector("#titrePartoche").innerHTML = playlist[i].titre
+
+  // Mise à jour des flèches et ajout d'un listener
+  const prevSpan = document.querySelector("#prev-span")
+  const nextSpan = document.querySelector("#next-span")
+  const prevVideo = document.querySelector("#prev-video")
+  const nextVideo = document.querySelector("#next-video")
+  if (i <= 0) {
+    prevSpan.innerHTML = ""
+    nextSpan.innerHTML = playlist[i + 1].titre
+    prevVideo.onclick = null
+    nextVideo.onclick = () => changeVideo(i + 1)
+    prevVideo.style.opacity = 0
+    nextVideo.style.opacity = 1
+  } else if (i >= playlist.length - 1) {
+    prevSpan.innerHTML = playlist[i - 1].titre
+    nextSpan.innerHTML = ""
+    prevVideo.onclick = () => changeVideo(i - 1)
+    nextVideo.onclick = null
+    prevVideo.style.opacity = 1
+    nextVideo.style.opacity = 0
+  } else {
+    prevSpan.innerHTML = playlist[i - 1].titre
+    nextSpan.innerHTML = playlist[i + 1].titre
+    prevVideo.onclick = () => changeVideo(i - 1)
+    nextVideo.onclick = () => changeVideo(i + 1)
+    prevVideo.style.opacity = 1
+    nextVideo.style.opacity = 1
+  }
+
+  player.play()
+}
+
+function addListenersToFleches(newPartoche) {
   const flechegauche = partoche.querySelector(".flechegauche")
   const flechedroite = partoche.querySelector(".flechedroite")
   flechegauche.addEventListener("click", function () {
@@ -50,34 +129,6 @@ window.onload = () => {
       flechedroite.style.opacity = 0
     }, 50)
     nextRegion(newPartoche)
-  })
-
-  // Initialisation des données
-  currentPartoche = newPartoche
-  initData(currentPartoche)
-  animate(currentPartoche)
-
-  // Association des événements aux liens du menu
-  document.querySelectorAll('.menu-item').forEach(menuItem => {
-    menuItem.addEventListener('click', function(e) {
-      const newPartoche = new Partoche(menuItem.id, menuItem.dataset)
-      player.src = newPartoche.mediaFile
-
-      // Initialisation des données
-      partoche.querySelectorAll('img').forEach(img => img.remove())
-      currentPartoche = newPartoche
-      initData(currentPartoche)
-      animate(currentPartoche)
-
-      // Mise en couleur de l'élément du menu
-      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('selected'))
-      e.currentTarget.classList.add('selected')
-      console.log(e.currentTarget)
-
-      // Mise à jour du titre
-      document.querySelector("#titrePartoche").innerHTML = 
-        e.currentTarget.querySelector('h2').innerHTML
-    })
   })
 }
 
