@@ -180,7 +180,7 @@
     <p>Conçu pour l'apprentissage d'un morceau de piano, on peut régler le mixage entre la main gauche et la main droite, et activer ou non le métronome. L'idée est de répéter chaque section du morceau de plus en plus vite, mains séparément en écoutant l'autre main, ou la même, ou les deux...</p>
     <div class="boutons">
       <a href="partoche-etude/rustique/index.html"><button>Rustique (Poulenc)</button></a>
-      <a href="partoche-etude/sonatine/index.html"><button>Sonatine en sol (Beethoven)</button></a>
+      <a href="partoche-etude/sonatineensol/index.html"><button>Sonatine en sol (Beethoven)</button></a>
       <a href="partoche-etude/arabesque/index.html"><button>Arabesque (Burgmuller)</button></a>
       <a href="partoche-etude/rhapsody/index.html"><button>Rhapsody (Norton)</button></a>
       <!-- <a href="partoche-etude/mistral/index.html"><button>Mistral gagnant (Renaud)</button></a> -->
@@ -267,6 +267,9 @@
       window.deferredPrompt = event;
       // Remove the 'hidden' class from the install button container
       divInstall.classList.toggle('hidden', false);
+      setTimeout(() => {
+        divInstall.classList.toggle('hidden', true);
+      }, 5000)
     });
     butInstall.addEventListener('click', () => {
       console.log('butInstall-clicked');
