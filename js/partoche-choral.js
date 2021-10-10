@@ -103,7 +103,8 @@ function createVoiceButtons(index) {
       newVoiceBtn.innerText = pupitre;
       newVoiceBtn.addEventListener("click", function(e) {
         e.target.classList.toggle("checked")
-        let allStabilo = document.querySelectorAll(".stabilo");
+        let allStabilo = document.querySelectorAll(".stabilo")
+        // Mute ou non les pistes et affiche ou non les stabilos
         if (e.target.classList.value === "checked") {
           tracks.forEach(tr => {
             if (tr["data-voice"] === e.target.attributes["data-voice"].value) {
@@ -127,6 +128,20 @@ function createVoiceButtons(index) {
                 st.classList.add("invisible")
               }
             })
+          })
+        }
+        // Ajuste le volume des pistes de voix s'il y en a plusieurs à jouer
+        let allLabels = document.querySelectorAll("#mixer label")
+        let activeLabels = 0
+        allLabels.forEach(label => {
+          if (label.classList.value === "checked") activeLabels++
+        })
+        if (activeLabels === 1) {
+          tracks.forEach(tr => tr.volume(1))
+        } else {
+          const volume = 1 - activeLabels / 10
+          tracks.forEach((tr, i) => {
+            if (i > 0) tr.volume(volume)
           })
         }
       })
