@@ -132,6 +132,8 @@ function createTitreMarkers() {
     document.querySelector("#previousMarkerBtn").classList.add('disabled');
     document.querySelector("#nextMarkerBtn").classList.add('disabled');
   } else {
+    document.querySelector("#previousMarkerBtn").classList.remove('disabled');
+    document.querySelector("#nextMarkerBtn").classList.remove('disabled');
     let dur = tracks[0].duration(); 
     for (let marker of markers) {
       let newMarker = document.createElement('div');

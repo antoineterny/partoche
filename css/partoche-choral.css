@@ -15,6 +15,7 @@
   opacity: 0.4;
   width: 100%;
   transform: translateY(-50%);
+  mix-blend-mode: multiply;
 }
 .sop {
   background-color: var(--sop-color);
