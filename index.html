@@ -33,7 +33,8 @@
   <title>partoche</title>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Work+Sans:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@600&family=IM+Fell+English&family=Work+Sans&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -58,13 +59,13 @@
     h2 {
       margin-top: 1em;
       position: relative;
-      font-family: 'IM Fell English', serif;
+      font-family: 'Alegreya', serif;
     }
     h2::after {
       content: "";
       position: absolute;
       left: 0;
-      top: 80%;
+      top: 100%;
       height: 2px;
       width: 100%;
       background-color: hsl(45, 100%, 53%);
@@ -72,10 +73,11 @@
     }
     h3 {
       margin-top: .5em;
-      font-family: 'IM Fell English', serif;
+      font-family: 'Alegreya', serif;
     }
     h2, h3 {
-      margin-bottom: 0.25em;
+      margin-bottom: 0.5em;
+       font-weight: 600;
     }
     .chapo {
       font-size: 1.3rem;
@@ -93,11 +95,6 @@
                   8px 8px 8px 0 grey;
       /* background-color: #f1f1f1; */
     }
-    .boutons {
-      display:flex;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
     button {
       font-size: 1rem;
       padding: .35em .5em;
@@ -107,11 +104,15 @@
       background: linear-gradient(hsl(45, 100%, 70%), hsl(45, 100%, 53%)) ;
       border: 1px solid hsl(45, 100%, 33%);
       font-weight: 600;
+      letter-spacing: .1px;
     }
     button:hover {
       background: linear-gradient(hsl(45, 100%, 53%), hsl(45, 100%, 80%) ) ;
       border: 1px solid hsl(45, 100%, 33%);
       cursor: pointer;
+    }
+    .boutons button{
+      width: 100%;
     }
     li {
       margin-left: 1em;
@@ -123,7 +124,7 @@
       border: 1px solid black;
       padding: 1px 5px;
       margin: 0 2px;
-      font-family: 'IM Fell English', serif;
+      font-family: 'Alegreya', serif;
     }
     label[data-voice="sop"]:hover {
       box-shadow: inset 0 0 0 3px  hsl(180,50%,80%);
@@ -132,7 +133,7 @@
       box-shadow: inset 0 0 0 3px  hsl(270,50%,80%);
     }
     span {
-      font-family: 'IM Fell English', serif;
+      font-family: 'Alegreya', serif;
     }
     #divInstall {
       position: fixed;
@@ -159,6 +160,7 @@
     }
     .hidden {
       opacity:0;
+      pointer-events: none;
     }
   </style>
 
@@ -174,6 +176,16 @@
     C'est une simple démonstration du cœur du programme.</p>
     <a href="partoche-base/index.html"><button>démo</button></a>
   </div> -->
+  
+  <div id="choral" class="cadre">
+    <h3>Partoche CHORAL</h3>
+    <p>Conçu pour aider les choristes dans leur préparation individuelle entre deux répétitions (ou en temps de confinement...), on entend toujours l'accompagnement sur lequel on ajoute la voix qu'on souhaite apprendre, qui se retrouve surlignée dans la partition.</p>
+    <div class="boutons">
+      <a href="partoche-choral/didon/index.html"><button>Didon et Énée (Purcell)</button></a>
+      <a href="partoche-choral/samson/index.html"><button>Samson et Dalila (Saint-Saëns)</button></a>
+      <a href="partoche-choral/orfeo/index.html"><button>Orfeo ed Euridice (Gluck)</button></a>
+    </div>
+  </div>
 
   <div id="etude" class="cadre">
     <h3>Partoche ÉTUDE</h3>
@@ -193,16 +205,6 @@
     <div class="boutons">
       <a href="partoche-duo/mmo/index.html"><button>Ma mère l'Oye (Ravel)</button></a>
       <a href="partoche-duo/dvorak/index.html"><button>Danse slave (Dvorak)</button></a>
-    </div>
-  </div>
-  
-  <div id="choral" class="cadre">
-    <h3>Partoche CHORAL</h3>
-    <p>Conçu pour aider les choristes dans leur préparation individuelle entre deux répétitions (ou en temps de confinement...), on entend toujours l'accompagnement sur lequel on ajoute la voix qu'on souhaite apprendre, qui se retrouve surlignée dans la partition.</p>
-    <div class="boutons">
-      <a href="partoche-choral/didon/index.html"><button>Didon et Énée (Purcell)</button></a>
-      <a href="partoche-choral/samson/index.html"><button>Samson et Dalila (Saint-Saëns)</button></a>
-      <a href="partoche-choral/orfeo/index.html"><button>Orfeo ed Euridice (Gluck)</button></a>
     </div>
   </div>
 
