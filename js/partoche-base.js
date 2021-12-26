@@ -159,7 +159,7 @@ function animate() {
     currentTime.innerHTML = formatTime(curr);
     totalTime.innerHTML = formatTime(dur);
   titre.style =
-    "background-image: linear-gradient(to right, gainsboro " +
+    "background-image: linear-gradient(to right, var(--accent) " +
     (curr / dur) * 100 +
     "%, white 0);";
 

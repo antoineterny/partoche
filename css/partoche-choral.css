@@ -82,6 +82,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-variant-numeric: lining-nums;
+  background-color: white;
 }
 #mixer label:first-of-type {
   margin-left: 0;
@@ -89,33 +90,35 @@
 #mixer label:last-of-type {
   margin-right: 0;
 }
-label[data-voice*="sop"].checked,
-label[data-voice*="sop"].checked:hover {
+
+#mixer label[data-voice*="sop"] {
+  border-color: var(--sop-color);
+}
+#mixer label[data-voice*="alt"] {
+  border-color: var(--alt-color);
+}
+#mixer label[data-voice*="ten"] {
+  border-color: var(--ten-color);
+}
+#mixer label[data-voice*="bas"] {
+  border-color: var(--bas-color);
+}
+
+#mixer label[data-voice*="sop"].checked,
+#mixer label[data-voice*="sop"].checked:hover {
   background-color: var(--sop-color);
 }
-label[data-voice*="alt"].checked,
-label[data-voice*="alt"].checked:hover {
+#mixer label[data-voice*="alt"].checked,
+#mixer label[data-voice*="alt"].checked:hover {
   background-color: var(--alt-color);
 }
-label[data-voice*="ten"].checked,
-label[data-voice*="ten"].checked:hover {
+#mixer label[data-voice*="ten"].checked,
+#mixer label[data-voice*="ten"].checked:hover {
   background-color: var(--ten-color);
 }
-label[data-voice*="bas"].checked,
-label[data-voice*="bas"].checked:hover {
+#mixer label[data-voice*="bas"].checked,
+#mixer label[data-voice*="bas"].checked:hover {
   background-color: var(--bas-color);
-}
-label[data-voice*="sop"]:hover {
-  background-color: var(--sop-color-light);
-}
-label[data-voice*="alt"]:hover {
-  background-color: var(--alt-color-light);
-}
-label[data-voice*="ten"]:hover {
-  background-color: var(--ten-color-light);
-}
-label[data-voice*="bas"]:hover {
-  background-color: var(--bas-color-light);
 }
 
 /*------------markers------------*/
@@ -129,4 +132,19 @@ label[data-voice*="bas"]:hover {
 /*---------à la fin---------*/
 .invisible {
   display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #mixer label[data-voice*="sop"]:hover {
+    background-color: var(--sop-color-light);
+  }
+  #mixer label[data-voice*="alt"]:hover {
+    background-color: var(--alt-color-light);
+  }
+  #mixer label[data-voice*="ten"]:hover {
+    background-color: var(--ten-color-light);
+  }
+  #mixer label[data-voice*="bas"]:hover {
+    background-color: var(--bas-color-light);
+  }
 }

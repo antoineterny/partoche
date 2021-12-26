@@ -2,71 +2,179 @@
   .conteneur {
     flex-direction: row;
   }
-  #menu p {
+  /* #menu p {
     font-size: 5vh;
     line-height: 10vh;
-  }
-  #masque {
+  } */
+  /* #masque {
     font-size: 5vh;
-  }
+  } */
   #lecteur {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 10vw;
-    height: calc(100vh - 2*var(--margin-unit));
+    min-width: 83px;
+    height: calc(100vh - 2 * var(--margin-unit));
     margin: 0 0 0 calc(2px + var(--margin-unit));
     overflow-y: auto;
     overflow-x: hidden;
   }
-  .time , #arrows-group {
+  .time {
     display: none;
   }
-  #main-group {
-    margin: 0;
+  #arrows-group {
+    width: 90px;
+    height: 90px;
+    margin-top: 3px;
+    justify-content: space-around;
+    align-content: space-around;
   }
-  #play-group button, #menu-group button {
-    width: 10vh;
-    min-width: 40px;
+  #main-group {
+    margin: calc(0.5 * var(--margin-unit));
+    overflow-y: auto;
+    max-width: unset;
+  }
+  #play-group button,
+  #menu-group button {
+    /* width: 10vh;
+    min-width: 60px;
     height: 10vh;
-    min-height: 40px;;
+    min-height: 60px; */
+    width: 90px;
+    height: 90px;
   }
   #titre {
-    height: 10vw;
-    flex-grow: 1;
+    /* min-height: 10vw; */
+    /* font-size: 3.5vh; */
+    height: unset;
+    max-height: 15vw;
+    flex-grow: 0;
     margin: 5px 0;
     padding-left: 0.1em;
-    font-size: 3.5vh;
     overflow: hidden;
     white-space: normal;
     word-wrap: break-word;
+    padding: 2ch 1ch;
+    font-size: 2.5vh;
   }
   #mixer {
     /* width: 59px; */
-    flex-wrap: wrap;
-    height: unset;
-    margin-top: 0;
+    flex-direction: column;
+    flex-grow: 1;
+    /* align-content: stretch;
+    display: flex; */
+    /* margin-top: 0;
+    align-items: stretch; */
   }
   #mixer label {
-    width: 10vw;
+    height: unset;
+    width: 100%;
     /* justify-content: flex-end; */
     padding: 1.5px;
-    margin: 2px 0;
-    font-size: 3vh;
+    /* margin: 2px 0;
+    font-size: 3vh; */
+    margin: 6px 0;
+    font-size: 2.5vh;
   }
   #menuBtn {
     margin-top: 5px;
   }
 }
+@media (min-aspect-ratio: 3/2) and (max-height: 800px) {
+  #arrows-group {
+    height: 45px;
+  }
+  #backwardBtn,
+  #forwardBtn {
+    display: none;
+  }
+  #play-group button,
+  #menu-group button {
+    width: 60px;
+    height: 60px;
+  }
+  #mixer label {
+    margin: 3px 0;
+    font-size: 2.8vh;
+  }
+}
 
-@media (max-aspect-ratio: 3/2) and (max-width: 600px) {
+@media (min-aspect-ratio: 3/2) and (max-height: 600px) {
+  #mixer label {
+    font-size: 3vh;
+  }
+  #menu p {
+    font-size: 3.5vh;
+    line-height: 7vh;
+  }
+  #arrows-group {
+    display: none;
+  }
+}
+
+@media (min-aspect-ratio: 3/2) and (max-height: 400px) {
+  #play-group button,
+  #menu-group button {
+    width: 40px;
+    height: 40px;
+  }
+  #menu p {
+    font-size: 4vh;
+    line-height: 8vh;
+  }
+  #main-group {
+    margin: 0;
+    overflow-y: auto;
+  }
+  #mixer label {
+    font-size: 3vh;
+    letter-spacing: 2px;
+  }
+  #arrows-group {
+    height: 45px;
+    height: 35px;
+    justify-content: space-evenly;
+  }
+  #arrows-group button {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media (max-aspect-ratio: 3/2) and (max-width: 650px) {
+  .time,
+  .marker-text {
+    display: none;
+  }
+  #backwardBtn,
+  #forwardBtn {
+    display: none;
+  }
+  #lecteur {
+    position: relative;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 60px 28px 1fr 60px;
+    /* column-gap: 6px;
+    height: 80px;
+    width: 100%;
+    margin-top: calc(3px + var(--margin-unit));
+    overflow-x: auto;
+    overflow-y: hidden; */
+  }
+  #arrows-group button {
+    height: 28px;
+    width: 28px;
+  }
+  #arrows-group {
+    height: unset;
+  }
   #menu p {
     font-size: 5vw;
     line-height: 10vw;
   }
-  .time , #arrows-group, .marker-text {
-    display: none;
-  }
+
   #lecteur {
     height: 60px;
   }
@@ -74,12 +182,28 @@
     font-size: 18px;
     padding-left: 10px;
     margin-bottom: 4px;
+    overflow: hidden;
   }
   #mixer label {
     font-size: 14px;
     padding: 1px;
+    overflow: hidden;
   }
   #main-group {
-    margin: 0 calc(var(--margin-unit)/2);
+    height: 60px;
+    margin: 0 calc(var(--margin-unit) / 4);
+    max-width: calc(100vw - 196px);
+  }
+}
+
+@media (max-aspect-ratio: 3/2) and (max-width: 450px) {
+  #arrows-group {
+    display: none;
+  }
+  #lecteur {
+    grid-template-columns: 60px 1fr 60px;
+  }
+  #main-group {
+    max-width: calc(100vw - 162px);
   }
 }

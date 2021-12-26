@@ -2,6 +2,7 @@
 // Initialisation du lecteur Audio
 //================================
 const playBtn = document.querySelector("#playBtn");
+const pauseBtn = document.querySelector("#pauseBtn")
 const titre = document.querySelector("#titre");
 const masque = document.querySelector("#masque");
 let tracks = [];
@@ -49,8 +50,10 @@ function initAudio(index) {
     if (loadedTracks < tracks.length) return;
     masque.style = "display: none";
     playBtn.disabled = false;
-    playBtn.classList.remove("disabled", "playing");
-    playBtn.classList.add("paused");
+    pauseBtn.disabled = false;
+    // playBtn.classList.remove("disabled", "playing");
+    // playBtn.classList.add("paused");
+    playBtn.classList.remove("disabled");
     document.querySelector("#arrows-group").classList.remove("disabled");
     titre.innerText = playlist[index].title;
     animID = requestAnimationFrame(animate);
@@ -60,8 +63,8 @@ function initAudio(index) {
 
     // stopped = false;
     tracks[0].on("end", () => {
-      playBtn.classList.remove("playing");
-      playBtn.classList.add("paused");
+      pauseBtn.classList.remove("invisible");
+      playBtn.classList.add("invisible");
       // cancelAnimationFrame(animID);
     });
   }
@@ -72,21 +75,22 @@ function initAudio(index) {
 //============================
 function play() {
   tracks.forEach((track) => track.play());
-  playBtn.classList.remove("paused");
-  playBtn.classList.add("playing");
+  playBtn.classList.add("invisible")
+  pauseBtn.classList.remove("invisible")
 }
 function pause() {
   tracks.forEach((track) => track.pause());
-  playBtn.classList.remove("playing");
-  playBtn.classList.add("paused");
+  playBtn.classList.remove("invisible")
+  pauseBtn.classList.add("invisible")
 }
-function togglePlayPause() {
-  if (!tracks[0].playing()) {
-    playBtn.onclick = play();
-  } else {
-    playBtn.onclick = pause();
-  }
-}
+// function togglePlayPause() {
+//   if (!tracks[0].playing()) {
+//     playBtn.onclick = play();
+//   } else {
+  //     playBtn.onclick = pause();
+  //   }
+  // }
+  
 function stop() {
   tracks.forEach((track) => track.stop());
   playBtn.classList.remove("playing");
@@ -182,7 +186,8 @@ function nextRegion() {
 //===========================
 // Commandes du lecteur audio
 //===========================
-playBtn.addEventListener("click", () => togglePlayPause());
+playBtn.addEventListener("click", () => play());
+pauseBtn.addEventListener("click", () => pause());
 
 // Raccourcis clavier
 document.addEventListener("keydown", (event) => {
@@ -222,12 +227,12 @@ const flechedroite = document.querySelector("#flechedroite");
 flechegauche.addEventListener('click', function() {
   if (document.querySelector('#menu').classList.contains('visible')) return;
   flechegauche.style.opacity = 1;
-  setTimeout(() => {flechegauche.style.opacity = 0;}, 50)
+  setTimeout(() => {flechegauche.style.opacity = 0;}, 100)
   previousRegion();
 })
 flechedroite.addEventListener('click', function() {
   if (document.querySelector("#menu").classList.contains("visible")) return;
   flechedroite.style.opacity = 1;
-  setTimeout(() => {flechedroite.style.opacity = 0;}, 50)
+  setTimeout(() => {flechedroite.style.opacity = 0;}, 100)
   nextRegion();
 })
