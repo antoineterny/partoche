@@ -1,0 +1,68 @@
+#pages {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  padding: calc(2 * var(--margin-unit));
+}
+#pages * {
+  font-family: "Alegreya Sans";
+}
+.tranche {
+  height: 100%;
+  padding: var(--margin-unit);
+  padding-top: calc(2 * var(--margin-unit));
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.solo-mute-btns {
+  display: flex;
+  justify-content: space-evenly;
+  margin: var(--margin-unit) 0;
+  /* outline: 1px solid green; */
+}
+.solo-mute-btns button {
+  height: 38px;
+  width: 38px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.volume-slider {
+  height: 100%;
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+}
+.tranche p {
+  /* background-color: tomato; */
+  /* padding: var(--margin-unit); */
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+button.solo-btn  {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button.mute-btn {
+  border-color: hsl(7, 66%, 55%);
+  color: hsl(7, 66%, 53%);
+}
+button.solo-btn:hover {
+  background-color: hsl(45, 100%, 95%);
+}
+button.mute-btn:hover {
+  background-color: hsl(7, 66%, 97%);
+}
+button.solo-btn.soloed {
+  background-color: var(--accent);
+  color: white;
+}
+button.mute-btn.muted {
+  background-color: hsl(7, 66%, 55%);
+  color: white;
+}
+button.solo-btn.soloed:hover,
+button.mute-btn.muted:hover {
+  opacity: .9;
+}

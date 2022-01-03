@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 10vw;
+    width: 15vw;
     min-width: 83px;
     height: calc(100vh - 2 * var(--margin-unit));
     margin: 0 0 0 calc(2px + var(--margin-unit));
@@ -34,6 +34,7 @@
     margin: calc(0.5 * var(--margin-unit));
     overflow-y: auto;
     max-width: unset;
+    width: 100%;
   }
   #play-group button,
   #menu-group button {
