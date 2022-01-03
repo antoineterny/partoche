@@ -19,8 +19,10 @@
 .solo-mute-btns {
   display: flex;
   justify-content: space-evenly;
+  justify-content: space-between;
   margin: var(--margin-unit) 0;
-  /* outline: 1px solid green; */
+  width: 84px;
+  margin: 6px auto;
 }
 .solo-mute-btns button {
   height: 38px;
@@ -29,18 +31,35 @@
   font-size: 18px;
   font-weight: 700;
 }
+.slider-wrapper {
+  height: 100%;
+}
+.slider-scale {
+  height: 100%;
+  width: 50%;
+  background-image: repeating-linear-gradient(
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 10%
+  );
+  margin: 0 auto;
+}
 .volume-slider {
   height: 100%;
   writing-mode: bt-lr;
   -webkit-appearance: slider-vertical;
+  width: 10px;
+  transform: translateY(-6px);
 }
+
 .tranche p {
   /* background-color: tomato; */
   /* padding: var(--margin-unit); */
   font-size: 1.15rem;
   text-transform: uppercase;
 }
-button.solo-btn  {
+button.solo-btn {
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -64,5 +83,5 @@ button.mute-btn.muted {
 }
 button.solo-btn.soloed:hover,
 button.mute-btn.muted:hover {
-  opacity: .9;
+  opacity: 0.9;
 }
