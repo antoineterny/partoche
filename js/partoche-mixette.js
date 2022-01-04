@@ -53,8 +53,8 @@ function initAudio(index) {
 
     // stopped = false;
     tracks[0].on("end", () => {
-      pauseBtn.classList.remove("invisible")
-      playBtn.classList.add("invisible")
+      pauseBtn.classList.add("invisible")
+      playBtn.classList.remove("invisible")
       // cancelAnimationFrame(animID);
     })
   }
@@ -62,7 +62,6 @@ function initAudio(index) {
 
 function createMixetteControls(voices) {
   voices.forEach(voice => {
-    console.log(`voice`, voice, typeof voice)
     document.querySelector("#pages").innerHTML += `
       <div class="tranche" id="${voice}">
       <div class="slider-wrapper">
@@ -89,11 +88,58 @@ function createMixetteControls(voices) {
 }
 
 function soloVoice(voice) {
-  document.getElementById(`solo-${voice}`).classList.toggle('soloed')
+  document.getElementById(`solo-${voice}`).classList.toggle("soloed")
+  soloMute()
 }
 function muteVoice(voice) {
-  document.getElementById(`mute-${voice}`).classList.toggle('muted')
+  document.getElementById(`mute-${voice}`).classList.toggle("muted")
+  soloMute()
 }
 function updateVolume(voice) {
-  document.getElementById(`label-${voice}`).innerText = document.getElementById(`volume-${voice}`).value + "%"
+  const lbl = document.getElementById(`label-${voice}`)
+  const vol = document.getElementById(`volume-${voice}`)
+  lbl.innerText = vol.value + "%"
+  tracks.forEach(tr => {
+    if (tr["data-voice"] === voice) tr.volume(vol.value / 100)
+  })
+}
+function soloMute() {
+  const mixette = []
+  for (let i = 0; i < playlist[index].voices.length; i++) {
+    // playlist[index].voices.forEach((voice, i) => {
+    const tmp = []
+    const soloBtn = document.getElementById(`solo-${playlist[index].voices[i]}`)
+    const muteBtn = document.getElementById(`mute-${playlist[index].voices[i]}`)
+
+    if (soloBtn.classList.contains("soloed")) {
+      tmp.push(true)
+    } else tmp.push(false)
+
+    if (muteBtn.classList.contains("muted")) {
+      tmp.push(true)
+    } else tmp.push(false)
+    mixette.push(tmp)
+  }
+  console.log(`mixette`, mixette)
+  console.log(`mixette.flat()`, mixette.flat())
+
+  if (!mixette.flat().includes(true)) {
+    tracks.forEach(tr => tr.mute(false))
+    console.log("ni solo ni mute!")
+    return
+  }
+
+  const soloValues = []
+  mixette.forEach(arr => soloValues.push(arr[0]))
+  console.log(`soloValues`, soloValues)
+  if (soloValues.includes(true)) {
+    tracks.forEach((tr, i) => tr.mute(!soloValues[i]))
+    return
+  }
+
+  const muteValues = []
+  mixette.forEach(arr => muteValues.push(arr[1]))
+  console.log(`muteValues`, muteValues)
+  tracks.forEach((tr, i) => tr.mute(muteValues[i]))
+
 }
