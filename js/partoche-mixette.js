@@ -61,6 +61,7 @@ function initAudio(index) {
 }
 
 function createMixetteControls(voices) {
+  document.querySelector("#pages").innerHTML = ""
   voices.forEach(voice => {
     document.querySelector("#pages").innerHTML += `
       <div class="tranche" id="${voice}">
@@ -106,7 +107,6 @@ function updateVolume(voice) {
 function soloMute() {
   const mixette = []
   for (let i = 0; i < playlist[index].voices.length; i++) {
-    // playlist[index].voices.forEach((voice, i) => {
     const tmp = []
     const soloBtn = document.getElementById(`solo-${playlist[index].voices[i]}`)
     const muteBtn = document.getElementById(`mute-${playlist[index].voices[i]}`)
@@ -120,8 +120,7 @@ function soloMute() {
     } else tmp.push(false)
     mixette.push(tmp)
   }
-  console.log(`mixette`, mixette)
-  console.log(`mixette.flat()`, mixette.flat())
+  // console.log(`mixette`, mixette)
 
   if (!mixette.flat().includes(true)) {
     tracks.forEach(tr => tr.mute(false))
@@ -131,7 +130,6 @@ function soloMute() {
 
   const soloValues = []
   mixette.forEach(arr => soloValues.push(arr[0]))
-  console.log(`soloValues`, soloValues)
   if (soloValues.includes(true)) {
     tracks.forEach((tr, i) => tr.mute(!soloValues[i]))
     return
@@ -139,7 +137,6 @@ function soloMute() {
 
   const muteValues = []
   mixette.forEach(arr => muteValues.push(arr[1]))
-  console.log(`muteValues`, muteValues)
   tracks.forEach((tr, i) => tr.mute(muteValues[i]))
 
 }
