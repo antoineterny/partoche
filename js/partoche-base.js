@@ -64,7 +64,8 @@ async function initData(index) {
   regions = processRegionsMarkers(regionsMarkersRaw)[0]
   markers = processRegionsMarkers(regionsMarkersRaw)[1]
 
-  if (typeof partocheType === undefined || partocheType != "mixette") {
+  // Juste une exception pour partoche-mixette
+  if (typeof partocheType === "undefined") {
     let json = await fetch(`${fileName}/${fileName}.json`).then(function (response) {
       return response.json()
     })
@@ -136,8 +137,9 @@ function addPages() {
 function createTitreMarkers() {
   document.querySelectorAll(".marker").forEach(x => x.remove())
   if (markers.length === 0) {
-    document.querySelector("#previousMarkerBtn").classList.add("disabled")
+    // document.querySelector("#previousMarkerBtn").classList.add("disabled")
     document.querySelector("#nextMarkerBtn").classList.add("disabled")
+    markers[0] = { time: 0 }
   } else {
     document.querySelector("#previousMarkerBtn").classList.remove("disabled")
     document.querySelector("#nextMarkerBtn").classList.remove("disabled")
@@ -200,7 +202,6 @@ function formatTime(rawSec) {
   return min + ":" + sec
 }
 function exactTime(rawSec) {
-  console.log(rawSec)
   let min = Math.floor((rawSec % 3600) / 60)
   let sec = (rawSec % 60).toFixed(3)
   sec < 10 ? (sec = "0" + sec) : sec

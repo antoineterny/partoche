@@ -301,8 +301,8 @@ function addPages() {
 // }
 function initAudio(index) {
   masque.style = "display: flex"
-  playBtn.disabled = true
-  playBtn.classList.add("disabled")
+  pauseBtn.classList.add("invisible")
+  playBtn.classList.remove("invisible")
   document.querySelector("#arrows-group").classList.add("disabled")
   titre.innerHTML = "<i>juste un instant, je charge...</i>"
   for (let i in tracks) {
@@ -342,8 +342,8 @@ function initAudio(index) {
     if (loadedTracks < tracks.length) return
     masque.style = "display: none"
     playBtn.disabled = false
-    playBtn.classList.remove("disabled", "playing")
-    playBtn.classList.add("paused")
+    pauseBtn.disabled = false
+    playBtn.classList.remove("disabled")
     document.querySelector("#arrows-group").classList.remove("disabled")
     titre.innerText = playlist[index].title
     animID = requestAnimationFrame(animate)
@@ -353,8 +353,8 @@ function initAudio(index) {
 
     // stopped = false;
     tracks[0].on("end", () => {
-      playBtn.classList.remove("playing")
-      playBtn.classList.add("paused")
+      pauseBtn.classList.add("invisible")
+      playBtn.classList.remove("invisible")
       // cancelAnimationFrame(animID);
     })
   }

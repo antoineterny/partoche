@@ -120,117 +120,50 @@
       <div id="lecteur">
         <div id="play-group">
           <button id="playBtn" class="paused disabled" disabled autocomplete="off">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 40 40"
-            >
-              <path
-                d="M37.633 16.963a3 3 0 0 1 0 5.367L4.343 38.975A3 3 0 0 1 0 36.292V3A2.998 2.998 0 0 1 4.342.317l33.291 16.646Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#playBtn"></use>
             </svg>
           </button>
           <button id="pauseBtn" class="invisible" disabled autocomplete="off">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 35 36"
-            >
-              <path
-                d="M14 3a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V3Zm20.949 0a3 3 0 0 0-3-3h-8a3 3 0 0 0-3 3v30a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V3Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#pauseBtn"></use>
             </svg>
           </button>
           <div id="currentTime" class="time"></div>
         </div>
+
         <div id="arrows-group" class="disabled">
           <button id="backwardBtn" onclick="backward(3)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 53 39"
-            >
-              <path
-                d="m32.762 28.832 15.045 9.096a3 3 0 0 0 4.552-2.567V3A3 3 0 0 0 47.807.433L32.762 9.529V3A3 3 0 0 0 28.21.433L1.448 16.613a2.999 2.999 0 0 0 0 5.135l26.762 16.18a3 3 0 0 0 4.552-2.567v-6.529Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#backwardBtn"></use>
             </svg>
           </button>
           <button id="forwardBtn" onclick="forward(3)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 53 39"
-            >
-              <path
-                d="M19.597 28.832 4.552 37.928A3 3 0 0 1 0 35.361V3A3 3 0 0 1 4.552.433l15.045 9.096V3A3 3 0 0 1 24.149.433l26.762 16.18a2.999 2.999 0 0 1 0 5.135l-26.762 16.18a3 3 0 0 1-4.552-2.567v-6.529Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#forwardBtn"></use>
             </svg>
           </button>
           <button id="previousMarkerBtn" onclick="previousMarker()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 45 40"
-            >
-              <path
-                d="M10.841 15.082 40.371.317A3 3 0 0 1 44.712 3v33.292a3 3 0 0 1-4.341 2.683L10.841 24.21v11.993a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3.086a3 3 0 0 1 3-3h4.841a3 3 0 0 1 3 3v11.996Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#previousMarkerBtn"></use>
             </svg>
           </button>
           <button id="nextMarkerBtn" onclick="nextMarker()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 45 40"
-            >
-              <path
-                d="M33.872 24.21 4.342 38.975A3.002 3.002 0 0 1 0 36.292V3A3 3 0 0 1 4.342.317l29.53 14.765V3.086a3 3 0 0 1 3-3h4.84a3 3 0 0 1 3 3v33.117a3 3 0 0 1-3 3h-4.84a3 3 0 0 1-3-3V24.21Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#nextMarkerBtn"></use>
             </svg>
           </button>
         </div>
+
+
         <div id="main-group">
           <div id="titre"><i>Commence par choisir un titre</i></div>
           <!-- <div id="mixer"></div> -->
         </div>
         <div id="menu-group">
           <button id="menuBtn" onclick="toggleMenu()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xml:space="preserve"
-              fill-rule="evenodd"
-              stroke-linejoin="round"
-              stroke-miterlimit="2"
-              clip-rule="evenodd"
-              viewBox="0 0 39 37"
-            >
-              <path
-                d="M38.442 31.205a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h32.442a3 3 0 0 0 3-3v-2Zm0-14.102a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h32.442a3 3 0 0 0 3-3v-2Zm0-14.103a3 3 0 0 0-3-3H3a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h32.442a3 3 0 0 0 3-3V3Z"
-              />
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#menuBtn"></use>
             </svg>
           </button>
           <div id="totalTime" class="time"></div>
