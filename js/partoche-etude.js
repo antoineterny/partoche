@@ -69,15 +69,13 @@
 async function initData(index) {
   let fileName = playlist[index].fileName
 
-  let regionsMarkersRaw = await fetch(
-    `${fileName}/${fileName}_regions_markers.csv`
-  ).then(response => response.text())
+  let regionsMarkersRaw = await fetch(`${fileName}/${fileName}_regions_markers.csv`).then(
+    response => response.text()
+  )
   regions = processRegionsMarkers(regionsMarkersRaw)[0]
   markers = processRegionsMarkers(regionsMarkersRaw)[1]
 
-  let json = await fetch(`${morceau}.json`).then(function (
-    response
-  ) {
+  let json = await fetch(`${morceau}.json`).then(function (response) {
     return response.json()
   })
   pageOffsets = json
@@ -92,27 +90,27 @@ async function initData(index) {
 // let pagesLoaded = 0
 function addPages() {
   document.querySelectorAll("#pages img").forEach(x => x.remove())
-  let partocheWidth = getComputedStyle(partoche).width;
-  pagesHeight = [];
-  previousPagesHeight = [];
-  pagesLoaded = 0;
-  for (let i=1; i<=pageOffsets.length; i++) {
-    let newImg = document.createElement('img');
-    newImg.onload = function() {
-      pagesLoaded += 1;
+  let partocheWidth = getComputedStyle(partoche).width
+  pagesHeight = []
+  previousPagesHeight = []
+  pagesLoaded = 0
+  for (let i = 1; i <= pageOffsets.length; i++) {
+    let newImg = document.createElement("img")
+    newImg.onload = function () {
+      pagesLoaded += 1
       if (pagesLoaded == pageOffsets.length) {
-        pagesHeight = Array.from(
-          document.querySelectorAll("#pages img")
-        ).map((x) => parseFloat(getComputedStyle(x).height));
-          for (let i=0; i<pagesHeight.length; i++) {
-              previousPagesHeight.push(getTotalPreviousHeight(i+1));
-          }
+        pagesHeight = Array.from(document.querySelectorAll("#pages img")).map(x =>
+          parseFloat(getComputedStyle(x).height)
+        )
+        for (let i = 0; i < pagesHeight.length; i++) {
+          previousPagesHeight.push(getTotalPreviousHeight(i + 1))
+        }
       }
     }
-    newImg.src = `${morceau}_Page_${[i]}.png`;
-    newImg.style.width = partocheWidth;
-    newImg.setAttribute("id", `page${i}`);
-    pages.appendChild(newImg);
+    newImg.src = `${morceau}_Page_${[i]}.png`
+    newImg.style.width = partocheWidth
+    newImg.setAttribute("id", `page${i}`)
+    pages.appendChild(newImg)
   }
   // addStabilo positionne les stabilos en fonction de la hauteur des pages
   // addStabilo();
@@ -320,13 +318,13 @@ function initAudio(index) {
   if (voices) {
     for (let i = 0; i < voices.length; i++) {
       tracks[i] = new Howl({
-        src: [`${fileName}/${fileName}_${voices[i]}.${format}`]
+        src: [`${fileName}/${fileName}_${voices[i]}.${format}`],
       })
       tracks[i]["data-voice"] = voices[i]
     }
   } else {
     tracks[0] = new Howl({
-      src: [`${fileName}/${fileName}.${format}`]
+      src: [`${fileName}/${fileName}.${format}`],
     })
   }
 
@@ -361,24 +359,39 @@ function initAudio(index) {
 }
 
 //Gestion du mixage
-const metronomeCheckbox = document.querySelector("#metronome");
+const metronomeCheckbox = document.querySelector("#metronome")
 metronomeCheckbox.addEventListener("click", function () {
   if (metronomeCheckbox.checked) {
-    tracks[2].mute(false);
+    tracks[2].mute(false)
   } else {
-    tracks[2].mute(true);
+    tracks[2].mute(true)
   }
-});
-const balance = document.querySelector("#balance");
+})
+const balance = document.querySelector("#balance")
 balance.addEventListener("input", () => {
-  if      (balance.value == -3) {tracks[0].volume(0);  tracks[1].volume(1)}
-  else if (balance.value == -2) {tracks[0].volume(.1); tracks[1].volume(1)}
-  else if (balance.value == -1) {tracks[0].volume(.3); tracks[1].volume(1)}
-  else if (balance.value == 0)  {tracks[0].volume(1);  tracks[1].volume(1)}
-  else if (balance.value == 1)  {tracks[0].volume(1);  tracks[1].volume(.3)}
-  else if (balance.value == 2)  {tracks[0].volume(1);  tracks[1].volume(.1)}
-  else if (balance.value == 3)  {tracks[0].volume(1);  tracks[1].volume(0)}
-});
+  if (balance.value == -3) {
+    tracks[0].volume(0)
+    tracks[1].volume(1)
+  } else if (balance.value == -2) {
+    tracks[0].volume(0.1)
+    tracks[1].volume(1)
+  } else if (balance.value == -1) {
+    tracks[0].volume(0.3)
+    tracks[1].volume(1)
+  } else if (balance.value == 0) {
+    tracks[0].volume(1)
+    tracks[1].volume(1)
+  } else if (balance.value == 1) {
+    tracks[0].volume(1)
+    tracks[1].volume(0.3)
+  } else if (balance.value == 2) {
+    tracks[0].volume(1)
+    tracks[1].volume(0.1)
+  } else if (balance.value == 3) {
+    tracks[0].volume(1)
+    tracks[1].volume(0)
+  }
+})
 
 // // Animation de la partition et du lecteur
 // function animate() {
@@ -420,18 +433,22 @@ balance.addEventListener("input", () => {
 // Création des marqueurs
 function createTitreMarkers() {
   if (markers.length > 0) {
-    let dur = tracks[0].duration();
+    let dur = tracks[0].duration()
     for (let marker of markers) {
-      let newMarker = document.createElement("div");
-      let newMarkerText = document.createElement("div");
-      newMarker.classList.add("marker");
-      newMarker.style = `left: ${(marker.time / dur) * 100}%;`;
-      newMarkerText.classList.add("marker-text");
-      newMarkerText.innerHTML = aLa + "=" + marker.text;
-      document
-        .querySelector("#titre")
-        .appendChild(newMarker)
-        .appendChild(newMarkerText);
+      // let newMarker = document.createElement("div");
+      // let newMarkerText = document.createElement("div");
+      // newMarker.classList.add("marker");
+      // newMarker.style = `left: ${(marker.time / dur) * 100}%;`;
+      // newMarkerText.classList.add("marker-text");
+      // newMarkerText.innerHTML = aLa + "=" + marker.text;
+      // document
+      //   .querySelector("#marqueurs")
+      //   .appendChild(newMarker)
+      //   .appendChild(newMarkerText);
+      document.querySelector("#titre").innerHTML += `
+        <div class="marker" style="left: ${(marker.time / dur) * 100}%;"></div>`
+      document.querySelector("#marqueurs").innerHTML += `
+        <div class="marker-text" style="left: ${(marker.time / dur) * 100}%;">${aLa}=${marker.text}</div>`
     }
   }
 }

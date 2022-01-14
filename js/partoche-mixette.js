@@ -64,12 +64,13 @@ function createMixetteControls(voices) {
   document.querySelector("#pages").innerHTML = ""
   voices.forEach(voice => {
     document.querySelector("#pages").innerHTML += `
-      <div class="tranche" id="${voice}">
+      <div class="tranche rounded" id="${voice}">
       <div class="slider-wrapper">
         <div class="slider-scale">
           <input
             class="volume-slider"
             type="range"
+            orient="vertical" 
             id="volume-${voice}"
             min="0"
             max="100"
@@ -106,6 +107,7 @@ function updateVolume(voice) {
 }
 function soloMute() {
   const mixette = []
+  const tranches = document.querySelectorAll(".tranche")
   for (let i = 0; i < playlist[index].voices.length; i++) {
     const tmp = []
     const soloBtn = document.getElementById(`solo-${playlist[index].voices[i]}`)
@@ -120,23 +122,33 @@ function soloMute() {
     } else tmp.push(false)
     mixette.push(tmp)
   }
-  // console.log(`mixette`, mixette)
+  console.log(`mixette`, mixette)
 
+  // Ni solo ni mute
   if (!mixette.flat().includes(true)) {
     tracks.forEach(tr => tr.mute(false))
-    console.log("ni solo ni mute!")
+    tranches.forEach((tranche, i) => tranche.classList.remove("inaudible"))
     return
   }
 
+  // Cas : au moins 1 solo
   const soloValues = []
   mixette.forEach(arr => soloValues.push(arr[0]))
   if (soloValues.includes(true)) {
     tracks.forEach((tr, i) => tr.mute(!soloValues[i]))
+    tranches.forEach((tranche, i) => {
+      if (!soloValues[i]) tranche.classList.add("inaudible")
+      else tranche.classList.remove("inaudible")
+    })
     return
   }
 
+  // Cas : au moins 1 mute
   const muteValues = []
   mixette.forEach(arr => muteValues.push(arr[1]))
   tracks.forEach((tr, i) => tr.mute(muteValues[i]))
-
+  tranches.forEach((tranche, i) => {
+    if (muteValues[i]) tranche.classList.add("inaudible")
+    else tranche.classList.remove("inaudible")
+  })
 }

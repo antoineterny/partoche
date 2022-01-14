@@ -20,7 +20,8 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
-  .time {
+  .time,
+  #marqueurs {
     display: none;
   }
   #arrows-group {
@@ -31,6 +32,7 @@
     align-content: space-around;
   }
   #main-group {
+    display: flex;
     margin: calc(0.5 * var(--margin-unit));
     overflow-y: auto;
     max-width: unset;
@@ -145,7 +147,8 @@
 
 @media (max-aspect-ratio: 3/2) and (max-width: 650px) {
   .time,
-  .marker-text {
+  .marker-text,
+  #marqueurs {
     display: none;
   }
   #backwardBtn,
@@ -184,9 +187,10 @@
     padding-left: 10px;
     margin-bottom: 4px;
     overflow: hidden;
+    height: 27px;
   }
   #mixer label {
-    font-size: 14px;
+    font-size: 10px;
     padding: 1px;
     overflow: hidden;
   }

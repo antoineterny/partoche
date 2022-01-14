@@ -136,6 +136,7 @@ function addPages() {
 // Ajout des marqueurs s'il y en a
 function createTitreMarkers() {
   document.querySelectorAll(".marker").forEach(x => x.remove())
+  document.querySelectorAll(".marker-text").forEach(x => x.remove())
   if (markers.length === 0) {
     // document.querySelector("#previousMarkerBtn").classList.add("disabled")
     document.querySelector("#nextMarkerBtn").classList.add("disabled")
@@ -145,13 +146,10 @@ function createTitreMarkers() {
     document.querySelector("#nextMarkerBtn").classList.remove("disabled")
     let dur = tracks[0].duration()
     for (let marker of markers) {
-      let newMarker = document.createElement("div")
-      let newMarkerText = document.createElement("div")
-      newMarker.classList.add("marker")
-      newMarker.style = `left: ${(marker.time / dur) * 100}%;`
-      newMarkerText.classList.add("marker-text")
-      newMarkerText.innerHTML = marker.text
-      document.querySelector("#titre").appendChild(newMarker).appendChild(newMarkerText)
+      document.querySelector("#titre").innerHTML += `
+        <div class="marker" style="left: ${(marker.time / dur) * 100}%;"></div>`
+      document.querySelector("#marqueurs").innerHTML += `
+        <div class="marker-text" style="left: ${(marker.time / dur) * 100}%;">${marker.text}</div>`
     }
   }
 }

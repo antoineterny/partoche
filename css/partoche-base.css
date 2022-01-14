@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@500;700&family=Alegreya:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@500;600;700&family=Alegreya:ital,wght@0,500;0,600;1,500;1,600&display=swap");
 :root {
   --margin-unit: 12px;
   --ink: hsl(0, 0%, 25%);
@@ -146,7 +146,7 @@ body {
   justify-content: space-between;
 }
 #arrows-group {
-  height: 80px;
+  /* height: 80px; */
   display: flex;
   line-height: 0;
   flex-shrink: 0;
@@ -157,11 +157,11 @@ body {
 #main-group {
   flex-grow: 1;
   margin: 0 calc(0.5 * var(--margin-unit));
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: space-between;
   height: 80px;
-  max-width: calc(100vw - 255px);
+  /* max-width: calc(100vw - 255px); */
 }
 .time {
   font-family: "Alegreya Sans";
@@ -275,9 +275,9 @@ button:hover svg {
   flex-grow: 0;
   font-size: 24px;
   white-space: nowrap;
-  overflow: visible; /* permet d'afficher les marqueurs, qui débordent*/
+  overflow: hidden;
   text-overflow: ellipsis; /* https://css-tricks.com/flexbox-truncated-text/ */
-  height: 68px;
+  height: 60px;
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -288,27 +288,36 @@ button:hover svg {
 }
 #titre i {
   pointer-events: none;
-  margin-left: .3em;
+  margin-left: 0.3em;
 }
 
 /*------------markers------------*/
+#marqueurs {
+  position: relative;
+  width: 100%;
+  height: 16px;
+  overflow-x: clip;
+}
 .marker {
+  position: absolute;
+  bottom: 0;
   width: 0;
   height: 0;
   border-style: solid;
   border-width: 0 5px 5px 5px;
   border-color: transparent transparent var(--ink) transparent;
-  position: absolute;
-  bottom: 0;
   transform: translateX(-50%) translateY(2px);
 }
 .marker-text {
-  font-size: 10px;
-  transform: translateX(-0.5em) translateY(0.5em);
+  position: absolute;
+  top: 0;
+  font-size: 12px;
   font-family: "Alegreya Sans";
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: .3px;
   white-space: nowrap;
+  line-height: 16px;
+  font-variant-numeric: lining-nums;
 }
 
 /*------------masque------------*/
