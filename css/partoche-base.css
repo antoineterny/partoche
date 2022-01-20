@@ -4,6 +4,7 @@
   --ink: hsl(0, 0%, 25%);
   --paper: hsl(45, 7%, 95%);
   --accent: hsl(45, 100%, 53%);
+  --accent-light: hsl(45, 94%, 81%);
   /* --sop-color: hsl(180,50%,80%);
   --alt-color: hsl(270,50%,80%);
   --ten-color: hsl(0,50%,80%);
@@ -161,7 +162,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   height: 80px;
-  /* max-width: calc(100vw - 255px); */
+  max-width: calc(100vw - 254px);
 }
 .time {
   font-family: "Alegreya Sans";
@@ -314,7 +315,7 @@ button:hover svg {
   font-size: 12px;
   font-family: "Alegreya Sans";
   font-weight: 600;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   white-space: nowrap;
   line-height: 16px;
   font-variant-numeric: lining-nums;
@@ -352,4 +353,28 @@ button:hover svg {
 /*---------à la fin---------*/
 .invisible {
   display: none;
+}
+
+@media (max-width: 600px) {
+  #menu p {
+    font-size: 1em;
+  }
+
+  #backwardBtn,
+  #forwardBtn {
+    display: none;
+  }
+
+  #arrows-group {
+    flex-direction: column;
+  }
+
+  #lecteur {
+    grid-template-columns: 60px 40px 1fr 60px;
+  }
+
+  #main-group {
+    max-width: calc(100vw - 202px);
+    margin: 0;
+  }
 }

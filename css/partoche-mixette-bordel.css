@@ -1,0 +1,212 @@
+#pages {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  padding: calc(2 * var(--margin-unit));
+}
+#pages * {
+  font-family: "Alegreya Sans";
+  font-variant: lining-nums;
+}
+.tranche {
+  height: 100%;
+  padding: var(--margin-unit);
+  padding-top: calc(2 * var(--margin-unit));
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.solo-mute-btns {
+  display: flex;
+  justify-content: space-evenly;
+  justify-content: space-between;
+  margin: var(--margin-unit) 0;
+  width: 84px;
+  margin: 6px auto;
+}
+.solo-mute-btns button {
+  height: 38px;
+  width: 38px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.slider-wrapper {
+  height: calc(100% - 93px);
+  /* background-image: repeating-linear-gradient(
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 10%
+  ); */
+}
+.slider-scale {
+  height: 100%;
+  width: 50%;
+  margin: 0 auto;
+  background-color: white;
+}
+.volume-slider {
+  height: 100%;
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  width: 10px;
+  transform: translateY(-6px);
+}
+
+.tranche p {
+  /* background-color: tomato; */
+  /* padding: var(--margin-unit); */
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+button.solo-btn {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button.mute-btn {
+  border-color: hsl(7, 66%, 55%);
+  color: hsl(7, 66%, 53%);
+}
+button.solo-btn:hover {
+  background-color: hsl(45, 100%, 95%);
+}
+button.mute-btn:hover {
+  background-color: hsl(7, 66%, 97%);
+}
+button.solo-btn.soloed {
+  background-color: var(--accent);
+  color: white;
+}
+button.mute-btn.muted {
+  background-color: hsl(7, 66%, 55%);
+  color: white;
+}
+button.solo-btn.soloed:hover,
+button.mute-btn.muted:hover {
+  opacity: 0.9;
+}
+
+.inaudible .slider-wrapper,
+.inaudible label,
+.inaudible p
+ {
+  opacity: 0.3;
+}
+
+
+/*//////////////////////////////////////////////////////////////*/
+/*///////////////////// VERSION HORIZONTALE ////////////////////*/
+/*//////////////////////////////////////////////////////////////*/
+
+#pages {
+  flex-direction: column;
+  gap: calc(2 * var(--margin-unit));
+  justify-content: space-between;
+}
+
+.tranche {
+  /* height: unset; */
+  padding: var(--margin-unit);
+  padding-right: calc(3 * var(--margin-unit));
+  /* flex-direction: column; */
+  flex-direction: row-reverse;
+}
+
+.slider-wrapper {
+  height: 100%;
+  /* background-image: repeating-linear-gradient(-90deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 10% ); */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tranche p {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  width: 10ch;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.solo-mute-btns {
+  /* width: 84px; */
+  justify-content: space-around;
+  align-items: center;
+  gap: 5px;
+}
+
+.slider-scale {
+  height: 30px;
+  /* width: 50%; */
+  /* margin: 0 auto; */
+  width: 100%;
+}
+
+.volume-slider {
+  /* height: 100%; */
+  /* width: 10px; */
+  /* transform: translateY(-6px); */
+  width: 100%;
+  -webkit-appearance: none;
+  margin: 10px 0;
+  transform: none;
+}
+
+.tranche label {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  width: 8ch;
+}
+
+input[type=range] {
+  height: 24px;
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background-image: var(--bg);
+  border-radius: 18px;
+  border: 1px solid gainsboro;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  margin-top: -7px;
+  width: 32px;
+  border-radius: 4px;
+  background: var(--accent);
+  cursor: grab;
+}
+/* input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #FFFFFF;
+} */
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background-image: var(--bg);
+  border-radius: 18px;
+  border: 1px solid gainsboro;
+}
+input[type=range]::-moz-range-thumb {
+  border: none;
+  height: 16px;
+  margin-top: -7px;
+  width: 32px;
+  border-radius: 4px;
+  background: var(--accent);
+  cursor: grab;
+}

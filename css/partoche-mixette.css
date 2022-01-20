@@ -1,28 +1,29 @@
 #pages {
-  display: flex;
-  justify-content: space-evenly;
   height: 100%;
-  padding: calc(2 * var(--margin-unit));
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: var(--margin-unit);
+  gap: var(--margin-unit);
 }
 #pages * {
   font-family: "Alegreya Sans";
+  font-variant: lining-nums;
 }
 .tranche {
-  height: 100%;
   padding: var(--margin-unit);
-  padding-top: calc(2 * var(--margin-unit));
   background-color: white;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .solo-mute-btns {
   display: flex;
-  justify-content: space-evenly;
   justify-content: space-between;
-  margin: var(--margin-unit) 0;
   width: 84px;
-  margin: 6px auto;
+  /* margin: 6px auto; */
+  align-items: center;
+  flex-shrink: 0;
 }
 .solo-mute-btns button {
   height: 38px;
@@ -31,34 +32,17 @@
   font-size: 18px;
   font-weight: 700;
 }
-.slider-wrapper {
-  height: calc(100% - 93px);
-  background-image: repeating-linear-gradient(
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 10%
-  );
+.slider-wrapper,
+.tranche label {
+  display: none;
 }
-.slider-scale {
-  height: 100%;
-  width: 50%;
-  margin: 0 auto;
-  background-color: white;
-}
-.volume-slider {
-  height: 100%;
-  writing-mode: bt-lr;
-  -webkit-appearance: slider-vertical;
-  width: 10px;
-  transform: translateY(-6px);
-}
-
 .tranche p {
-  /* background-color: tomato; */
   /* padding: var(--margin-unit); */
   font-size: 1.15rem;
   text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button.solo-btn {
   border-color: var(--accent);
@@ -87,9 +71,24 @@ button.mute-btn.muted:hover {
   opacity: 0.9;
 }
 
+.inaudible {
+  background-color: transparent;
+}
+
 .inaudible .slider-wrapper,
 .inaudible label,
-.inaudible p
- {
-  opacity: 0.3;
+.inaudible p {
+  opacity: 0.5;
+}
+
+@media (orientation: landscape) {
+  #pages {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tranche {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-right: calc(2 * var(--margin-unit));
+    padding-left: calc(2 * var(--margin-unit));
+  }
 }
