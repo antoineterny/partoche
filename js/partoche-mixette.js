@@ -65,26 +65,28 @@ function createMixetteControls(voices) {
   voices.forEach(voice => {
     document.querySelector("#pages").innerHTML += `
       <div class="tranche rounded" id="${voice}">
-      <div class="slider-wrapper">
-        <div class="slider-scale">
-          <input
-            class="volume-slider"
-            type="range"
-            orient="vertical" 
-            id="volume-${voice}"
-            min="0"
-            max="100"
-            value="100"
-            oninput="updateVolume('${voice}')"
-          />
+        <div class="labels">
+          <p>${voice}</p>
+          <div class="solo-mute-btns">
+            <button class="solo-btn" id="solo-${voice}" onclick="soloVoice('${voice}')">S</button>
+            <button class="mute-btn" id="mute-${voice}" onclick="muteVoice('${voice}')">M</button>
+          </div>
         </div>
-      </div>
-      <label id="label-${voice}">100%</label>
-      <div class="solo-mute-btns">
-        <button class="solo-btn" id="solo-${voice}" onclick="soloVoice('${voice}')">S</button>
-        <button class="mute-btn" id="mute-${voice}" onclick="muteVoice('${voice}')">M</button>
-      </div>
-      <p>${voice}</p>
+        <div class="fader">
+          <div class="slider-wrapper">
+              <input
+                class="volume-slider"
+                type="range"
+                id="volume-${voice}"
+                min="0"
+                max="100"
+                value="100"
+                oninput="updateVolume('${voice}')"
+                style="--bg:linear-gradient(to right, var(--accent-light) 100%, white 0);"
+              />
+          </div>
+          <label id="label-${voice}">100%</label>
+        </div>
     </div>`
   })
 }
@@ -100,7 +102,9 @@ function muteVoice(voice) {
 function updateVolume(voice) {
   const lbl = document.getElementById(`label-${voice}`)
   const vol = document.getElementById(`volume-${voice}`)
+  const gradient = () => `linear-gradient(to right, var(--accent-light) ${vol.value}%, white 0)`
   lbl.innerText = vol.value + "%"
+  vol.style.setProperty("--bg", gradient())
   tracks.forEach(tr => {
     if (tr["data-voice"] === voice) tr.volume(vol.value / 100)
   })
@@ -122,7 +126,7 @@ function soloMute() {
     } else tmp.push(false)
     mixette.push(tmp)
   }
-  console.log(`mixette`, mixette)
+  // console.log(`mixette`, mixette)
 
   // Ni solo ni mute
   if (!mixette.flat().includes(true)) {
