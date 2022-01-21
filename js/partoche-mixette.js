@@ -82,7 +82,7 @@ function createMixetteControls(voices) {
                 max="100"
                 value="100"
                 oninput="updateVolume('${voice}')"
-                style="--bg:linear-gradient(to right, var(--accent-light) 100%, white 0);"
+                style="--bg:linear-gradient(to right, var(--accent-light) 100%, transparent 0);"
               />
           </div>
           <label id="label-${voice}">100%</label>
@@ -102,7 +102,7 @@ function muteVoice(voice) {
 function updateVolume(voice) {
   const lbl = document.getElementById(`label-${voice}`)
   const vol = document.getElementById(`volume-${voice}`)
-  const gradient = () => `linear-gradient(to right, var(--accent-light) ${vol.value}%, white 0)`
+  const gradient = () => `linear-gradient(to right, var(--accent-light) ${vol.value}%, transparent 0)`
   lbl.innerText = vol.value + "%"
   vol.style.setProperty("--bg", gradient())
   tracks.forEach(tr => {
