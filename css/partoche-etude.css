@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Livvic:ital,wght@0,500;1,500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Livvic:ital,wght@0,500;0,600;1,500&display=swap");
 
 * {
-  font-family: 'Livvic', sans-serif;
+  font-family: "Livvic", sans-serif;
 }
 .rounded {
   border-radius: 12px;
 }
 
 /*------------boutons------------*/
-.paused {
+/* .paused {
   background-image: url(../img/svg-circle/play.svg);
 }
 .playing {
@@ -62,12 +62,12 @@
 }
 #menuBtn:hover {
   background-image: url(../img/svg-circle/menuB.svg);
-}
+} */
 
 /*------------titre et mixer------------*/
 #titre {
   display: block;
-  margin-bottom: 16px;
+  height: 36px;
 }
 #mixer {
   display: flex;
@@ -89,6 +89,10 @@
   align-items: center;
   flex-grow: 1;
 }
+.marker-text {
+  font-family: 'Livvic';
+  font-size: 12px;
+}
 
 /*------------media queries------------*/
 @media (max-width: 640px) {
@@ -97,36 +101,41 @@
   } */
   #lecteur {
     height: unset;
+    grid-template-columns: 50px 30px 1fr 50px;
   }
   #titre {
     height: 25px;
     font-size: 1rem;
-    margin-bottom: 13px;
   }
   #arrows-group {
     width: 30px;
+    height: unset;
   }
   #arrows-group button {
     height: 30px;
-    width: 30px; 
+    width: 30px;
     margin-bottom: 3px;
   }
-  #backwardBtn, #forwardBtn {
+  #backwardBtn,
+  #forwardBtn {
     display: none;
   }
-  #play-group, #menu-group {
+  #play-group,
+  #menu-group {
     width: 50px;
   }
-  #play-group button, #menu-group button {
+  #play-group button,
+  #menu-group button {
     height: 50px;
     width: 50px;
   }
   #main-group {
     flex-grow: 1;
-    margin: 0 12px;
+    height: unset;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin: 0 calc(0.25 * var(--margin-unit));
   }
   #mixer {
     font-size: 12px;
@@ -135,6 +144,6 @@
     font-size: 12px;
   }
   .marker-text {
-    font-size: 9px;
+    font-size: 11px;
   }
 }

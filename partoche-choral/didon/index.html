@@ -129,27 +129,61 @@
       <div id="menu"></div>
     </div>
     
-    <div id="lecteur">
-      <div id="play-group">
-        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
-        <div id="currentTime" class="time"></div>
+      <div id="lecteur">
+        <div id="play-group">
+          <button id="playBtn" class="paused disabled" disabled autocomplete="off">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#playBtn"></use>
+            </svg>
+          </button>
+          <button id="pauseBtn" class="invisible" disabled autocomplete="off">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#pauseBtn"></use>
+            </svg>
+          </button>
+          <div id="currentTime" class="time"></div>
+        </div>
+
+        <div id="arrows-group" class="disabled">
+          <button id="backwardBtn" onclick="backward(3)">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#backwardBtn"></use>
+            </svg>
+          </button>
+          <button id="forwardBtn" onclick="forward(3)">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#forwardBtn"></use>
+            </svg>
+          </button>
+          <button id="previousMarkerBtn" onclick="previousMarker()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#previousMarkerBtn"></use>
+            </svg>
+          </button>
+          <button id="nextMarkerBtn" onclick="nextMarker()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#nextMarkerBtn"></use>
+            </svg>
+          </button>
+        </div>
+
+        <div id="main-group">
+          <div id="titre"><i>Commence par choisir un titre</i></div>
+          <div id="marqueurs"></div>
+          <div id="mixer"></div>
+        </div>
+
+        <div id="menu-group">
+          <button id="menuBtn" onclick="toggleMenu()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#menuBtn"></use>
+            </svg>
+          </button>
+          <div id="totalTime" class="time"></div>
+        </div>
+
+        <div id="masque">juste un instant, je charge...</div>
       </div>
-      <div id="arrows-group" class="disabled">
-        <button id="backwardBtn" onclick="backward(3)"></button>
-        <button id="forwardBtn" onclick="forward(3)"></button>
-        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
-        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
-      </div>
-      <div id="main-group">
-        <div id="titre"><i>Commence par choisir un titre</i></div>
-        <div id="mixer"></div>
-      </div>
-      <div id="menu-group">
-        <button id="menuBtn" onclick="toggleMenu()"></button>
-        <div id="totalTime" class="time"></div>
-      </div>
-      <div id="masque">juste un instant, je charge...</div>
-    </div>
 
   </div>
   

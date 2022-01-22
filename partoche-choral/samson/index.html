@@ -1,161 +1,191 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag("js", new Date())
 
-    gtag('config', 'UA-176566871-1');
-  </script>
+      gtag("config", "UA-176566871-1")
+    </script>
 
-  <script type="module">
-    import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-    const el = document.createElement('pwa-update');
-    document.body.appendChild(el);
-  </script>
+    <script type="module">
+      import "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate"
+      const el = document.createElement("pwa-update")
+      document.body.appendChild(el)
+    </script>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Samson et Dalila</title>
-  <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css">
-  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral.css">
-  <link rel="stylesheet" type="text/css" href="../../css/partoche-choral-queries.css">
-  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
-  <!-- <link rel="manifest" href="/partoche-choral/samson/site.webmanifest"> -->
-  <script src="../../js/howler.core.min.js"></script>
-  <script>
-    const playlist = [
-      { 
-        title: "1. Dieu d'Israël ! Écoute la prière",
-        fileName: "samson01",
-        voices: ["acc", "sop1","sop2", "alt", "ten1", "ten2", "bas1", "bas2"],
-        format: "mp3"
-      },
-      { 
-        title: "3. Quoi ! Veux-tu donc qu'à jamais",
-        fileName: "samson03",
-        voices: ["acc", "sop1","sop2", "alt", "ten1", "ten2", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "4. Nous avons vu nos cités renversées",
-        fileName: "samson04",
-        voices: ["acc", "sop", "alt", "ten", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "5. Hélas ! paroles vaines !",
-        fileName: "samson05",
-        voices: ["acc", "sop", "alt", "ten1", "ten2", "bas1", "bas2"],
-        format: "mp3"
-      },
-      { 
-        title: "6. Ils ne sont plus, ces temps",
-        fileName: "samson06",
-        voices: ["acc", "sop", "alt", "ten", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "7. Ah ! le souffle du Seigneur",
-        fileName: "samson07",
-        voices: ["acc", "sop1", "sop2", "alt", "ten", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "8. Oui, devant sa colère",
-        fileName: "samson08",
-        voices: ["acc", "sop1", "sop2", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
-        format: "mp3"
-      },
-      { 
-        title: "11. Voici le printemps nous portant des fleurs",
-        fileName: "samson11",
-        voices: ["acc", "sop1", "sop2", "alt1", "alt2"],
-        format: "mp3"
-      },
-      { 
-        title: "13. Samson ! nous buvons avec toi !",
-        fileName: "samson13",
-        voices: ["acc", "sop", "alt", "ten", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "14. Dalila venge en ce jour",
-        fileName: "samson14",
-        voices: ["acc", "sop1","sop2", "alt", "ten1", "ten2", "bas1", "bas2"],
-        format: "mp3"
-      },
-      { 
-        title: "15. Ah ! rions de sa fureur !",
-        fileName: "samson15",
-        voices: ["acc", "sop", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
-        format: "mp3"
-      },
-      { 
-        title: "16. Marque d'un signe nos longs troupeaux !",
-        fileName: "samson16",
-        voices: ["acc", "sop", "alt", "ten", "bas"],
-        format: "mp3"
-      },
-      { 
-        title: "17. Dagon se révèle !",
-        fileName: "samson17",
-        voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas"],
-        format: "mp3"
-      },
-    ]
-  </script>
-</head>
-<body>
-  <div class="conteneur">
-
-    <div id="partoche" class="cadre">
-      <div id="pages">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Anton_van_Dyck_-_Samson_and_Delilah_-_Google_Art_Project.jpg/1024px-Anton_van_Dyck_-_Samson_and_Delilah_-_Google_Art_Project.jpg" style="width:100%">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Samson et Dalila</title>
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-choral.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-choral-queries.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+    <!-- <link rel="manifest" href="/partoche-choral/samson/site.webmanifest"> -->
+    <script src="../../js/howler.core.min.js"></script>
+    <script>
+      const playlist = [
+        {
+          title: "1. Dieu d'Israël ! Écoute la prière",
+          fileName: "samson01",
+          voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas1", "bas2"],
+          format: "mp3",
+        },
+        {
+          title: "3. Quoi ! Veux-tu donc qu'à jamais",
+          fileName: "samson03",
+          voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "4. Nous avons vu nos cités renversées",
+          fileName: "samson04",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "5. Hélas ! paroles vaines !",
+          fileName: "samson05",
+          voices: ["acc", "sop", "alt", "ten1", "ten2", "bas1", "bas2"],
+          format: "mp3",
+        },
+        {
+          title: "6. Ils ne sont plus, ces temps",
+          fileName: "samson06",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "7. Ah ! le souffle du Seigneur",
+          fileName: "samson07",
+          voices: ["acc", "sop1", "sop2", "alt", "ten", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "8. Oui, devant sa colère",
+          fileName: "samson08",
+          voices: ["acc", "sop1", "sop2", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
+          format: "mp3",
+        },
+        {
+          title: "11. Voici le printemps nous portant des fleurs",
+          fileName: "samson11",
+          voices: ["acc", "sop1", "sop2", "alt1", "alt2"],
+          format: "mp3",
+        },
+        {
+          title: "13. Samson ! nous buvons avec toi !",
+          fileName: "samson13",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "14. Dalila venge en ce jour",
+          fileName: "samson14",
+          voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas1", "bas2"],
+          format: "mp3",
+        },
+        {
+          title: "15. Ah ! rions de sa fureur !",
+          fileName: "samson15",
+          voices: ["acc", "sop", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
+          format: "mp3",
+        },
+        {
+          title: "16. Marque d'un signe nos longs troupeaux !",
+          fileName: "samson16",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
+          format: "mp3",
+        },
+        {
+          title: "17. Dagon se révèle !",
+          fileName: "samson17",
+          voices: ["acc", "sop1", "sop2", "alt", "ten1", "ten2", "bas"],
+          format: "mp3",
+        },
+      ]
+    </script>
+  </head>
+  <body>
+    <div class="conteneur">
+      <div id="partoche" class="cadre">
+        <div id="pages">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Anton_van_Dyck_-_Samson_and_Delilah_-_Google_Art_Project.jpg/1024px-Anton_van_Dyck_-_Samson_and_Delilah_-_Google_Art_Project.jpg"
+            style="width: 100%"
+          />
+        </div>
+        <div class="fleche" id="flechegauche">«</div>
+        <div class="fleche" id="flechedroite">»</div>
+        <div id="menu"></div>
       </div>
-      <div class="fleche" id="flechegauche">«</div>
-      <div class="fleche" id="flechedroite">»</div>
-      <div id="menu"></div>
+
+      <div id="lecteur">
+        <div id="play-group">
+          <button id="playBtn" class="paused disabled" disabled autocomplete="off">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#playBtn"></use>
+            </svg>
+          </button>
+          <button id="pauseBtn" class="invisible" disabled autocomplete="off">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#pauseBtn"></use>
+            </svg>
+          </button>
+          <div id="currentTime" class="time"></div>
+        </div>
+
+        <div id="arrows-group" class="disabled">
+          <button id="backwardBtn" onclick="backward(3)">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#backwardBtn"></use>
+            </svg>
+          </button>
+          <button id="forwardBtn" onclick="forward(3)">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#forwardBtn"></use>
+            </svg>
+          </button>
+          <button id="previousMarkerBtn" onclick="previousMarker()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#previousMarkerBtn"></use>
+            </svg>
+          </button>
+          <button id="nextMarkerBtn" onclick="nextMarker()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#nextMarkerBtn"></use>
+            </svg>
+          </button>
+        </div>
+
+        <div id="main-group">
+          <div id="titre"><i>Commence par choisir un titre</i></div>
+          <div id="marqueurs"></div>
+          <div id="mixer"></div>
+        </div>
+
+        <div id="menu-group">
+          <button id="menuBtn" onclick="toggleMenu()">
+            <svg>
+              <use xlink:href="../../svg/symbols.svg#menuBtn"></use>
+            </svg>
+          </button>
+          <div id="totalTime" class="time"></div>
+        </div>
+
+        <div id="masque">juste un instant, je charge...</div>
+      </div>
     </div>
-    
-    <div id="lecteur">
 
-      <div id="play-group">
-        <button id="playBtn" class="paused disabled" disabled autocomplete="off"></button>
-        <div id="currentTime" class="time"></div>
-      </div>
-
-      <div id="arrows-group" class="disabled">
-        <button id="backwardBtn" onclick="backward(3)"></button>
-        <button id="forwardBtn" onclick="forward(3)"></button>
-        <button id="previousMarkerBtn" onclick="previousMarker()"></button>
-        <button id="nextMarkerBtn" onclick="nextMarker()"></button>
-      </div>
-
-      <div id="main-group">
-        <div id="titre"><i>Commence par choisir un titre</i></div>
-        <div id="mixer"></div>
-      </div>
-
-      <div id="menu-group">
-        <button id="menuBtn" onclick="toggleMenu()"></button>
-        <div id="totalTime" class="time"></div>
-      </div>
-
-      <div id="masque">juste un instant, je charge...</div>
-      
-    </div>
-
-  </div>
-  
-  <script src="../../js/partoche-audio.js"></script>
-  <script src="../../js/partoche-base.js"></script>
-  <script src="../../js/partoche-choral.js"></script>
-</body>
+    <script src="../../js/partoche-audio.js"></script>
+    <script src="../../js/partoche-base.js"></script>
+    <script src="../../js/partoche-choral.js"></script>
+  </body>
 </html>

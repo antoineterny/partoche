@@ -1,10 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
 :root {
   /* --margin-unit: 12px; */
-  --sop-color: hsl(180,50%,80%);
-  --alt-color: hsl(270,50%,80%);
-  --ten-color: hsl(0,50%,80%);
-  --bas-color: hsl(90,50%,80%);
+  --sop-color: hsl(180, 50%, 80%);
+  --sop-color-light: hsl(180, 50%, 80%, 0.3);
+  --alt-color: hsl(270, 50%, 80%);
+  --alt-color-light: hsl(270, 50%, 80%, 0.3);
+  --ten-color: hsl(0, 50%, 80%);
+  --ten-color-light: hsl(0, 50%, 80%, 0.3);
+  --bas-color: hsl(90, 50%, 80%);
+  --bas-color-light: hsl(90, 50%, 80%, 0.3);
 }
 
 /*------------stabilo------------*/
@@ -43,7 +46,6 @@
   align-items: center;
   padding-left: 13px;
   border-bottom: 1px solid black; */
-  margin-bottom: 13px;
 }
 
 /*------------mixer------------*/
@@ -51,10 +53,10 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
-  transform: translateY(-1px);
+  height: 30px;
 }
 #mixer label {
-  font-size: 18px;
+  /* font-size: 18px;
   font-variant: small-caps;
   border: 1px solid black;
   padding: 2px;
@@ -63,6 +65,24 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  cursor: pointer; */
+  font-size: 15px;
+  height: 28px;
+  border: 3px solid black;
+  border-radius: 6px;
+  padding: 2px;
+  margin: 0 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  cursor: pointer;
+  font-family: "Alegreya Sans";
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: lining-nums;
+  background-color: white;
 }
 #mixer label:first-of-type {
   margin-left: 0;
@@ -70,35 +90,41 @@
 #mixer label:last-of-type {
   margin-right: 0;
 }
-label[data-voice*="sop"].checked {
+
+#mixer label[data-voice*="sop"] {
+  border-color: var(--sop-color);
+}
+#mixer label[data-voice*="alt"] {
+  border-color: var(--alt-color);
+}
+#mixer label[data-voice*="ten"] {
+  border-color: var(--ten-color);
+}
+#mixer label[data-voice*="bas"] {
+  border-color: var(--bas-color);
+}
+
+#mixer label[data-voice*="sop"].checked,
+#mixer label[data-voice*="sop"].checked:hover {
   background-color: var(--sop-color);
 }
-label[data-voice*="alt"].checked {
+#mixer label[data-voice*="alt"].checked,
+#mixer label[data-voice*="alt"].checked:hover {
   background-color: var(--alt-color);
 }
-label[data-voice*="ten"].checked {
+#mixer label[data-voice*="ten"].checked,
+#mixer label[data-voice*="ten"].checked:hover {
   background-color: var(--ten-color);
 }
-label[data-voice*="bas"].checked {
+#mixer label[data-voice*="bas"].checked,
+#mixer label[data-voice*="bas"].checked:hover {
   background-color: var(--bas-color);
-}
-label[data-voice*="sop"]:hover {
-  box-shadow: inset 0 0 0 3px var(--sop-color);
-}
-label[data-voice*="alt"]:hover {
-  box-shadow: inset 0 0 0 3px var(--alt-color);
-}
-label[data-voice*="ten"]:hover {
-  box-shadow: inset 0 0 0 3px var(--ten-color);
-}
-label[data-voice*="bas"]:hover {
-  box-shadow: inset 0 0 0 3px var(--bas-color);
 }
 
 /*------------markers------------*/
-.marker {
+/* .marker {
   border-width: 0 3px 3px 3px;
-}
+} */
 .marker-text {
   font-size: 10px;
 }
@@ -106,4 +132,19 @@ label[data-voice*="bas"]:hover {
 /*---------à la fin---------*/
 .invisible {
   display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #mixer label[data-voice*="sop"]:hover {
+    background-color: var(--sop-color-light);
+  }
+  #mixer label[data-voice*="alt"]:hover {
+    background-color: var(--alt-color-light);
+  }
+  #mixer label[data-voice*="ten"]:hover {
+    background-color: var(--ten-color-light);
+  }
+  #mixer label[data-voice*="bas"]:hover {
+    background-color: var(--bas-color-light);
+  }
 }
