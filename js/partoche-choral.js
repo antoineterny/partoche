@@ -139,6 +139,7 @@ function createVoiceButtons(index) {
         if (activeLabels === 1) {
           tracks.forEach(tr => tr.volume(1))
         } else {
+          // TODO : affiner la formule du volume
           const volume = 1 - activeLabels / 10
           tracks.forEach((tr, i) => {
             if (i > 0) tr.volume(volume)
@@ -166,7 +167,7 @@ function createVoiceButtons(index) {
 
 function addStabilo() {
   if (pagesLoaded !== pageOffsets.length) {
-    setTimeout(addStabilo, 10)
+    setTimeout(addStabilo, 50)
   } else {
     document.querySelectorAll(".stabilo").forEach(x => x.remove())
     Object.keys(stabilo).forEach(voix => {

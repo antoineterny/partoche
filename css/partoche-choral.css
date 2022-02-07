@@ -68,7 +68,7 @@
   cursor: pointer; */
   font-size: 15px;
   height: 28px;
-  border: 3px solid black;
+  border: 3px solid transparent;
   border-radius: 6px;
   padding: 2px;
   margin: 0 2px;
@@ -78,7 +78,7 @@
   flex-grow: 1;
   cursor: pointer;
   font-family: "Alegreya Sans";
-  font-weight: 600;
+  font-weight: 900;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-variant-numeric: lining-nums;
@@ -93,32 +93,40 @@
 
 #mixer label[data-voice*="sop"] {
   border-color: var(--sop-color);
+  color: var(--sop-color);
 }
 #mixer label[data-voice*="alt"] {
   border-color: var(--alt-color);
+  color: var(--alt-color);
 }
 #mixer label[data-voice*="ten"] {
   border-color: var(--ten-color);
+  color: var(--ten-color);
 }
 #mixer label[data-voice*="bas"] {
   border-color: var(--bas-color);
+  color: var(--bas-color);
 }
 
 #mixer label[data-voice*="sop"].checked,
 #mixer label[data-voice*="sop"].checked:hover {
   background-color: var(--sop-color);
+  color: white;
 }
 #mixer label[data-voice*="alt"].checked,
 #mixer label[data-voice*="alt"].checked:hover {
   background-color: var(--alt-color);
+  color: white;
 }
 #mixer label[data-voice*="ten"].checked,
 #mixer label[data-voice*="ten"].checked:hover {
   background-color: var(--ten-color);
+  color: white;
 }
 #mixer label[data-voice*="bas"].checked,
 #mixer label[data-voice*="bas"].checked:hover {
   background-color: var(--bas-color);
+  color: white;
 }
 
 /*------------markers------------*/
@@ -137,14 +145,22 @@
 @media (hover: hover) and (pointer: fine) {
   #mixer label[data-voice*="sop"]:hover {
     background-color: var(--sop-color-light);
+    border-color: transparent;
+    color: var(--ink-light);
   }
   #mixer label[data-voice*="alt"]:hover {
     background-color: var(--alt-color-light);
+    border-color: transparent;
+    color: var(--ink-light);
   }
   #mixer label[data-voice*="ten"]:hover {
     background-color: var(--ten-color-light);
+    border-color: transparent;
+    color: var(--ink-light);
   }
   #mixer label[data-voice*="bas"]:hover {
     background-color: var(--bas-color-light);
+    border-color: transparent;
+    color: var(--ink-light);
   }
 }
