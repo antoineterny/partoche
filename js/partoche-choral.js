@@ -92,7 +92,7 @@ function createVoiceButtons(index) {
   for(i=0; i<voices.length; i++){
     if (voices[i].match(/sop/g)) {pupitre = "sop"}
     else if (voices[i].match(/alt/g)) {pupitre = "alt"}
-    else if (voices[i].match(/ten/g)) {pupitre = "tén"}
+    else if (voices[i].match(/ten/g)) {pupitre = "ten"}
     else if (voices[i].match(/bas/g)) {pupitre = "bas"};
     let numero = voices[i].match(/[1-9]/g);
     if(numero) pupitre += ` ${numero[0]}`;

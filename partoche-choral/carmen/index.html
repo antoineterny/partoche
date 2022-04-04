@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-176566871-1"></script>
     <script>
       window.dataLayer = window.dataLayer || []
@@ -14,112 +13,126 @@
       gtag("config", "UA-176566871-1")
     </script>
 
+    <script type="module">
+      import "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate"
+      const el = document.createElement("pwa-update")
+      document.body.appendChild(el)
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orfeo ed Euridice</title>
+    <title>Carmen</title>
     <link rel="stylesheet" type="text/css" href="../../css/partoche-base.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/partoche-mixette.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-choral.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/partoche-choral-queries.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+    <!-- <link rel="manifest" href="/partoche-choral/samson/site.webmanifest"> -->
     <script src="../../js/howler.core.min.js"></script>
     <script>
       const playlist = [
         {
-          title: "Acte 1 scène 1 <i>« Ah se intorno »</i>",
-          fileName: "a1s1",
-          voices: ["flute", "harpe", "piano"],
+          title: "2.1 - Sur la place (hommes)",
+          fileName: "carmen02_1",
+          voices: ["acc", "ten", "bas"],
           format: "mp3",
         },
         {
-          title: "Acte 1 scène 2 <i>« Chiamo il mio ben cosi »</i>",
-          fileName: "a1s2",
-          voices: ["flute", "harpe", "piano"],
+          title: "2.2 - Il y sera (hommes)",
+          fileName: "carmen02_2",
+          voices: ["acc", "ten", "bas1", "bas2"],
           format: "mp3",
         },
         {
-          title: "Acte 1 scène 3 - 8. <i>« Gli sguardi trattieni »</i>",
-          fileName: "a1s3",
-          voices: ["flute", "harpe", "piano"],
+          title: "4.1 - La cloche a sonné (hommes)",
+          fileName: "carmen04_1",
+          voices: ["acc", "ten", "bas"],
           format: "mp3",
         },
         {
-          title: "<i>changement de décor&nbsp;</i> - Ballo I & II",
-          fileName: "ballo",
-          voices: ["flute", "harpe", "piano"],
+          title: "4.2 - La fumée (mixte)",
+          fileName: "carmen04_2",
+          voices: ["acc", "sop", "alt", "ten"],
           format: "mp3",
         },
         {
-          title: "Acte 2 scène 1 <i>« Chi mai dell Erebo »</i>",
-          fileName: "a2s1",
-          voices: ["flute", "harpe", "piano"],
+          title: "4.3 - La voilà ! (mixte)",
+          fileName: "carmen04_3",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
           format: "mp3",
         },
         {
-          title: "Acte 2 scène 2 - n°13 Air de flûte & <i>« È quest'asilo »</i>",
-          fileName: "a2s2-13",
-          voices: ["flute", "harpe", "piano"],
+          title: "8 - Au secours ! LENT (femmes)",
+          fileName: "carmen08_lent",
+          voices: ["acc", "sop", "alt1", "alt2"],
           format: "mp3",
         },
         {
-          title: "Acte 2 scène 2 - n°14 <i>« Che puro ciel »</i>",
-          fileName: "a2s2-14",
-          voices: ["orfeo", "flute", "harpe", "piano"],
+          title: "8 - Au secours ! TEMPO (femmes)",
+          fileName: "carmen08",
+          voices: ["acc", "sop", "alt1", "alt2"],
           format: "mp3",
         },
         {
-          title: "Acte 2 scène 2 - n°15 <i>« Vieni a' regni del riposo »</i>",
-          fileName: "a2s2-15",
-          voices: ["orfeo", "flute", "harpe", "piano"],
+          title: "19.1 - Écoute, compagnon (hommes)",
+          fileName: "carmen19_1",
+          voices: ["acc", "ten1", "ten2", "bas1", "bas2"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 1 - n°17 - Ballet",
-          fileName: "a3s1-17",
-          voices: ["flute", "harpe", "piano"],
+          title: "19.2 - Écoute, compagnon (mixte)",
+          fileName: "carmen19_2",
+          voices: ["acc", "sop", "alt", "ten1", "ten2", "bas1", "bas2"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 2 - n°19 Duo</i>",
-          fileName: "a3s2-19",
-          voices: ["flute", "harpe", "piano"],
+          title: "21 - Quant au douanier (mixte)",
+          fileName: "carmen21",
+          voices: ["acc", "sop1", "sop2", "alt1", "alt2", "ten1", "ten2", "bas1", "bas2"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 2 - n°21 <i>« Che fiero momento »</i>",
-          fileName: "a3s2-21",
-          voices: ["flute", "harpe", "piano"],
+          title: "24.1 - En route, il faut partir (mixte)",
+          fileName: "carmen24_1",
+          voices: ["acc", "sop", "alt1", "alt2", "ten1", "ten2", "bas"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 2 - n°23 <i>« Che farò senza Euridice »</i>",
-          fileName: "a3s2-23",
-          voices: ["orfeo", "flute", "harpe", "piano"],
+          title: "24.2 - Il t'en coûtera la vie (mixte)",
+          fileName: "carmen24_2",
+          voices: ["acc", "sop", "alt1", "alt2", "ten", "bas"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 3 - n°25 <i>« Orfeo che fai ? »</i>",
-          fileName: "a3s3-25",
-          voices: ["voix", "harpe", "piano"],
+          title: "25 - À deux cuartos (mixte)",
+          fileName: "carmen25",
+          voices: ["acc", "sop", "alt", "ten", "bas"],
           format: "mp3",
         },
         {
-          title: "Acte 3 scène 3 - n°26 <i>« Gaudio, gaudio »</i>",
-          fileName: "a3s3-26",
-          voices: ["voix", "flute", "harpe", "piano"],
+          title: "26.1 - Voici la quadrille ! (mixte)",
+          fileName: "carmen26_1",
+          voices: ["acc", "sop", "alt", "ten1", "ten2", "bas"],
           format: "mp3",
         },
         {
-          title: "Bis <i>« Trinofi Amore ! »</i>",
-          fileName: "bis",
-          voices: ["flute", "harpe", "piano"],
+          title: "26.2 - Une autre quadrille s'avance ! (mixte)",
+          fileName: "carmen26_2",
+          voices: ["acc", "sop", "alt", "ten1", "ten2", "bas"],
           format: "mp3",
         },
       ]
-      const partocheType = "mixette"
     </script>
   </head>
   <body>
     <div class="conteneur">
       <div id="partoche" class="cadre rounded">
-        <div id="pages"></div>
+        <div id="pages">
+          <img src="carmen_affiche_occ.jpg" style="width: 100%" />
+        </div>
+        <div class="fleche" id="flechegauche">«</div>
+        <div class="fleche" id="flechedroite">»</div>
         <div id="menu"></div>
       </div>
 
@@ -161,12 +174,12 @@
           </button>
         </div>
 
-
         <div id="main-group">
           <div id="titre"><i>Commence par choisir un titre</i></div>
-          <div id="marqueurs"></div>          
-          <!-- <div id="mixer"></div> -->
+          <div id="marqueurs"></div>
+          <div id="mixer"></div>
         </div>
+
         <div id="menu-group">
           <button id="menuBtn" onclick="toggleMenu()">
             <svg>
@@ -175,12 +188,14 @@
           </button>
           <div id="totalTime" class="time"></div>
         </div>
-        <div id="masque">chargement...</div>
+
+        <div id="masque">juste un instant, je charge...</div>
       </div>
     </div>
 
     <script src="../../js/partoche-audio.js"></script>
     <script src="../../js/partoche-base.js"></script>
-    <script src="../../js/partoche-mixette.js"></script>
+    <script src="../../js/partoche-choral.js"></script>
+    <script src="../../js/experiment.js"></script>
   </body>
 </html>

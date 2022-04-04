@@ -63,8 +63,8 @@ function initAudio(index) {
 
     // stopped = false;
     tracks[0].on("end", () => {
-      pauseBtn.classList.remove("invisible")
-      playBtn.classList.add("invisible")
+      pauseBtn.classList.add("invisible")
+      playBtn.classList.remove("invisible")
       // cancelAnimationFrame(animID);
     })
   }

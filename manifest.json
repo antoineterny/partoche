@@ -5,8 +5,8 @@
   "start_url": "/partoche/index.html",
   "display": "fullscreen",
   "orientation": "any",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
+  "theme_color": "#f3f3f1",
+  "background_color": "#f3f3f1",
   "description": "partoche est une application web qui aide les musiciens et chanteurs à apprendre leur partition, en synchronisant la lecture d'un enregistrement audio avec l'affichage de la partition.",
   "icons": [
     {

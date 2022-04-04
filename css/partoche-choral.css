@@ -1,13 +1,13 @@
 :root {
   /* --margin-unit: 12px; */
-  --sop-color: hsl(180, 50%, 80%);
-  --sop-color-light: hsl(180, 50%, 80%, 0.3);
-  --alt-color: hsl(270, 50%, 80%);
-  --alt-color-light: hsl(270, 50%, 80%, 0.3);
-  --ten-color: hsl(0, 50%, 80%);
-  --ten-color-light: hsl(0, 50%, 80%, 0.3);
-  --bas-color: hsl(90, 50%, 80%);
-  --bas-color-light: hsl(90, 50%, 80%, 0.3);
+  --sop-color: hsl(180, 55%, 75%);
+  --sop-color-light: hsl(180, 55%, 75%, 0.4);
+  --alt-color: hsl(270, 55%, 75%);
+  --alt-color-light: hsl(270, 55%, 75%, 0.4);
+  --ten-color: hsl(0, 55%, 75%);
+  --ten-color-light: hsl(0, 55%, 75%, 0.4);
+  --bas-color: hsl(90, 55%, 75%);
+  --bas-color-light: hsl(90, 55%, 75%, 0.4);
 }
 
 /*------------stabilo------------*/
@@ -66,10 +66,10 @@
   align-items: center;
   flex-grow: 1;
   cursor: pointer; */
-  font-size: 15px;
+  font-size: 21px;
   height: 28px;
   border: 3px solid transparent;
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 2px;
   margin: 0 2px;
   display: flex;
@@ -146,21 +146,21 @@
   #mixer label[data-voice*="sop"]:hover {
     background-color: var(--sop-color-light);
     border-color: transparent;
-    color: var(--ink-light);
+    color: var(--ink);
   }
   #mixer label[data-voice*="alt"]:hover {
     background-color: var(--alt-color-light);
     border-color: transparent;
-    color: var(--ink-light);
+    color: var(--ink);
   }
   #mixer label[data-voice*="ten"]:hover {
     background-color: var(--ten-color-light);
     border-color: transparent;
-    color: var(--ink-light);
+    color: var(--ink);
   }
   #mixer label[data-voice*="bas"]:hover {
     background-color: var(--bas-color-light);
     border-color: transparent;
-    color: var(--ink-light);
+    color: var(--ink);
   }
 }
