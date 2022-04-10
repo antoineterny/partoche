@@ -170,7 +170,7 @@ function animate() {
     "%, white 0);"
 
   for (let i = 0; i < regions.length; i++) {
-    if (curr > regions[i].start - avance && curr < regions[i].end - avance) {
+    if (curr >= regions[i].start - avance && curr < regions[i].end - avance) {
       let prevPagesH = previousPagesHeight[regions[i].page - 1]
       let currentPageH = pagesHeight[regions[i].page - 1]
       let currentPageOffset = pageOffsets[regions[i].page - 1][regions[i].line - 1]

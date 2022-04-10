@@ -93,8 +93,8 @@ function pause() {
 
 function stop() {
   tracks.forEach(track => track.stop())
-  playBtn.classList.remove("playing")
-  playBtn.classList.add("paused")
+  // playBtn.classList.remove("playing")
+  // playBtn.classList.add("paused")
   // cancelAnimationFrame(animID);
 }
 function prev() {
@@ -127,7 +127,7 @@ function previousMarker() {
   if (curr < markers[0].time + 1) {
     tracks.forEach(track => track.seek(0))
   } else if (
-    curr > markers[markers.length - 1].time &&
+    curr >= markers[markers.length - 1].time &&
     curr < markers[markers.length - 1].time + 1
   ) {
     tracks.forEach(track => track.seek(markers[markers.length - 2].time))
@@ -135,7 +135,7 @@ function previousMarker() {
     tracks.forEach(track => track.seek(markers[markers.length - 1].time))
   } else {
     for (i = 0; i < markers.length - 1; i++) {
-      if (curr > markers[i].time && curr < markers[i + 1].time) {
+      if (curr >= markers[i].time && curr < markers[i + 1].time) {
         if (curr < markers[i].time + 1) {
           tracks.forEach(track => track.seek(markers[i - 1].time))
         } else {
@@ -153,7 +153,7 @@ function nextMarker() {
     return
   } else {
     for (i = 0; i < markers.length - 1; i++) {
-      if (curr > markers[i].time && curr < markers[i + 1].time) {
+      if (curr >= markers[i].time && curr < markers[i + 1].time) {
         tracks.forEach(track => track.seek(markers[i + 1].time))
       }
     }
@@ -165,7 +165,7 @@ function previousRegion() {
     tracks.forEach(track => track.seek(0))
   } else {
     for (i = 1; i < regions.length; i++) {
-      if (curr > regions[i].start && curr < regions[i].start + 1) {
+      if (curr >= regions[i].start && curr < regions[i].start + 1) {
         tracks.forEach(track => track.seek(regions[i - 1].start))
       } else if (curr > regions[i].start && curr < regions[i].end) {
         tracks.forEach(track => track.seek(regions[i].start))
@@ -177,7 +177,7 @@ function nextRegion() {
   let curr = tracks[0].seek()
   if (curr > regions[regions.length - 1].start) return
   for (let region of regions) {
-    if (curr > region.start && curr < region.end) {
+    if (curr >= region.start && curr < region.end) {
       tracks.forEach(track => track.seek(region.end))
     }
   }
@@ -197,11 +197,13 @@ document.addEventListener("keydown", event => {
   }
   if (event.code == "ArrowLeft") {
     event.preventDefault()
-    backward(3)
+    if (event.ctrlKey) previousMarker()
+    else backward(3)
   }
   if (event.code == "ArrowRight") {
     event.preventDefault()
-    forward(3)
+    if (event.ctrlKey) nextMarker()
+    else forward(3)
   }
   if (event.code == "ArrowUp") {
     event.preventDefault()

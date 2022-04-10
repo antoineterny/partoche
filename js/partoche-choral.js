@@ -15,7 +15,7 @@ function initMenu() {
   menu.innerHTML = "";
   for (let i = 0; i < playlist.length; i++) {
     let newP = document.createElement("p");
-    newP.innerText = playlist[i].title;
+    newP.innerHTML = playlist[i].title;
     newP.addEventListener("click", () => {
       index = i;
       initAudio(i);
@@ -27,7 +27,7 @@ function initMenu() {
     document.querySelector("#menu").append(newP);
   }
   let partocheHeight = parseInt(getComputedStyle(partoche).height);
-  menu.style = `max-height: ${partocheHeight}px`;
+  menu.style += `max-height: ${partocheHeight}px`;
   toggleMenu();
 }
 
@@ -167,7 +167,7 @@ function createVoiceButtons(index) {
 
 function addStabilo() {
   if (pagesLoaded !== pageOffsets.length) {
-    setTimeout(addStabilo, 50)
+    setTimeout(addStabilo, 150)
   } else {
     document.querySelectorAll(".stabilo").forEach(x => x.remove())
     Object.keys(stabilo).forEach(voix => {
