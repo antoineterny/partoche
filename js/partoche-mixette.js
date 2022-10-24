@@ -63,7 +63,7 @@ function initAudio(index) {
 function createMixetteControls(voices) {
   document.querySelector("#pages").innerHTML = ""
   voices.forEach(voice => {
-    document.querySelector("#pages").innerHTML += `
+    document.querySelector("#pages").innerHTML += /*html*/`
       <div class="tranche rounded" id="${voice}">
         <div class="labels">
           <p>${voice}</p>

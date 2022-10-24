@@ -27,7 +27,7 @@ function initMenu() {
     document.querySelector("#menu").append(newP);
   }
   let partocheHeight = parseInt(getComputedStyle(partoche).height);
-  menu.style += `max-height: ${partocheHeight}px`;
+  menu.style = `max-height: ${partocheHeight}px;`;
   toggleMenu();
 }
 

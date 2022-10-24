@@ -36,7 +36,7 @@ function initMenu() {
       // createVoiceButtons(i);
       toggleMenu()
     })
-    document.querySelector("#menu").append(newP)
+    menu.append(newP)
   }
   let partocheHeight = parseInt(getComputedStyle(partoche).height)
   menu.style = `max-height: ${partocheHeight}px`
